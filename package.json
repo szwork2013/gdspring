@@ -32,7 +32,8 @@
     "streamifier": "*",
     "formidable": "*",
     "fs-extra":"*",
-    "soap":"*"
+    "soap":"*",
+    "wechat-enterprise":"*"
   },
   "devDependencies": {
     "jshint": "^2.9.3",

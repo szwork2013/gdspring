@@ -41,6 +41,12 @@ var config = module.exports = {
             pass: 'P@ssword0'
         }
     },
+    enterprise: {
+        corpId: 'wxbea72108079dcb26',
+        corpsecret: 'yy3S_IBbELpalg9HJbbWj3wnWtc-u8vwz0lT7x2fI80UKAHKdxZtS8IyYc-7jdeA',
+        token: '1iBZ',
+        encodingAESKey: '4JdmSv43zuTE8D8rECS45XTvs1dHc5uyUwaOpKUNyHg'
+    },
     // 程序路由指定
     dir: "controller",
     // 调试日志开关
@@ -68,22 +74,7 @@ var config = module.exports = {
         //白名单
         "white-list" : [
             '/',
-            '/api/custcenter/login',
-            '/api/rbacmg/userlogin',
-            '/api/common/decrypt',
-            '/api/custcenter/codegenerate',
-            '/api/custcenter/register',
-            '/api/custcenter/resetpassword',
-            '/api/custcenter/logout',
-            '/api/summary/pageviewsummary',
-            '/api/file/show',
-            '/api/file/showforckedit',
-            '/api/file/upload',
-            '/api/file/uploadforckedit',
-            '/api/file/uploadforckeditpaste',
-            '/api/file/allfileinfo',
-            '/api/file/download',
-            '/api/summary/custsummary'
+            '/api/custcenter/login'
         ],
         // 缓存过期时间单位秒, 一般为2个小时有效期
         "max-age": 3600 * 48
@@ -116,10 +107,10 @@ var config = module.exports = {
 
 //Specify config for prod and dev 
 if (config.debug) {
-    config.port = 9091;
+    config.port = 9999;
     config.static = 'public';
 } else {
     // 程序端口
-    config.port = 9091;
+    config.port = 9999;
 	config.static = 'minify';
 }
