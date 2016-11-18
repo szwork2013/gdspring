@@ -1,3 +1,6 @@
+var wechat = require('wechat-enterprise');
+var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret, '');
+
 /**
 @description 
 用户中心接口模块
@@ -50,9 +53,10 @@
 	   "resources":["123","456"] 	
 	}
 */
-exports.postlogin = (req,res)  => {
-	$.proxy_wcqy.cbhandler.callback(req.body, (result) => {
-		res.send(result);
+exports.getusers = (req,res)  => {
+	api.getUser(req.query.userid, function (err, data) {
+	  console.log(data);
+	  res.send(data);
 	});
 }
 

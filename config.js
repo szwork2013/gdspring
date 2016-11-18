@@ -21,29 +21,11 @@ var config = module.exports = {
             port: 6379,
             db: 0,
             pass: 'P@ssword0'
-        },
-        session:{
-            host: "172.28.189.101",
-            port: 6379,
-            db: 10,
-            pass: 'P@ssword0'
-        },
-        userdb:{
-            host: "172.28.189.101",
-            port: 6379,
-            db: 2,
-            pass: 'P@ssword0'
-        },
-        filedb:{
-            host: "172.28.189.101",
-            port: 6379,
-            db: 2,
-            pass: 'P@ssword0'
         }
     },
     enterprise: {
         corpId: 'wxbea72108079dcb26',
-        corpsecret: 'yy3S_IBbELpalg9HJbbWj3wnWtc-u8vwz0lT7x2fI80UKAHKdxZtS8IyYc-7jdeA',
+        corpsecret: 'wbqx1xWAELa3HmdJLqjpOk4FXkWh6UjF_kc4mPlwjz9Hlj8yOf-9u5s9TFzhSSWz',
         token: '1iBZ',
         encodingAESKey: '4JdmSv43zuTE8D8rECS45XTvs1dHc5uyUwaOpKUNyHg'
     },
@@ -76,6 +58,7 @@ var config = module.exports = {
             '/',
             '/corp/',
             '/corp',
+            '/api/wcqy/users',
             '/api/custcenter/login'
         ],
         // 缓存过期时间单位秒, 一般为2个小时有效期
