@@ -1,0 +1,50 @@
+/**'use strict';
+/**
+ * 方便引用API访问方法
+ */
+ module.exports = ((r, arr, qt) => {
+    // 引用赋值
+    for (a of arr)
+        r[a] = require(a);
+    //递归引用
+    ((res, dirPath) => {
+        // 读proxy目录结构
+        (files => {
+            // 变量文件
+            for (f of files) {
+                if (qt.indexOf(f) == -1 && /^[a-zA-Z0-9\_\-\.]+$/.test(f)) {
+                    //动态引用
+                    res[f] = require(f);
+                }
+            }
+        })($.fs.readdirSync(dirPath));
+    })(r, $.path.join(__dirname, "../node_modules"));
+    //返回引用
+    return r;
+})($,
+[
+'http',
+'fs',
+'path'
+], 
+//过滤文件夹
+[
+'.bin',
+'.DS_Store',
+'biskviit',
+'gulp-imagemin',
+'imagemin',
+'imagemin-gifsicle',
+'imagemin-jpegtran',
+'imagemin-optipng',
+'imagemin-pngquant',
+'imagemin-svgo',
+'babel-runtime',
+'caniuse-db',
+'grunt-contrib-uglify',
+'grunt-contrib-jshint',
+'grunt-contrib-nodeunit',
+'grunt-contrib-watch',
+'grunt-contrib-qunit',
+'grunt-contrib-concat'
+]);

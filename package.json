@@ -1,0 +1,42 @@
+{
+  "name": "gdspring",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "grunt qunit"
+  },
+  "dependencies": {
+    "biskviit": "*",
+    "body-parser": "*",
+    "colors": "*",
+    "compression": "*",
+    "cookie-parser": "*",
+    "ejs": "*",
+    "express": "*",
+    "express-session": "*",
+    "fetch": "*",
+    "functions": "*",
+    "jssha": "*",
+    "mysql": "*",
+    "mysql-queues": "*",
+    "redis": "*",
+    "connect-redis": "*",
+    "request": "*",
+    "moment": "*",
+    "faye-websocket": "*",
+    "crypto": "*",
+    "bluebird": "*",
+    "node-uuid": "*",
+    "data-driven": "*",
+    "connect-busboy": "*",
+    "streamifier": "*",
+    "formidable": "*",
+    "fs-extra":"*",
+    "soap":"*"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.3",
+    "should": "^11.1.0",
+    "supertest": "^2.0.0"
+  }
+}

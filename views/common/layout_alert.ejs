@@ -1,0 +1,244 @@
+<div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" style="left: 50%;margin-left: -150px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="glyphicon glyphicon-check"></i>
+            </div>
+            <div class="modal-title"></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-lg" data-dismiss="modal" style="display: none;">确定</button>
+                <button class="btn btn-success btn-lg" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-warning" class="modal modal-message modal-warning fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" style="left: 50%;margin-left: -150px;">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-bottom: 0;">
+                <i class="fa fa-warning"></i>
+            </div>
+            <div class="modal-title"></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer" style="margin: 0;">
+                <button type="button" class="btn btn-warning btn-lg" data-dismiss="modal" style="display: none;">确定</button>
+                <button class="btn btn-warning btn-lg" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 选择页 -->
+<div id="modal-type-1-info" class="modal modal-message modal-info fade" style="display: none;z-index:1500;overflow-y: auto;" aria-hidden="true">
+    <div class="modal-dialog" style="margin: 0;">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 10px;text-align: left!important;">
+                <span class="extend-fa"></span>
+            </div>
+            <div class="modal-select" style="padding: 5px 15px;font-size: 15px;"></div>
+            <div class="modal-body" style="text-align: left!important;"></div>
+        </div>
+    </div>
+</div>
+<div id="modal-type-2-info" class="modal modal-message modal-info fade" style="display: none;z-index:2000;overflow-y: auto;" aria-hidden="true">
+    <div class="modal-dialog" style="margin: 0;">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 10px;text-align: left!important;">
+                <span class="extend-fa"></span>
+            </div>
+            <div class="modal-select" style="padding: 5px 15px;font-size: 15px;"></div>
+            <div class="modal-body" style="text-align: left!important;">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-type-3-info" class="modal modal-message modal-info fade" style="display: none;z-index:2500;overflow-y: auto;" aria-hidden="true">
+    <div class="modal-dialog" style="margin: 0;">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 10px;text-align: left!important;">
+                <span class="extend-fa"></span>
+            </div>
+            <div class="modal-select" style="padding: 5px 15px;font-size: 15px;"></div>
+            <div class="modal-body" style="text-align: left!important;">
+            </div>
+        </div>
+    </div>
+</div>
+<input id="alert-success" type="hidden" data-toggle="modal" data-target="#modal-success">
+<input id="alert-warning" type="hidden" data-toggle="modal" data-target="#modal-warning">
+<input class="modal-type-1-info" type="hidden" data-toggle="modal" data-target="#modal-type-1-info"/>
+<input class="modal-type-2-info" type="hidden" data-toggle="modal" data-target="#modal-type-2-info"/>
+<input class="modal-type-3-info" type="hidden" data-toggle="modal" data-target="#modal-type-3-info"/>
+<script>
+    /**
+     * 获取微信个人信息的方法
+     */
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    /**
+     * 选择弹出框
+     */
+    function showAlert(show_alert, page_type) {
+        // 选择弹窗口类型
+        (function($modal) {
+            $("#alert-" + show_alert).click();
+            $modal.find("[type='button']").hide().click = null;
+            switch(page_type) {
+                case 'cars':
+                    // 缓存状态
+                    sessionStorage.noCarReturn = true;
+                    $modal.find(".modal-title").text("添加成功");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'cars_edit':
+                    // 缓存状态
+                    sessionStorage.noCarReturn = true;
+                    $modal.find(".modal-title").text("修改成功");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'cars-dealcar':
+                    $modal.find(".modal-title").text("成功结案");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'cars-deleteCar':
+                    $modal.find(".modal-title").text("删除成功");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'friends':
+                    $modal.find(".modal-title").text("好友重复");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'home':
+                    $modal.find(".modal-title").text("成功提交认证信息，等待审核。");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'member':
+                    sessionStorage.noMemberReturn = true;
+                    $modal.find(".modal-title").text("个人信息修改成功。");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'openidE':
+                    $modal.find(".modal-title").text("微信号绑定失败");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'openidS':
+                    $modal.find(".modal-title").text("微信号绑定成功");
+                    $modal.find(".modal-body").text("");
+                break;
+                case 'openid':
+                    $modal.find(".modal-title").text("点击确定，可绑定当前微信号");
+                    $modal.find(".modal-body").text("");
+                    $modal.find("[type='button']").show().click(function() {
+                        if ($("#wxurl").val()) {
+                            location.href = $("#wxurl").val();
+                        }
+                    });
+                break;
+            }
+        })($("#modal-" + show_alert).prop("aria-hidden", "false"));
+    }
+
+    /*
+    * 弹出选择框
+    **/
+    function showModal($this, obj, cb) {
+        // 控制弹出层大小
+        $this.find(".modal-dialog").css({
+            width: obj.width || '100%',
+            float: obj.float || 'none'
+        }).find(".modal-content").css({
+            "min-height": document.documentElement.clientHeight
+        });
+        // 显示头部文本和返回
+        $this.find(".modal-header span").html(
+            "<i data-dismiss='modal' class='glyphicon glyphicon-arrow-left closed' style='font-size:18px;'>" + 
+            "<span style='padding-left: 5px;'>" + obj.title + "</span>"
+        );
+        // 显示所选择
+        $this.find(".modal-select").html(obj.isEmpty ? "<span style='font-size:15px;font-weight: bold;color: #08c !important;' >清空</span>" : (function(wb) {
+            if (wb) {
+                var arr = wb.split("/");
+                return "<span style='font-size:18px;font-weight: bold;'>已选择</span><br/>品牌：" + (arr[0] || "") + "<br/>车系：" + (arr[1] || "") + "<br/>车型：" + (arr[2] || "");
+            } else {
+                return "";
+            }
+        })(obj.html));
+        //
+        if (obj.isEmpty) {
+            $this.find(".modal-select span").click(obj.emptyFun);
+        }
+        // 
+        (function($body) {
+            var bl = true, color = "";
+            // 循环弹出层属性
+            for (var cl in obj.msg) {
+                // 分类加数据
+                $body
+                // 追加头部
+                .append(
+                    obj.hidetitle ? "" : $("<div></div>").addClass("form-title").css(cl, "none").html(cl)
+                )
+                // 追加内容
+                .append(
+                    (function($div) {
+                        for (var i=0; i < obj.msg[cl].length; i++) {
+                            if (obj.type == 'color') {
+                                color = { "白色": "#FFFFFF", "香槟色": "#EEE685", "银白色": "#C0C0C0", "黑色": "#000000", "灰色": "#808080", "红色": "#FF0000", "黄色": "#FFFF00", "蓝色": "#0000FF", "绿色": "#008000", "紫色": "#800080", "咖啡色": "#603811" }[ obj.msg[cl][i][obj.text] ];
+                            }
+                            $div.append(
+                                $("<div></div>").addClass(
+                                    "col-lg-" + obj.col + " col-md-" + obj.col + " col-sm-" + obj.col + " col-xs-" + obj.col + " btn btn-link"
+                                ).css({
+                                    "text-align": obj.align || "left",
+                                    "font-size": "15px",
+                                    "overflow": "hidden",
+                                    "white-space": "nowrap",
+                                    "text-overflow": "ellipsis",
+                                    "-o-text-overflow": "ellipsis",
+                                    "-ms-text-overflow": "ellipsis",
+                                    "-moz-text-overflow": "ellipsis",
+                                    "-webkit-text-overflow": "ellipsis"
+                                }).html(
+                                   (obj.type == 'color' ? ("<span style='padding: 2.5px 11px;box-shadow: 1px 1px 1px #888888;color: " + color + ";background-color: " + color + ";margin-right: 5px;'></span>") : "") + obj.msg[cl][i][obj.text]
+                                ).prop("value", obj.msg[cl][i][obj.value]).click(function() {
+                                    if (bl) {
+                                        bl = false;
+                                        cb({
+                                            text: $(this).text(),
+                                            value: $(this).prop("value")
+                                        }, function() {
+                                            bl = true;
+                                        });
+                                    }
+                                })
+                            );
+                        }
+                        return $div;
+                    })(
+                        $("<div></div>").addClass("row")
+                    )
+                );
+            }
+            return $body;
+        })(
+            $this.find(".modal-body").html("")
+        ).append(
+            $("<div></div>").addClass("form-title")
+            .css({
+                "border-bottom": "none",
+                "margin-bottom": 0
+            })
+        );
+        $("." + $this.attr("id")).click();
+    }
+
+    $(function() {
+        // 控制弹窗口
+        showAlert(getQueryString('showalert'), getQueryString('pagetype'));
+    });
+</script>

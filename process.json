@@ -1,0 +1,15 @@
+{
+	"apps": [{
+		"name": "gdspring",
+		"script": "app.js",
+		"node_args": ["--harmony"],
+		"watch": true,
+		"instances" : 1,
+		"exec_mode" : "cluster",
+		"log_date_format": "YYYY - MM - DD HH: mm Z",
+		"error_file" : "./gdspring-err.log",
+		"out_file": "./gdspring-out.log",
+        "min_uptime": "60s",
+      	"max_restarts": 30,
+	}]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "gOAuth",
+  "description": "gOAuth is a project for provide RBAC/OAuth services",
+  "version": "0.3",
+  "url": "https://github.com/golden-tech-native",
+  "logo": "https://avatars1.githubusercontent.com/u/20122745?v=3&s=200",
+  "options": {
+      "linkNatives": "true",        
+      "attributesEmit": "true",
+      "exclude": "example,lib,node_modules,proxy,public,test,views",
+      "paths": "./controller",
+      "outdir": "./output"
+    }
+}
