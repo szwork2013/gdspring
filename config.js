@@ -74,6 +74,8 @@ var config = module.exports = {
         //白名单
         "white-list" : [
             '/',
+            '/corp/',
+            '/corp',
             '/api/custcenter/login'
         ],
         // 缓存过期时间单位秒, 一般为2个小时有效期
