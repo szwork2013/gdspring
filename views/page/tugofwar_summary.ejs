@@ -3,12 +3,19 @@
     <head>
        <meta charset="utf-8">
        <title> 拔河比赛 </title>
-       </style>
-       <script src="../js/jquery.js"></script>
+    </head>
+    
+    <body>
+        <ul></ul>
+    </body>
+
+     <script src="../js/jquery.js"></script>
         <script type="text/javascript">
             var logger = document.getElementsByTagName('ul')[0], index  = 0;
             var host= window.location.host;
-            var socket = new WebSocket("ws://"+host+"/1", 'echo-protocol');
+            var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+            var url= "ws://"+host+"/1";
+            var socket = new wsCtor(url, 'echo-protocol');
             var log = function(text) {
                 logger.innerHTML += '<li>' + text + '</li>';
             };
@@ -36,9 +43,4 @@
               };
         };
         </script>
-    </head>
-    
-    <body>
-        <ul></ul>
-    </body>
 </html>

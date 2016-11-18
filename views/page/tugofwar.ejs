@@ -96,11 +96,20 @@
                 100% {bottom: 0;}
             }
         </style>
-        
-       <script src="../js/jquery.js"></script>
+    </head>
+    
+    <body>
+        <div class="shake_box">
+            <div class="shakTop"><span></span></div>
+            <div class="shakBottom"><span></span></div>
+        </div>
+    </body>
+
+        <script src="../js/jquery.js"></script>
         <script type="text/javascript">
             var host= window.location.host;
-            var socket = new WebSocket("ws://"+host+"/1", 'echo-protocol');
+            var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+            var socket = new wsCtor("ws://"+host+"/1", 'echo-protocol');
 
             $(function() {
                 listen();
@@ -192,12 +201,4 @@
                 }
             }
         </script>
-    </head>
-    
-    <body>
-        <div class="shake_box">
-            <div class="shakTop"><span></span></div>
-            <div class="shakBottom"><span></span></div>
-        </div>
-    </body>
 </html>
