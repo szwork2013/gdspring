@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset="utf-8">
+       <title> 拔河比赛 </title>
+       </style>
+       <script src="../js/jquery.js"></script>
+        <script type="text/javascript">
+            var logger = document.getElementsByTagName('ul')[0], index  = 0;
+            var host= window.location.host;
+            var socket = new WebSocket("ws://"+host+"/1", 'echo-protocol');
+            var log = function(text) {
+                logger.innerHTML += '<li>' + text + '</li>';
+            };
+
+            $(function() {
+                listen();
+            })
+
+            function listen() {
+              //打开连接时触发
+              socket.onopen = function() {
+                  log('OPEN: ' + socket.protocol);
+              };
+              //收到消息时触发
+              socket.onmessage = function(evt) {
+                  log('MESSAGE: ' + evt.data);
+              };
+              //关闭连接时触发
+              socket.onclose = function(evt) {
+                  log('CLOSE: ' + evt);
+              };
+              //连接错误时触发
+              socket.onerror = function(evt) {
+                  log('CLOSE: ' + evt.code + ', ' + evt.reason);
+              };
+        };
+        </script>
+    </head>
+    
+    <body>
+        <ul></ul>
+    </body>
+</html>

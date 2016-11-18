@@ -99,6 +99,28 @@
         
        <script src="../js/jquery.js"></script>
         <script type="text/javascript">
+            var host= window.location.host;
+            var socket = new WebSocket("ws://"+host+"/1", 'echo-protocol');
+
+            $(function() {
+                listen();
+            })
+
+            function listen() {
+              //打开连接时触发
+              socket.onopen = function() {
+                  //log('OPEN: ' + socket.protocol);
+              };
+              //关闭连接时触发
+              socket.onclose = function(evt) {
+                  //log('CLOSE: ' + evt);
+              };
+              //连接错误时触发
+              socket.onerror = function(evt) {
+                  //log('CLOSE: ' + evt.code + ', ' + evt.reason);
+              };
+            };
+
             //先判断设备是否支持HTML5摇一摇功能
             if (window.DeviceMotionEvent) {
                 //获取移动速度，得到device移动时相对之前某个时间的差值比
@@ -115,7 +137,6 @@
             var curShakeX=curShakeY=curShakeZ=lastShakeX=lastShakeY=lastShakeZ=0;
 
             function deviceMotionHandler(event){
-
                 //获得重力加速
                 var acceleration =event.accelerationIncludingGravity;
 
@@ -140,6 +161,7 @@
 
                     if (speed > shakeThreshold) {
                         //TODO 相关方法，比如：
+                        socket.send("1");
 
                         //播放音效
                         shakeAudio.play();
@@ -151,13 +173,11 @@
                         },1000)
 
                     }
-
                     lastShakeX = curShakeX;
                     lastShakeY = curShakeY;
                     lastShakeZ = curShakeZ;
                 }
             }
-
 
             //预加摇一摇声音
             var shakeAudio = new Audio();
@@ -165,6 +185,7 @@
             var shake_options = {
                 preload  : 'auto'
             }
+
             for(var key in shake_options){
                 if(shake_options.hasOwnProperty(key) && (key in shakeAudio)){
                     shakeAudio[key] = shake_options[key];
