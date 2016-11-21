@@ -1,5 +1,5 @@
 var wechat = require('wechat-enterprise');
-var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret, '');
+var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret);
 
 /**
 @description 
