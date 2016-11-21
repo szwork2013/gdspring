@@ -7,7 +7,7 @@ exports.gettugofwar = function(req, res) {
     var data;
     api.getUserIdByCode(code, (data)=>{
     	data = data;
-    	alert(data);
+    	console.log(data);
     });
 
 	res.render('page/tugofwar',data);
