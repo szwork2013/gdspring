@@ -4,14 +4,12 @@
         <meta charset="utf-8">
         <title>签到</title>
          <style type="text/css">
-            
-            .signup_box {
+            body {
+                margin: 0;
                 background: url(../img/signup.jpg) no-repeat center center;
                 position: fixed;
-                top : 0;
-                left: 0;
-                width  : 100%;
-                height : 100%;
+                background-position:0% 0%;  
+                background-size:cover; 
             }
             .avatar {
                  display:block;
@@ -24,10 +22,8 @@
         </style>
     </head>
     <body>
-        <div class="signup_box">
-            <div class="avatar">
-               <img src="<%=avatar%>" height="120" width="120"/>
-            </div>
+        <div class="avatar">
+           <img src="<%=avatar%>" height="120" width="120"/>
         </div>
     </body>
         <script src="../js/jquery.js"></script>
