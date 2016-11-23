@@ -1,0 +1,14 @@
+.smallDiv{
+    width: 40px;
+    height:40px;
+    border:1px solid;
+    float:left
+}
+.newLineDiv{
+    width: 40px;
+    height:40px;
+    border:1px solid;
+}
+.backcolor{
+    background: #999999;
+}
