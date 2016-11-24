@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="../../js/li/common.js"></script>
+   <!-- <link href="blue.css" rel="stylesheet">-->
+    <script src="../../js/li/jquery.min.js"></script>
+    <script src="../../js/li/jquery.artDialog.source.js" type="text/javascript"></script>
+    <script src="../../js/li/iframeTools.js" type="text/javascript"></script>
+    <script src="../../js/plugins/layer/layer.js"></script>
+
+    <title>车信网年终抽奖</title>
+     <link href="../../css/li/lottery.css" rel="stylesheet">
+    <script src="../../js/li/lotteryApp.js"></script>
+
+    <!--边框平铺背景-start-->
+
+</head>
+<body>
+<div class="" style="display: none; position: absolute;">
+    <div class="aui_outer">
+        <table class="aui_border">
+            <tbody>
+            <tr>
+                <td class="aui_nw"></td>
+                <td class="aui_n"></td>
+                <td class="aui_ne"></td>
+            </tr>
+            <tr>
+                <td class="aui_w"></td>
+                <td class="aui_c">
+                    <div class="aui_inner">
+                        <table class="aui_dialog">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="aui_header">
+                                    <div class="aui_titleBar">
+                                        <div class="aui_title" style="cursor: move;"></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="aui_icon">
+                                    <div class="aui_iconBg"
+                                         style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
+                                </td>
+                                <td class="aui_main" style="width: auto; height: auto;">
+                                    <div class="aui_content" style="padding: 20px 25px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="aui_footer">
+                                    <div class="aui_buttons"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td class="aui_e"></td>
+            </tr>
+            <tr>
+                <td class="aui_sw"></td>
+                <td class="aui_s"></td>
+                <td class="aui_se" style="cursor: se-resize;">
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="" style="display: none; position: absolute;">
+    <div class="aui_outer">
+        <table class="aui_border">
+            <tbody>
+            <tr>
+                <td class="aui_nw"></td>
+                <td class="aui_n"></td>
+                <td class="aui_ne"></td>
+            </tr>
+            <tr>
+                <td class="aui_w"></td>
+                <td class="aui_c">
+                    <div class="aui_inner">
+                        <table class="aui_dialog">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="aui_header">
+                                    <div class="aui_titleBar">
+                                        <div class="aui_title" style="cursor: move;"></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="aui_icon">
+                                    <div class="aui_iconBg"
+                                         style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
+                                </td>
+                                <td class="aui_main" style="width: auto; height: auto;">
+                                    <div class="aui_content" style="padding: 20px 25px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="aui_footer">
+                                    <div class="aui_buttons"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td class="aui_e"></td>
+            </tr>
+            <tr>
+                <td class="aui_sw"></td>
+                <td class="aui_s"></td>
+                <td class="aui_se" style="cursor: se-resize;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="" style="display: none; position: absolute;">
+    <div class="aui_outer">
+        <table class="aui_border">
+            <tbody>
+            <tr>
+                <td class="aui_nw"></td>
+                <td class="aui_n"></td>
+                <td class="aui_ne"></td>
+            </tr>
+            <tr>
+                <td class="aui_w"></td>
+                <td class="aui_c">
+                    <div class="aui_inner">
+                        <table class="aui_dialog">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="aui_header">
+                                    <div class="aui_titleBar">
+                                        <div class="aui_title" style="cursor: move;"></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="aui_icon">
+                                    <div class="aui_iconBg"
+                                         style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
+                                </td>
+                                <td class="aui_main" style="width: auto; height: auto;">
+                                    <div class="aui_content" style="padding: 20px 25px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="aui_footer">
+                                    <div class="aui_buttons"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td class="aui_e"></td>
+            </tr>
+            <tr>
+                <td class="aui_sw"></td>
+                <td class="aui_s"></td>
+                <td class="aui_se" style="cursor: se-resize;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div style="display: none; position: absolute;" class="">
+    <div class="aui_outer">
+        <table class="aui_border">
+            <tbody>
+            <tr>
+                <td class="aui_nw"></td>
+                <td class="aui_n"></td>
+                <td class="aui_ne"></td>
+            </tr>
+            <tr>
+                <td class="aui_w"></td>
+                <td class="aui_c">
+                    <div class="aui_inner">
+                        <table class="aui_dialog">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="aui_header">
+                                    <div class="aui_titleBar">
+                                        <div class="aui_title" style="cursor: move;"></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="aui_icon">
+                                    <div class="aui_iconBg"
+                                         style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
+                                </td>
+                                <td class="aui_main" style="width: auto; height: auto;">
+                                    <div class="aui_content" style="padding: 20px 25px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="aui_footer">
+                                    <div class="aui_buttons"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td class="aui_e"></td>
+            </tr>
+            <tr>
+                <td class="aui_sw"></td>
+                <td class="aui_s"></td>
+                <td class="aui_se" style="cursor: se-resize;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div style="display: none; position: absolute;" class="">
+    <div class="aui_outer">
+        <table class="aui_border">
+            <tbody>
+            <tr>
+                <td class="aui_nw"></td>
+                <td class="aui_n"></td>
+                <td class="aui_ne"></td>
+            </tr>
+            <tr>
+                <td class="aui_w"></td>
+                <td class="aui_c">
+                    <div class="aui_inner">
+                        <table class="aui_dialog">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="aui_header">
+                                    <div class="aui_titleBar">
+                                        <div class="aui_title" style="cursor: move;"></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="aui_icon">
+                                    <div class="aui_iconBg"
+                                         style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
+                                </td>
+                                <td class="aui_main" style="width: auto; height: auto;">
+                                    <div class="aui_content" style="padding: 20px 25px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="aui_footer">
+                                    <div class="aui_buttons"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td class="aui_e"></td>
+            </tr>
+            <tr>
+                <td class="aui_sw"></td>
+                <td class="aui_s"></td>
+                <td class="aui_se" style="cursor: se-resize;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div style="display: none; position: absolute;" class="">
+    <div class="aui_outer">
+        <table class="aui_border">
+            <tbody>
+            <tr>
+                <td class="aui_nw"></td>
+                <td class="aui_n"></td>
+                <td class="aui_ne"></td>
+            </tr>
+            <tr>
+                <td class="aui_w"></td>
+                <td class="aui_c">
+                    <div class="aui_inner">
+                        <table class="aui_dialog">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="aui_header">
+                                    <div class="aui_titleBar">
+                                        <div class="aui_title" style="cursor: move;"></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="aui_icon" style="display: none;">
+                                    <div class="aui_iconBg" style="background: none;"></div>
+                                </td>
+                                <td class="aui_main" style="width: auto; height: auto;">
+                                    <div class="aui_content" style="padding: 20px 25px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="aui_footer">
+                                    <div class="aui_buttons" style="display: none;"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td class="aui_e"></td>
+            </tr>
+            <tr>
+                <td class="aui_sw"></td>
+                <td class="aui_s"></td>
+                <td class="aui_se" style="cursor: se-resize;"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="dvNewFrameBg">
+
+    <!--内容区域-start-->
+    <div class="dvActivityContent"
+         style="position: absolute; left: 50%; top: 49.8%; margin-left: -512px; margin-top: -384px;">
+        <div class="dvActivityContent dvMiddleBg">
+            <!--左侧-start-->
+            <div class="dvActivityLeft">
+                <!--奖项（显示）-start-->
+                <div class="dvDisplayRewards">
+                    <img id="imgAwards" alt="" style="max-width: 260px; max-height: 233px"
+                         src="http://7xnwvr.com2.z0.glb.qiniucdn.com/lottery_logo_20160108133110567.jpg">
+
+                    <div>珍珠项链</div>
+                </div>
+                <!--奖项（显示）-end-->
+                <!--奖项选择-start-->
+                <div class="dvAwardSelect">
+                    <div class="dvAwardSelectLeft"></div>
+                    <div class="dvAwardSelectMiddleTitle">二等奖</div>
+                    <div class="dvAwardSelectMiddleArrow">
+                        <div class="dvAwardArrow"></div>
+                    </div>
+                    <div class="dvAwardSelectRight"></div>
+                </div>
+                <!--奖项选择-end-->
+                <div class="dvAwardSelectContent" style="display: none;">
+                    <ul>
+                        <li id="fab7feb4-d8a9-4c4b-b869-35663a400d69" awardlevel="3" awardcount="1" awardphoto="lottery_logo_20160108133143505.jpg" prizename="苏绣摆台">三等奖
+                        </li>
+                        <li id="151f67f7-5ca6-47a6-a8f2-369c789a0c42" awardlevel="2" awardcount="1" awardphoto="lottery_logo_20160108133110567.jpg" prizename="珍珠项链">二等奖
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--左侧-end-->
+            <!--中部-start-->
+            <div class="dvActivityMiddle">
+                <!--参与滚动名单-start-->
+                <div class="dvNewActivityList">
+                    <div class="NewActivityListUlFrame">
+                        <ul class="ulNewActivityList" id="ulPerPool" style="top: -92px;">
+                            <%for(var j= 0; j < data.length; j++) { %>
+
+                                <li id="f3fa1c42-227b-46ca-afb9-68f67b26c76e" openid="oRpPlwUe7Ic2WiFBlgFGIok09tCQ"
+                                        class=""><img
+                                        src=<%= data[j].src %>
+                                        height="35px" width="35px"><span><%= data[j].name %></span></li>
+
+                            <%}%>
+                            <!--<li id="f3fa1c42-227b-46ca-afb9-68f67b26c76e" openid="oRpPlwUe7Ic2WiFBlgFGIok09tCQ"
+                                class=""><img
+                                        src="http://wx.qlogo.cn/mmopen/mLa0XfyP8X1f7dBDov2EILvHgBn7tJdKEoEFibcDUfHVwnibAZicenCSB5HY9OJItOAhNmGeBXvwrVzAzOs5FXJhrMqM9ia4GVTic/0"
+                                        height="35px" width="35px"><span>罗湘洲·姑苏老三</span></li>
+                            <li id="46e0df30-526e-48c7-97e6-54294d73c866" openid="oRpPlwRXaz8lkVOzX1uuQc2mQnTU"
+                                class=""><img
+                                        src="http://wx.qlogo.cn/mmopen/2BT80xmOuLPhMB2IdGLCiakf0CWUiaoIDnyQCHKhicLkLXGRPibUcZ3AsUn8nIXyzEyibUhhuwfBxpVhgRhVXwAFDFg/0"
+                                        height="35px" width="35px"><span>Linda</span></li>
+                            <li id="3b9f3ec5-bdbd-4eab-ab26-99ebc4e9153c" openid="oRpPlwZGsNRs7RQqDkXx6Q2eYayQ"
+                                class=""><img
+                                        src="http://wx.qlogo.cn/mmopen/mLa0XfyP8X21ia9uMyicWS3nuh44ehK7SwY8NaHKql7vBuLTAC700Rv4NupvGaZU6m2yVuGicQ3jicgOCyH3LicwoicA/0"
+                                        height="35px" width="35px"><span> Tomato baby</span></li>-->
+                        </ul>
+                    </div>
+
+                    <!--操作按钮-start-->
+                    <div class="dvStartButton dvBackrgoundStart">
+                    </div>
+                    <!--操作按钮-end-->
+                </div>
+                <!--参与滚动名单-end-->
+            </div>
+            <!--中部-end-->
+            <!--右侧-start-->
+            <div class="dvActivityRight">
+                <!--中奖名单-start-->
+                <div class="dvResultFrame">
+                    <div class="dvResult">
+                        <div class="dvResultMiddle">
+                            <div class="dvResultTitle">
+                                <label id="lblLuckList" class="lblLuckyList">中奖名单</label>
+                            </div>
+                            <!--中奖名单-start-->
+                            <ul class="ulLuckList">
+                                <li id="37889484-2074-469f-8507-15b42605ee19"
+                                    ondblclick="delLuckDog('oRpPlwYU_dfedweCJwMgHlUaSbNA','151f67f7-5ca6-47a6-a8f2-369c789a0c42')">
+                                    <img src="http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0"
+                                         height="100px" width="100px"><label class="lblName"
+                                                                             style="font-size:30px;width:100%;text-align:center;float: left;">Tim</label><label
+                                            class="lblNumber smartCommonCssUnvisiable">oRpPlwYU_dfedweCJwMgHlUaSbNA</label>
+                                </li>
+                            </ul>
+                            <!--中奖名单-end-->
+                            <label id="lblCheckList" class="lblCheckList" onclick="checkLuckList()"
+                                   style="margin-left: 80px;">中奖名单</label>
+                        </div>
+                    </div>
+                </div>
+                <!--中奖名单-end-->
+            </div>
+            <!--右侧-end-->
+            <!--底部-start-->
+            <div class="dvActivityBottom" style="display: none;">
+                <!--底部标题文字-start-->
+                <div class="dvActivityList">
+                    <label id="lblBottomTitle" class="lblBottomTitle" style="width: 120px;">参与人员</label>
+                </div>
+                <!--底部标题文字-end-->
+                <!--参与人员头像-start-->
+                <div class="dvPitureList">
+                    <div class="dvPitureListSides dvPitureListLeft" onclick="activityRoll(-1)"></div>
+                    <div class="dvPitureListMiddle">
+                        <div class="dvUlFrame">
+                        </div>
+                    </div>
+                    <div class="dvPitureListSides dvPitureListRight" onclick="activityRoll(1)"></div>
+                </div>
+                <!--参与人员头像-end-->
+            </div>
+            <!--底部-end-->
+            <!--隐藏区域-start-->
+            <div class="dvContent dvActivitors">
+                <div class="dvGvFrame">
+                    <div>
+                        <table class="gvActivitors smartCommonCssUnvisiable">
+                            <tbody>
+                            <tr>
+                                <th scope="col" style="border-style: None; font-weight: normal;">昵称</th>
+                                <th scope="col" style="border-style: None; font-weight: normal;">电话号码</th>
+                                <th scope="col" style="border-style: None; font-weight: normal;">微信号</th>
+                                <th scope="col" style="border-style: None; font-weight: normal;">微博账号</th>
+                                <th scope="col" style="border-style: None; font-weight: normal;">人员奖项ID</th>
+                                <th scope="col" style="border-style: None; font-weight: normal;">是否已经被抽中</th>
+                                <th scope="col" style="border-style: None; font-weight: normal;">人员InnerID</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--隐藏区域-end-->
+        </div>
+    </div>
+    <!--内容区域-end-->
+</div>
+<div style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; background: rgb(255, 255, 255);"></div>
+</body>
+</html>

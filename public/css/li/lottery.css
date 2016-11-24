@@ -1,0 +1,1316 @@
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+/*公共隐藏样式(常用与GridView列隐藏)*/
+.smartCommonCssUnvisiable {
+    display: none;
+}
+
+/*清除左侧浮动*/
+.clearLeft {
+    clear: left;
+}
+
+/*清除右侧浮动*/
+.clearRight {
+    clear: right;
+}
+
+/*清除浮动*/
+.clearBoth {
+    clear: both;
+}
+
+/*向左浮动*/
+.floatLeft {
+    float: left;
+}
+
+/*向又浮动*/
+.floatRight {
+    float: right;
+}
+
+/*列表页面操作列内部图标样式*/
+.smartListOperIconCss {
+    margin: 10px 0 0 0;
+    cursor: pointer;
+}
+
+/*列表页面状态列内部图标样式*/
+.smartListStatusIconCss {
+    margin: 10px 0 0 0;
+}
+
+/*列表页面选择框样式(全选框)*/
+.chkAllCss {
+    margin: 10px 0 0 2px;
+    *+margin: 0 0 0 5px;
+}
+
+/*列表页面选择框样式(单个选择)*/
+.listChkCss {
+    margin: 10px 0 0 0;
+    *+margin: 0 0 0 5px;
+}
+
+/*编辑页面必输项前型号样式*/
+.redStarCss {
+    color: red;
+    margin: 3px 0 0 0;
+}
+
+/*通用A标签样式*/
+.aCommonCss {
+    color: #2897e8;
+}
+
+/*文本框不可用公用样式*/
+.txtDisableCommonCss {
+    background-color: #e5e5e5;
+}
+
+/*ActivityEdit*/
+.ulEditContent .smartEditRightCss {
+    color: #878D92;
+    font-family: Tahoma;
+    font-size: 14px;
+    margin: 3px 0 0;
+    text-align: left;
+    width: 150px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #999999;
+}
+
+.smallHrefImgCss {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.tabAward tr td {
+    font-size: 14px;
+    color: #999999;
+    height: 40px;
+    line-height: 40px;
+}
+
+.tabAward tr .td1 {
+    width: 100px;
+    text-align: right;
+}
+
+.tabAward tr .td2 {
+    width: 130px;
+}
+
+.tabAward tr .td2 .tabtext {
+    width: 100px;
+    border: 1px solid #999999;
+}
+
+.tabAward tr .td3 {
+    width: 400px;
+}
+
+.tabAward tr .td3 .ImgDiv {
+    width: 380px;
+    height: 70px;
+    border: 1px solid #999999;
+    overflow: hidden;
+}
+
+.tabAward tr .td3 .ImgDiv img {
+    max-width: 70px;
+    max-height: 70px;
+}
+
+.tabAward tr .td3 .aspNetDisabled {
+    width: 345px;
+    height: 13px;
+}
+
+.tabAward tr .td4 {
+    text-align: center;
+    width: 80px;
+}
+
+.addImgDiv {
+    background: url("http://139.196.189.2:8080/Content/Img/Demo/gold_prize_+.png") no-repeat;
+    width: 66px;
+    height: 66px;
+    margin: 30px 0 0;
+    cursor: pointer;
+    float: left;
+}
+
+.delImgDiv {
+    background: url("http://139.196.189.2:8080/Content/Img/Demo/deletex.png") no-repeat;
+    width: 20px;
+    height: 20px;
+    margin: -90px 0 0 350px;
+    cursor: pointer;
+    float: left;
+}
+
+.dvExpand {
+    width: 800px;
+    height: 400px;
+    border: 1px solid #D8D8D8;
+}
+
+.dvExpand .dvTop {
+    width: 100%;
+    height: 20%;
+    padding: 10px;
+}
+
+.dvExpand .dvTitle {
+    font-size: 18px;
+    text-indent: 20px;
+    color: RGB(152, 151, 156);
+    line-height: 20px;
+    border-bottom: 1px solid #D8D8D8;
+    width: 90%;
+    padding: 0;
+}
+
+.dvExpand .dvTop ul {
+    list-style-type: none;
+    margin: 10px auto;
+    padding: 0px 20px;
+}
+
+.dvExpand .dvTop ul li {
+    margin: 0 30px 10px 0;
+    border: 1px solid #878D92;
+    width: 188px;
+    height: 46px;
+    cursor: pointer;
+    float: left;
+}
+
+.dvExpand .dvTop ul li:visited {
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+    width: 188px;
+    height: 46px;
+    cursor: pointer;
+}
+
+.dvExpand .dvTop ul li:hover {
+    margin-bottom: 10px;
+    border: 1px solid #b6ff00;
+    width: 188px;
+    height: 46px;
+    cursor: pointer;
+}
+
+.dvExpand .dvBottom {
+    width: 100%;
+    height: 60%;
+    padding: 10px;
+}
+
+.dvExpand .dvBottom span {
+    text-indent: 20px;
+    color: #777777;
+    line-height: 40px;
+}
+
+.dvExpand .dvBottom .txtareaCSS {
+    width: 628px;
+    height: 80px;
+    border: 1px solid #D8D8D8;
+    line-height: 20px;
+    clear: both;
+}
+
+.dvExpand .dvBottom div {
+    clear: both;
+}
+
+.divAttaList {
+    height: 90px;
+}
+
+.divAttaList ul {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.divAttaList ul li {
+    width: 40%;
+    text-align: left;
+    vertical-align: middle;
+    padding: 3px 3px 3px 3px;
+    height: 25px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.divAttaList ul li a {
+    color: #999999;
+}
+
+.divAttaList ul li img {
+    margin-left: 5px;
+    cursor: pointer;
+    vertical-align: text-bottom;
+}
+
+/*Activity页面Css*/
+.dvFrameBg {
+    width: 100%;
+    background-color: #eae6e6;
+}
+
+.dvFrameBg .dvActivtiyContent {
+    width: 90%;
+    background-color: #FFFFFF;
+    height: 576px;
+    margin: 33px 0 0 55px;
+    float: left;
+}
+
+.dvFrameBg .dvActivtiyContent .ulTabs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dvFrameBg .dvActivtiyContent .ulTabs .liTabs {
+    float: left;
+    height: 55px;
+    line-height: 55px;
+    width: 220px;
+    text-align: center;
+    font-size: 22px;
+    cursor: pointer;
+    border-right: 1px solid #D8D8D8;
+    border-bottom: 1px solid #D8D8D8;
+    background-color: #F6F6F0;
+}
+
+.dvFrameBg .dvActivtiyContent .ulTabs .tabOnClick {
+    border-bottom: none;
+    background-color: #FFFFFF;
+    float: left;
+    height: 55px;
+    line-height: 55px;
+    width: 220px;
+    text-align: center;
+    font-size: 22px;
+    cursor: pointer;
+    border-right: 1px solid #D8D8D8;
+}
+
+.dvFrameBg .dvActivtiyContent .dvContent {
+    height: 522px;
+    width: 100%;
+    float: left;
+}
+
+.dvFrameBg .dvActivtiyContent .dvActivitors {
+    background-color: #FFFFFF;
+}
+
+.dvFrameBg .dvActivtiyContent .dvCharts .dvBarChart {
+    width: 250px;
+    height: 250px;
+    float: left;
+    margin: 20px 20px 0 10px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvCharts .dvPieChart {
+    width: 250px;
+    height: 250px;
+    float: left;
+    margin: 20px 0 0 10px;
+    clear: left;
+}
+
+.dvFrameBg .dvActivtiyContent .dvCharts .dvGraphChart {
+    width: 250px;
+    height: 250px;
+    float: left;
+    margin: 20px 0 0 10px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery {
+    background: url(../../../Skin/White/Images/activity_bg.gif);
+    background-repeat: no-repeat;
+}
+
+.dvFrameBg .dvActivtiyContent .dvStatistics {
+}
+
+.dvFrameBg .dvActivtiyContent .displayNone {
+    display: none;
+}
+
+.dvFrameBg .dvActivtiyContent .displayInline {
+    display: inline;
+}
+
+.dvFrameBg .dvActivtiyContent .dvGvFrame {
+    height: 522px;
+    width: 100%;
+    float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.gvActivitors {
+    margin: 15px 0 0 0;
+    font-size: 14px;
+    color: #777777;
+}
+
+.gvActivitors tr {
+    height: 28px;
+    line-height: 28px;
+}
+
+.gvActivitors tr td {
+    text-align: center;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame {
+    width: 295px;
+    height: 358px;
+    float: left;
+    margin: 75px 0 0 67px;
+    background: url(../../../Skin/White/Images/activity_animate_frame_bg.gif);
+    background-repeat: repeat-x;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame .dvAnimate {
+    width: 295px;
+    height: 358px;
+    float: left;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame .dvAnimate .dvActivityList {
+    width: 265px;
+    height: 208px;
+    margin: 18px 0 0 15px;
+    float: left;
+    overflow: hidden;
+    background: url(../../../Skin/White/Images/activity_activitors_bg.gif);
+    background-repeat: repeat-x;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame .dvAnimate .dvActivityList .ulActivityList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame .dvAnimate .dvActivityList .ulActivityList li {
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+    font-family: 'Microsoft YaHei';
+    text-align: center;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame .dvAnimate .dvOperButton {
+    width: 100px;
+    height: 100px;
+    margin: 30px auto;
+    float: right;
+    cursor: pointer;
+    background: url(http://139.196.189.2:8080/Skin/White/Images/activity_begin_bg.png);
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvAnimateFrame .dvAnimate .dvOperButton .lblStart {
+    margin: 35px 0 0 20px;
+    float: left;
+    color: #FFFFFF;
+    font-family: YouYuan;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.liLuckyDog {
+    color: #fff;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame {
+    width: 478px;
+    height: 309px;
+    float: left;
+    margin: 75px 0 0 65px;
+    background: url(http://139.196.189.2:8080/Skin/White/Images/activity_luckylist_bg.png);
+    background-repeat: no-repeat;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyList {
+    width: 472px;
+    height: 242px;
+    margin: 0 0 0 5px;
+    float: left;
+    background-color: #F3190E;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyListTitle {
+    height: 70px;
+    width: 472px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyListTitle .lblLuckyList {
+    color: white;
+    font-family: 'Microsoft YaHei';
+    font-size: 24px;
+    line-height: 70px;
+    margin: 0 0 0 20px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyListTitle .lblCurrentLevel {
+    color: white;
+    font-family: 'Microsoft YaHei';
+    margin: 20px 0 0 90px;
+    font-size: 16px;
+    line-height: 32px;
+    font-weight: bold;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyList .dvLuckContent {
+    width: 446px;
+    height: 231px;
+    float: left;
+    background-color: #784231;
+    margin: 0 0 0 14px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyList .dvLuckContent ul {
+    list-style: none;
+    margin: 26px 0 0 93px;
+    padding: 0;
+    width: 330px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyList .dvLuckContent ul li {
+    height: 36px;
+    line-height: 36px;
+    color: #F8E5BA;
+    font-size: 18px;
+}
+
+.dvFrameBg .dvActivtiyContent .dvLottery .dvLockyListFrame .dvLuckyList .dvLuckContent ul li .lblName {
+    width: 170px;
+    float: left;
+}
+
+/*NewActivity页面Css*/
+body {
+    margin: 0;
+    padding: 0;
+    /*background: url("/Content/Img/Demo/LuckDraw_bj.jpg") no-repeat scroll center center transparent;*/
+    /*background: url(/Content/Img/Demo/523LuckDraw_bg.jpg) no-repeat center;*/
+    /*background: url(/Content/Img/Demo/LuckDraw_bj2.jpg) center center no-repeat;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: #df3538;
+}
+
+.dvNewFrameBg {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0 auto;
+    /*background: url("/Content/Img/Demo/LuckDraw_bj1.jpg") no-repeat scroll center center transparent;*/
+    /*background: url(/Content/Img/Demo/523LuckDraw_bg.jpg) no-repeat center;*/
+    /*background: url(/Content/Img/Demo/523LuckDraw_bg.jpg) fixed center center no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+}
+
+.dvNewFrameBg .dvActivityContent {
+    width: 1024px;
+    height: 768px;
+    margin: 0 auto;
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/smart-sjbg.png);
+}
+
+.dvNewFrameBg .dvMiddleBg {
+    /*background: url(/Content/Img/Demo/523LuckDraw_bg.png);*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center 16px;*/
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityLeft {
+    width: 260px;
+    height: 548px;
+    float: left;
+    margin-top: 205px;
+    margin-left: 30px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle {
+    width: 371px;
+    height: 575px;
+    float: left;
+    margin-left: 24px;
+    margin-top: 193px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight {
+    width: 254px;
+    height: 270px;
+    float: left;
+    margin-left: 55px;
+    margin-top: 219px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList {
+    width: 371px;
+    height: 575px;
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList .NewActivityListUlFrame {
+    width: 371px;
+    height: 320px;
+    background: url("http://139.196.189.2:8080/Content/Img/Demo/cj-center.png");
+    overflow: hidden;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList .NewActivityListUlFrame .ulNewActivityList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 284px;
+    height: 228px;
+    list-style: none;
+    overflow: hidden;
+    margin-left: 44px;
+    margin-top: 44px;
+    /*margin:121px auto;*/
+    /*overflow:hidden;*/
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList .ulNewActivityList .liLuckyDog {
+    color: #fff;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList .ulNewActivityList li {
+    height: 44px;
+    line-height: 44px;
+    font-size: 24px;
+    font-family: 'Microsoft YaHei';
+    text-align: left;
+    display: inline;
+    float: right;
+    width: 100%;
+    margin-top: 2px;
+    color: #543b3b;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList .ulNewActivityList li img {
+    height: 34px;
+    width: 35px;
+    float: left;
+    margin: 5px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvNewActivityList .ulNewActivityList li span {
+    width: 239px;
+    float: right;
+    height: 44px;
+    line-height: 44px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvStartButton {
+    width: 173px;
+    height: 172px;
+    background-repeat: no-repeat;
+    margin-left: 97px;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvBackrgoundStart {
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/sj-star.png);
+    background-repeat: no-repeat;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvBackrgoundStop {
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/sj-stop.png);
+    background-repeat: no-repeat;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityMiddle .dvBackrgoundOver {
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/sj-star.png);
+    background-repeat: no-repeat;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityLeft .dvLogo {
+    width: 319px;
+    height: 76px;
+    /*background: url(/Content/Img/Demo/523_title.png);*/
+    background-repeat: no-repeat;
+    margin: 0 0 0 418px;
+}
+
+.spLogoText {
+    width: 319px;
+    font-size: 90px;
+    color: #F7D1BB;
+    text-decoration: none;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(251, 249, 210, 1)), to(rgba(247, 209, 187, 0.3)));
+    font-family: 'Microsoft YaHei';
+    -webkit-text-stroke: 2px #1E1B1A;
+    text-align: center;
+    display: block;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityLeft .dvDisplayRewards {
+    width: 260px;
+    /*height: 243px;*/
+    overflow: hidden;
+    clear: left;
+    float: left;
+    margin-top: 10px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityLeft .dvDisplayRewards .lblCurrentAward {
+    width: 212px;
+    height: 38px;
+    color: #F6EAC2;
+    font: bold 18px 'Microsoft YaHei';
+    letter-spacing: 5px;
+    float: left;
+    text-align: center;
+    margin: 15px 0 0 0;
+}
+
+.dvDisplayRewards div {
+    color: #fff;
+    line-height: 60px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityLeft .spRewardsIntroduce {
+    width: 225px;
+    height: 30px;
+    line-height: 30px;
+    font-family: 'Microsoft YaHei';
+    font-weight: bold;
+    color: #E5E3B3;
+    float: left;
+    clear: left;
+    text-align: right;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame {
+    width: 254px;
+    height: 270px;
+    float: left;
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/sj-right.png);
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResultLeft {
+    width: 12px;
+    height: 300px;
+    /*background: url(/Content/Img/Demo/523_right1.png);*/
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult {
+    width: 254px;
+    height: 270px;
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultTop {
+    width: 272px;
+    height: 7px;
+    /*background: url(/Content/Img/Demo/523_right2.png);*/
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle {
+    width: 254px;
+    height: 270px;;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultBottom {
+    width: 272px;
+    height: 5px;
+    /*background: url(/Content/Img/Demo/523_right5.png);*/
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResultRight {
+    width: 12px;
+    height: 298px;
+    margin-top: 1px;
+    /*background: url(/Content/Img/Demo/523_right3.png);*/
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .dvResultTitle {
+    width: 254px;
+    height: 74px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .dvResultTitle .lblLuckyList {
+    color: #FAF3BC;
+    font-size: 34px;
+    font-family: 'Microsoft YaHei';
+    height: 100%;
+    width: 100%;
+    line-height: 74px;
+    text-align: center;
+    display: block;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .ulLuckList {
+    width: 254px;
+    height: 132px;
+    line-height: 40px;
+    margin-top: 10px;
+    margin-bottom: 26px;
+    padding: 0;
+    list-style: none;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .ulLuckList li {
+    width: 254px;
+    height: 100%;
+    color: #FFF5B5;
+    font-size: 30px;
+    font-family: 'Microsoft YaHei';
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .ulLuckList li img {
+    margin: 0 30% 0 30%;
+    float: left;
+}
+
+.lblName {
+    margin: 5px auto;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .ulLuckList li lblName {
+    float: left;
+    font-size: 100%;
+    line-height: 150%;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .lblCheckList {
+    cursor: pointer;
+    color: #FFFFFF;
+    font-size: 12px;
+    /*text-decoration: underline;*/
+}
+
+.dvAwardSelect {
+    width: 216px;
+    height: 60px;
+    float: right;
+    margin: 5px 18px 0 0;
+    cursor: pointer;
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/523_xwcj.png) repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+}
+
+.dvAwardSelectLeft {
+    width: 6px;
+    height: 8px;
+    float: left;
+    /*background: url(/Content/Img/Demo/530_prize_left.png);*/
+}
+
+.dvAwardSelectMiddleTitle {
+    width: 150px;
+    height: 60px;
+    float: left;
+    text-align: center;
+    line-height: 60px;
+    font-size: 26px;
+    color: #fff;
+}
+
+.dvAwardSelectMiddleTitle label {
+    height: 60px;
+    line-height: 60px;
+    margin: 0 10px 0 0;
+    font-family: 'Microsoft YaHei';
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff;
+    /*letter-spacing: 4px;*/
+}
+
+.dvAwardSelectMiddleArrow {
+    width: 28px;
+    height: 60px;
+    float: left;
+    /*background: url(/Content/Img/Demo/530_prize_middle.png);*/
+    cursor: pointer;
+}
+
+.dvAwardArrow {
+    width: 46px;
+    height: 46px;
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/523_xwd-cj.png);
+    background-repeat: no-repeat;
+    margin: 10px 0 0 10px;
+}
+
+.dvAwardSelectRight {
+    width: 6px;
+    height: 60px;
+    float: left;
+    /*background: url(/Content/Img/Demo/530_prize_right.png);*/
+}
+
+.dvNewFrameBg .dvActivityBottom {
+    width: 1007px;
+    height: 135px;
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvActivityList {
+    height: 45px;
+    height: 45px;
+    width: 120px;
+    margin: 0 auto;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvActivityList .lblBottomTitle {
+    width: 120px;
+    height: 45px;
+    line-height: 45px;
+    float: left;
+    height: 45px;
+    text-align: center;
+    color: #57564A;
+    font-family: 'Microsoft YaHei';
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList {
+    width: 1007px;
+    height: 90px;
+    float: left;
+    color: #57564A;
+    font-family: 'Microsoft YaHei';
+    font-size: 24px;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListSides {
+    width: 48px;
+    height: 64px;
+    float: left;
+    cursor: pointer;
+    margin: 14px 0 0 0;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListLeft {
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/530_users_left.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListRight {
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/530_users_right.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle {
+    width: 839px;
+    height: 80px;
+    float: left;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    margin: 20px 0 0 0;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle .dvUlFrame {
+    width: 1000000px;
+    height: 80px;
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul {
+    width: 839px;
+    height: 80px;
+    float: left;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li {
+    width: 839px;
+    height: 80px;
+    float: left;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl {
+    padding: 0;
+    margin: 0;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd, .dlCheckAll dd {
+    width: 48px;
+    height: 80px;
+    margin: 0 8px 0 8px;
+    float: left;
+    overflow: hidden;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd .activityImg, .dlCheckAll dd .activityImg {
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+}
+
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd .lblActivityListName {
+    font-size: 12px;
+    width: 48px;
+    height: 18px;
+    overflow: hidden;
+    float: left;
+    text-align: center;
+    line-height: 18px;
+}
+
+.dvAwardSelectContent {
+    float: right;
+    clear: right;
+    margin: 0 233px 0 0;
+    display: none;
+}
+
+.dvAwardSelectContent ul {
+    margin: 0 0 0 2px;
+    width: 210px;
+    /*background: url(/Content/Img/Demo/523_left1.png) repeat-y;*/
+    background-color: #bc2c2e;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    z-index: 1000;
+}
+
+.dvAwardSelectContent ul li {
+    color: #FFFFFF;
+    height: 38px;
+    line-height: 38px;
+    width: 210px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.lblAward {
+    margin: 0 38px 0 0;
+    cursor: pointer;
+    line-height: 38px;
+    font-size: 20px;
+    font-family: microsoft yahei;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+}
+
+.dvAwardSelectContent ul li:hover {
+    color: #fff;
+    background-color: #fab76f;
+}
+
+.dlCheckAll {
+    width: 640px;
+}
+
+.dlCheckAll dd .lblActivityListName {
+    font-size: 12px;
+    width: 48px;
+    height: 16px;
+    overflow: hidden;
+    float: left;
+    text-align: center;
+    margin: 5px 0 0 0;
+    color: #999999;
+    line-height: 18px;
+}
+
+.dvNewFrameBg .dvActivityContent .dvActivityBottom .lblCheckList {
+    cursor: pointer;
+    color: #FFFFFF;
+    font-size: 12px;
+    text-decoration: underline;
+    float: right;
+    margin: 25px 0 0 40px;
+}
+
+.ulEditContent .smartEditChkCss {
+    margin: 3px 0;
+}
+
+.aspNetDisabled {
+    width: 500px;
+}
+
+/*活动推广编辑页面Css*/
+.dvSpread {
+    width: 700px;
+    height: 400px;
+}
+
+.dvSpread .dvSpreadTab {
+    border-bottom: 1px solid #D8D8D8;
+    width: 680px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 65px;
+    clear: left;
+}
+
+.dvSpread .dvSpreadTab .lblSpreadTabTitle {
+    margin: 0 0 0 18px;
+    color: #B2B2B2;
+    font-family: 'Microsoft YaHei';
+}
+
+.dvSpread .ulSpreadType {
+    list-style: none;
+}
+
+.dvSpread .ulSpreadType li {
+    cursor: pointer;
+}
+
+.dvSpread .ulSpreadType li:hover {
+    background-color: #dfe5e8;
+    border: 1px solid #5CBF4A;
+}
+
+.dvSpread .ulSpreadType .liMicroBlog {
+    width: 190px;
+    height: 47px;
+    line-height: 47px;
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/logo_wbwx.png);
+    background-position: 10px 3px;
+    background-repeat: no-repeat;
+    float: left;
+    border: 1px solid #D8D8D8;
+    margin: 0 10px 0 0;
+}
+
+.dvSpread .ulSpreadType .liWeChart {
+    width: 190px;
+    height: 47px;
+    line-height: 47px;
+    background: url(http://139.196.189.2:8080/Content/Img/Demo/logo_wbwx.png);
+    background-position: 10px -37px;
+    background-repeat: no-repeat;
+    float: left;
+    border: 1px solid #D8D8D8;
+    margin: 0 10px 0 0;
+}
+
+.dvSpread .ulSpreadType .liMail {
+    display: none;
+}
+
+.dvSpread .ulSpreadType .lblSpreadTitle {
+    color: #777777;
+    margin: 0 0 0 80px;
+    float: left;
+}
+
+.dvSpread .dvActivitySet {
+    width: 500px;
+    height: auto;
+    margin: 15px 0 0 0;
+}
+
+.dvSpread .dvActivitySet .lblActivitySetTitle {
+    margin: 0 2px 8px 34px;
+    font-size: 14px;
+    color: #777777;
+    height: 21px;
+    line-height: 25px;
+    float: left;
+    text-align: right;
+}
+
+.dvSpread .dvActivitySet .txtareaCSS {
+    margin: 5px 0 0 0;
+}
+
+.dvSpread .dvActivitySet .lblActivitySet {
+    color: #777777;
+    font-size: 14px;
+    margin: 4px 0 0 0;
+}
+
+.dvSpread .dvActivitySet .lblActivityRadio {
+    margin: 2px 8px 0 0;
+    clear: right;
+}
+
+.dvSpread .dvActivitySet .dvWeChart {
+    float: left;
+    width: 650px;
+}
+
+.dvSpread .dvActivitySet .dvMicroBlog {
+    float: left;
+    width: 650px;
+}
+
+.dvSpread .dvActivitySet .dvOperaButtons {
+    margin: 30px 0 0 0;
+    height: 42px;
+}
+
+.dvSpread .ulSpreadType li .dvHook {
+    background: url(http://139.196.189.2:8080../../Images/Common/Icon/smart-rewards_hook.png);
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    float: right;
+    margin: 10px 15px 0 0;
+}
+
+.rewarddiv {
+    *margin-left: -380px;
+    width: 381px;
+    height: 20px;
+    background-color: black;
+    opacity: .6;
+    position: fixed;
+    margin-top: 50px;
+    filter: alpha(opacity=60);
+    display: none;
+}
+
+.rewarddiv img {
+    float: right;
+    margin-top: 3px;
+    margin-right: 10px;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+}
+
+.rewarddiv .lblrewardtitle {
+    float: left;
+    margin-top: 5px;
+    line-height: 18px;
+    color: white;
+}
+
+.BottomTitleSpan {
+    color: RGB(152, 151, 156);
+    font-size: 12px;
+    text-indent: 100px;
+    line-height: 40px;
+    float: left;
+}
+
+.ulEditContent li {
+    height: 40px;
+}
+
+.smartEditDropDownListCss {
+    border: 1px solid #999999;
+}
+
+.smartListDropDownListCss {
+    border: 1px solid #999999;
+}
+
+.divDetail {
+    width: 800px;
+}
+
+.divDetail .divTitle {
+    width: 100%;
+    height: 50px;
+    color: RGB(94, 95, 97);
+    font-size: 25px;
+    line-height: 50px;
+    font-family: 'Microsoft Yi Baiti';
+    font-weight: bold;
+    text-indent: 30px;
+}
+
+.divDetail .divContent {
+    width: 100%;
+    font-size: 12px;
+    color: rgb(128, 128, 128);
+    line-height: 24px;
+}
+
+.divDetail .divContent .divTop {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.divDetail .divContent .divMiddle {
+    width: 90%;
+    margin: 0 auto;
+    border-top: 1px dashed rgb(128, 128, 128);
+}
+
+.divDetail .divContent .divMiddle ul {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.divDetail .divContent .divMiddle ul li table td {
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+.divDetail .divContent .divMiddle .divul {
+    list-style-type: none;
+    width: 90%;
+    padding: 0;
+    margin: 0;
+}
+
+.divDetail .divContent .divMiddle .divul li {
+    float: left;
+}
+
+.divDetail .divContent .divMiddle .divul .divli {
+    padding-top: 40px;
+    padding-right: 40px;
+    clear: left;
+}
+
+.divDetail a {
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(128, 128, 128);
+}
