@@ -860,45 +860,33 @@
     //     221,222,223,224,225,226,227,228,229,230];
 
     var socket = null;
-            var url = "ws://www.jskplx.com/signup";
-            $(function() {
-               if ('WebSocket' in window)
-                    socket = new WebSocket(url);
-               else if ('MozWebSocket' in window)
-                    socket = new MozWebSocket(url);
-                //打开连接时触发
-                socket.onopen = function() {
-                    alert('OPEN: ' + socket.protocol);
-                };
-
-                socket.onmessage = function(evt) {
-               	//alert(evt.data);
-               	console.log(evt.data);
-               		//insertImg(evt.data);
-                var data=JSON.parse(evt.data);
-
-               	var imgSrc = data.avatar;
-    	    	var num = data.num;
-    	    	var name = data.name;
-
-    	    	console.log(imgSrc);
-    	    	console.log(num);
-    	    	console.log(name);
-    	        if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
-    	            document.getElementById(num).src=imgSrc;// $("#"+num)[0].src = imgSrc;
-    	            document.getElementById(num).title=name;
-    	        }
-                  //var data = JSON.parse(evt.data);
-                  // log('MESSAGE: ' + evt.data);
-
-                  // $('.img').css("display", "none");
-                  // $("#"+evt.data).show();
-
-              };
-            })
+    var url = "ws://www.jskplx.com/signup";
     // $(function() {
-    //     // getData();
+    //     if ('WebSocket' in window)
+    //         socket = new WebSocket(url);
+    //     else if ('MozWebSocket' in window)
+    //         socket = new MozWebSocket(url);
+    //     //打开连接时触发
+    //     socket.onopen = function() {
+    //         console.log('OPEN: ' + socket.protocol);
+    //     };
+    //     //收到消息时触发
+    //     socket.onmessage = function(evt) {
+	   //      var data=JSON.parse(evt.data);
+	   //     	var imgSrc = data.avatar;
+	   //  	var num = data.num;
+	   //  	var name = data.name;
+	   //      if(num != "" && num != undefined && num != null){
+	   //  		if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
+	   //  		    document.getElementById(num).src=imgSrc;// $("#"+num)[0].src = imgSrc;
+	   //  		    document.getElementById(num).title=name;
+	   //  		}
+	   //  	}
+    //   	};
     // })
+    $(function() {
+        getData();
+    })
     //ajax 请求头像数据
     function getData(){
         $.ajax({
@@ -923,15 +911,16 @@
     	    	var imgSrc = data[i].avatar;
     	    	var num = data[i].num;
     	    	var name = data[i].name;
-    	        if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
-    	            document.getElementById(num).src=imgSrc;// $("#"+num)[0].src = imgSrc;
-    	            document.getElementById(num).title=name;
-    	        }
+    	    	if(num != "" && num != undefined && num != null){
+    	    		if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
+    	    		    document.getElementById(num).src=imgSrc;// $("#"+num)[0].src = imgSrc;
+    	    		    document.getElementById(num).title=name;
+    	    		}
+    	    	}
+    	        
     	    }
     	}
     }	
-    
-    	
-    
+
 </script>
 </html>
