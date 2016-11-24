@@ -26,10 +26,18 @@
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-       var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-      var socket = new wsCtor("ws://localhost:9091/1", 'echo-protocol');
-
+      //var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+      //var socket = new wsCtor("ws://www.jskplx.com/signup", 'echo-protocol');
+      var socket=null;
       $(function() {
+
+        if ('WebSocket' in window)
+            socket = new WebSocket("ws://www.jskplx.com/signup");
+        else if ('MozWebSocket' in window)
+            socket = new MozWebSocket("ws://www.jskplx.com/signup");
+        else
+             alert("not support");
+
           //初始化加载listen方法
           listen();
 

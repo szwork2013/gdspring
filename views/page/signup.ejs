@@ -6,7 +6,7 @@
          <style type="text/css">
             body {
                 margin: 0;
-                background: url(../img/signup.jpg) no-repeat center center;
+                background: url(../img/signup.png) no-repeat center center;
                 position: fixed;
                 background-position:0% 0%;  
                 background-size:cover; 
@@ -23,11 +23,27 @@
     </head>
     <body>
         <div class="avatar">
-           <img src="<%=avatar%>" height="120" width="120"/>
+           <img src="<%=user.avatar%>" height="120" width="120"/>
+           <div><%=user.message%></div>
         </div>
     </body>
         <script src="../js/jquery.js"></script>
         <script type="text/javascript">
-            
+            var socket = null;
+            var url = "ws://"+ window.location.host +"/signup";
+            $(function() {
+               if ('WebSocket' in window)
+                    socket = new WebSocket(url);
+               else if ('MozWebSocket' in window)
+                    socket = new MozWebSocket(url);
+
+               socket.onopen = function() {
+                  socket.send({
+                     avatar:"<%=user.avatar%>",
+                     num:"<%=user.num%>",
+                     name:"<%=user.name%>"
+                  });
+               };
+            })
         </script>
 </html>

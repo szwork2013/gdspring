@@ -19,10 +19,10 @@ exports.getfetchallusers = function(req, res) {
 			   	table: 0
 			 });
 			 user.department = JSON.stringify(user.department);
-
 			 //保存数据
              redis.hmset(util.format(KEY.USER, user.userid), user, (err, data) => {
              	console.log(data);
+             	rcallback();
 			 });
 	    },(err) => {
 	       console.log(err);
@@ -34,11 +34,14 @@ exports.getfetchallusers = function(req, res) {
 exports.getuserlist = function(req, res) {
 	var data = {};
 	data.items = [];
-
+    var i=1;
 	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
 	    console.log(replies.length + " replies:");
 	    async.each(replies, (userid, rcallback) => {
          	redis.hgetall(userid, (err, result) => {
+         	   $.extend(result,{
+                   num: i++
+               });
          	   data.items.push(result);
          	   rcallback();
 		 	});

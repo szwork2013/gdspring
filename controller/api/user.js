@@ -13,7 +13,7 @@ var KEY = {
 
 exports.getreguserlist = function(req, res) {
 	var data = [];
-    var i = 1;
+  var i = 1;
 	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
 	    console.log(replies.length + " replies:");
 	    async.each(replies, (userid, rcallback) => {
@@ -26,7 +26,45 @@ exports.getreguserlist = function(req, res) {
 		 	});
 	    }, function (err){
 	    	console.log(data.items);
-	        res.send(data);
+	      res.send(data);
 	    });
    });
 };
+
+exports.getfetchallusers = function(req, res) {
+  api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
+     async.each(data.userlist,(user, rcallback) => {
+             //初始化桌号
+      $.extend(user, {
+        table: 0
+      });
+      user.department = JSON.stringify(user.department);
+       //保存数据
+      redis.hmset(util.format(KEY.USER, user.userid), user, (err, data) => {
+        console.log(data);
+        rcallback();
+      });
+    },(err) => {
+      console.log(err);
+      res.send("0");
+    });
+  });
+};
+
+exports.getresetuser = function(req, res) {
+  var key = util.format(KEY.USER, req.query.UserId);
+
+  redis.hgetall(key, (err, user)=>{
+    user.table=0;
+    user.issign=0;
+    redis.hmset(key, user, (err, data) => {
+      console.log(data);
+    });
+    res.send("0");
+  });
+};
+
+
+
+
+

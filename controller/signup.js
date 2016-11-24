@@ -20,31 +20,42 @@ exports.getreg = function(req, res) {
 	var state = req.query.state;
 
  	api.getUserIdByCode(code, (err, data) => {
- 		var result = {};
+ 		var user = {};
  		console.log(code);
- 		console.log(data);
-        
+        console.log(data);
+
         // 获取不到Code或者拿不到UserId
  		if(!code || !data.UserId) {
-		   $.extend(result,{
+		   $.extend(user,{
 		   	    message:"我猜你是大BOSS，不在五行中！请联系工作人员获取桌号，谢谢！"
 		   });
 
-		   res.render('page/signup',result);
+		   res.render('page/signup',{user: user});
  		}
 
 		if(data.UserId){
-		   redis.KEY(util.format(KEY.Reg, data.UserId), (err,data) => {
-		   	  console.log(err);
-		   	  console.log(data);
+		   var key = util.format(KEY.USER, data.UserId);
+		   redis.hgetall(key, (err, user)=>{
+		   	
+		   	  if(!user.issign||user.issign=="0"){
+		   	  	 $.extend(user,{
+			   	    message: "签到了就去吃饭，还愣着干嘛！"
+			     });
+		   	  	 return res.render('page/signup', {user: user});
+		   	  }
+              
+              //签到成功
+              $.extend(user,{
+              	  num: $.plug.sms.getRandomInt(1,230),
+			   	  issign: 1,
+			   	  message: message[$.plug.sms.getRandomInt(0,2)].format(user.name, user.table? user.table:0)
+			  });
 
-		   });
+              redis.hmset(key, user, (err, data) => {
+		         console.log(data);
+		      });
 
-		   redis.hgetall(util.format(KEY.USER, data.UserId), (err, data)=>{
-			   $.extend(result,{
-			   	    message: message[$.plug.sms.getRandomInt(0,2)].format(data.name, data.table?data.table:0)
-			   });
-		   	  res.render('page/signup',data);
+		   	  res.render('page/signup',{user: user});
 		   });
 		}
     });

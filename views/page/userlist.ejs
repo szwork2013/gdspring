@@ -15,15 +15,23 @@
 <body>  
     <table border="1" style="width:300px;margin:0 auto;margin-top:10px;">  
         <tr>  
-            <td>ID</td>  
-            <td>UserName</td>  
-            <td>Password</td>  
+            <td>序号</td>  
+            <td>姓名</td>  
+            <td>ID</td> 
+            <td>部门</td>
+            <td>桌号</td>
+            <td>桌号</td>
+            <td>签到情况</td>
         </tr>  
         <%for(var i = 0;i<items.length;i++){%>  
             <tr>  
-                <td><%=items[i].id%></td>  
-                <td><%=items[i].userName%></td>  
-                <td><%=items[i].password%></td>  
+                <td><%=items[i].num%></td>  
+                <td><%=items[i].name%></td>  
+                <td><%=items[i].userid%></td>
+                <td><%=items[i].department%></td>
+                <td><%=items[i].table%></td>
+                <td><img src="<%=items[i].avatar%>" style="width:120px;height:120px"/></td>
+                <td><%=items[i].issign%></td>    
             </tr>  
         <%}%>  
     </table>  
