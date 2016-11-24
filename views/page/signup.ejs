@@ -38,11 +38,13 @@
                     socket = new MozWebSocket(url);
 
                socket.onopen = function() {
-                  socket.send({
+                  var d={
                      avatar:"<%=user.avatar%>",
                      num:"<%=user.num%>",
                      name:"<%=user.name%>"
-                  });
+                  };
+                  
+                  socket.send(JSON.stringify(d));
                };
             })
         </script>

@@ -872,9 +872,22 @@
                 };
 
                 socket.onmessage = function(evt) {
-               	alert(evt);
-               		// insertImg(evt);
+               	//alert(evt.data);
+               	console.log(evt.data);
+               		//insertImg(evt.data);
+                var data=JSON.parse(evt.data);
 
+               	var imgSrc = data.avatar;
+    	    	var num = data.num;
+    	    	var name = data.name;
+
+    	    	console.log(imgSrc);
+    	    	console.log(num);
+    	    	console.log(name);
+    	        if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
+    	            document.getElementById(num).src=imgSrc;// $("#"+num)[0].src = imgSrc;
+    	            document.getElementById(num).title=name;
+    	        }
                   //var data = JSON.parse(evt.data);
                   // log('MESSAGE: ' + evt.data);
 
