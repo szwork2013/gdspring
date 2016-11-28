@@ -32,9 +32,9 @@
       $(function() {
 
         if ('WebSocket' in window)
-            socket = new WebSocket("ws://www.jskplx.com/signup");
+            socket = new WebSocket("ws://www.jskplx.com/wxmsg");
         else if ('MozWebSocket' in window)
-            socket = new MozWebSocket("ws://www.jskplx.com/signup");
+            socket = new MozWebSocket("ws://www.jskplx.com/wxmsg");
         else
              alert("not support");
 

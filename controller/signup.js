@@ -49,7 +49,7 @@ exports.getreg = function(req, res) {
               $.extend(user,{
               	  num: $.plug.sms.getRandomInt(1,230),
 			   	  issign: 1,
-			   	  message: message[$.plug.sms.getRandomInt(0,2)].format(user.name, user.table? user.table:0)
+			   	  message: message[$.plug.sms.getRandomInt(0,3)].format(user.name, user.table? user.table:0)
 			  });
 
               redis.hmset(key, user, (err, data) => {
