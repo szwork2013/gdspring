@@ -1,0 +1,124 @@
+.smallDiv{
+    width: 17.5px;
+    height:17.5px;
+    /*border:1px solid;*/
+    float:left;
+    z-index: 2;
+}
+.newLineDiv{
+    width: 17.5px;
+    height:17.5px;
+    /*border:1px solid;*/
+}
+
+.firstDiv{
+	margin:auto;
+	width: 700px !important;
+	height: 350px !important;
+	display: block;
+	width: 100%;
+	text-align: center;
+
+}
+.secondeDiv{
+	/*height: 1000px;*/
+	width: 100%;
+	
+	
+	
+	z-index: 1;
+}
+.bodyClass{
+	height: 100%;width: 100%;
+	background: url(../../img/headBackImg.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.backcolor{
+    background: #999999;
+}
+
+/*css 动画  效果*/
+/*翻转效果  动画的 帧 */
+@-webkit-keyframes revolving{
+    0%  {-webkit-transform: perspective(500px) rotateX(0deg);}
+    50% {-webkit-transform: perspective(500px) rotateX(180deg);}
+    100%{-webkit-transform: perspective(500px) rotateX(360deg);}
+}
+
+/* 滚动效果 动画 */
+
+/*@keyframes animated_div
+{
+	0%	{transform: rotate(0deg);left:0px;}
+	25%	{transform: rotate(-20deg);left:0px;}
+	50%	{transform: rotate(0deg);left:100px;}
+	55%	{transform: rotate(0deg);left:100px;}
+	70%	{transform: rotate(0deg);left:100px;}
+	100%{transform: rotate(0deg);left:0px;}
+	0%   {transform:perspective(0px) ;}
+	25%  {transform:perspective(40px);}
+	50%  {transform:perspective(80px);}
+	55%  {transform:perspective(120px);}
+	70%  {transform:perspective(160px);}
+	100% {transform:perspective(200px);}
+}*/
+
+@-webkit-keyframes animated_div
+{
+	/*0%	{-webkit-transform: rotate(0deg);left:0px;}
+	25%	{-webkit-transform: rotate(20deg);left:0px;}
+	50%	{-webkit-transform: rotate(0deg);left:100px;}
+	55%	{-webkit-transform: rotate(0deg);left:100px;}
+	70%	{-webkit-transform: rotate(0deg);left:100px;}
+	100%{-webkit-transform: rotate(0deg);left:0px;}*/
+	0%   {-webkit-transform:perspective(0px) scale(1,1);}
+	20%  {-webkit-transform:perspective(10px) scale(1.2,1.2);}
+	40%  {-webkit-transform:perspective(20px) scale(1.4,1.4);}
+	60%  {-webkit-transform:perspective(30px) scale(1.8,1.8);}
+	80%  {-webkit-transform:perspective(20px) scale(1.4,1.4);}
+	100% {-webkit-transform:perspective(0px) scale(1,1);}
+}
+
+/*@-moz-keyframes animated_div
+{
+	0%   {-moz-transform: rotate(0deg);left:0px;}
+	25%  {-moz-transform: rotate(20deg);left:0px;}
+	50%  {-moz-transform: rotate(0deg);left:100px;}
+	55%  {-moz-transform: rotate(0deg);left:100px;}
+	70%  {-moz-transform: rotate(0deg);left:100px;}
+	100% {-moz-transform: rotate(deg);left:0px;}
+	0%   {-moz-transform:perspective(0px);}
+	25%  {-moz-transform:perspective(40px);}
+	50%  {-moz-transform:perspective(80px);}
+	55%  {-moz-transform:perspective(120px);}
+	70%  {-moz-transform:perspective(160px);}
+	100% {-moz-transform:perspective(200px);}
+}
+
+@-o-keyframes animated_div
+{
+	0%   {-o-transform: rotate(0deg);left:0px;}
+	25%  {-o-transform: rotate(20deg);left:0px;}
+	50%  {-o-transform: rotate(0deg);left:100px;}
+	55%  {-o-transform: rotate(0deg);left:100px;}
+	70%  {-o-transform: rotate(0deg);left:100px;}
+	100% {-o-transform: rotate(0deg);left:0px;}
+
+	0%   {-o-transform:perspective(0px);}
+	25%  {-o-transform:perspective(40px);}
+	50%  {-o-transform:perspective(80px);}
+	55%  {-o-transform:perspective(120px);}
+	70%  {-o-transform:perspective(160px);}
+	100% {-o-transform:perspective(200px);}
+	
+}*/
+/* 放大和缩小图片 */
+@-webkit-keyframes bigPicture
+{
+	0%   {transform: scale(5,5);}
+	25%  {transform: scale(4,4);}
+	50%  {transform: scale(3,3);}
+	75%  {transform: scale(2,2);}
+	100% {transform: scale(1,1);z-index: 2;}
+}
