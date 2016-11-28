@@ -21,7 +21,7 @@ exports.getfetchallusers = function(req, res) {
 			 user.department = JSON.stringify(user.department);
 			 //保存数据
              redis.hmset(util.format(KEY.USER, user.userid), user, (err, data) => {
-             	console.log(data);
+             	//console.log(data);
              	rcallback();
 			 });
 	    },(err) => {
@@ -46,7 +46,7 @@ exports.getuserlist = function(req, res) {
          	   rcallback();
 		 	});
 	    }, function (err){
-	    	console.log(data.items);
+	    	//console.log(data.items);
 	        res.render('page/userlist', data);
 	    });
    });

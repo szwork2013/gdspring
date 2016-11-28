@@ -36,14 +36,15 @@ exports.getreg = function(req, res) {
 		if(data.UserId){
 		   var key = util.format(KEY.USER, data.UserId);
 		   redis.hgetall(key, (err, user)=>{
-		   	
-		   	  if(!user.issign||user.issign=="0"){
-		   	  	 $.extend(user,{
-			   	    message: "签到了就去吃饭，还愣着干嘛！"
+		   	  console.log(user.issign);
+		   	  
+		   	  if(!user.issign || user.issign === "1"){
+		   	  	 $.extend(user, {
+			   	    message: "签到了就去吃饭，还愣着干嘛！桌号是{0}".format(user.table? user.table:0)
 			     });
 		   	  	 return res.render('page/signup', {user: user});
 		   	  }
-              
+
               //签到成功
               $.extend(user,{
               	  num: $.plug.sms.getRandomInt(1,230),

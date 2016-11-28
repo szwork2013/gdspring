@@ -34,7 +34,7 @@ exports.getreguserlist = function(req, res) {
 exports.getfetchallusers = function(req, res) {
   api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
      async.each(data.userlist,(user, rcallback) => {
-             //初始化桌号
+      //初始化桌号
       $.extend(user, {
         table: 0
       });
@@ -55,8 +55,11 @@ exports.getresetuser = function(req, res) {
   var key = util.format(KEY.USER, req.query.UserId);
 
   redis.hgetall(key, (err, user)=>{
-    user.table=0;
-    user.issign=0;
+    $.extend(user, {
+         table: 0,
+         issign: 0
+      });
+   
     redis.hmset(key, user, (err, data) => {
       console.log(data);
     });
