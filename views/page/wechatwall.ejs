@@ -64,7 +64,7 @@
             messageLength = messageLength > 300 ? messageLength:300;
             appendText(position,message,messageLength,data);
         }else if(image != undefined && image != null && image != ''){
-            appendImage(position,image);
+            appendImage(position,image,data);
         }
     }
     // 接受到纯文字
@@ -79,7 +79,7 @@
         );
     }
     // 接受到图片
-    function appendImage(position,image){
+    function appendImage(position,image,data){
         $("#rootwall").append(
             "<marquee direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div class='' style='background:url(../../img/111.jpg) no-repeat;background-size:cover;width:"+(messageLength)+"px;'>" +
