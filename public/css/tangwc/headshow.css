@@ -1,20 +1,20 @@
 .smallDiv{
-    width: 17.5px;
-    height:17.5px;
+    width: 35px;
+    height:35px;
     /*border:1px solid;*/
     float:left;
     z-index: 2;
 }
 .newLineDiv{
-    width: 17.5px;
-    height:17.5px;
+    width: 35px;
+    height:35px;
     /*border:1px solid;*/
 }
 
 .firstDiv{
 	margin:auto;
-	width: 700px !important;
-	height: 350px !important;
+	width: 1400px !important;
+	height: 700px !important;
 	display: block;
 	width: 100%;
 	text-align: center;
@@ -30,7 +30,7 @@
 }
 .bodyClass{
 	height: 100%;width: 100%;
-	background: url(../../img/headBackImg.jpg);
+	background: url(../../img/headBackImg.jpg) ;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
