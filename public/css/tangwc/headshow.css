@@ -30,7 +30,7 @@
 }
 .bodyClass{
 	height: 100%;width: 100%;
-	background: url(../../img/headBackImg.jpg) ;
+	background: url(../../img/headBackImage.jpg) ;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
