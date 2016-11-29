@@ -13,7 +13,7 @@
             }
             .avatar {
                  display:block;
-                 top:50%;
+                 top:59%;
                  left:45%;
                  position:fixed;
                  border:1px solid #fff;
@@ -21,7 +21,7 @@
              }
              .message {
                  display:block;
-                 top:59%;   
+                 top:67%;
                  left:20%;
                  position:fixed;
                  font-family:"楷体"; 
@@ -32,42 +32,31 @@
              }
         </style>
     </head>
-    <body id="bodyId">
-            <div class="avatar">
-               <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/>
-            </div>
-            <div class="message"><%=user.message%></div>
-
+    <body>
+        <div class="avatar">
+           <img src="<%=user.avatar%>" height="120" width="120"/>
+        </div>
+        <div class="message"><%=user.message%></div>
     </body>
-    <script src="../js/jquery.js"></script>
-    <script type="text/javascript">
-        var socket = null;
-        var url = "ws://"+ window.location.host +"/signup";
-        $(function() {
-           if ('WebSocket' in window)
-                socket = new WebSocket(url);
-           else if ('MozWebSocket' in window)
-                socket = new MozWebSocket(url);
+        <script src="../js/jquery.js"></script>
+        <script type="text/javascript">
+            var socket = null;
+            var url = "ws://"+ window.location.host +"/signup";
+            $(function() {
+               if ('WebSocket' in window)
+                    socket = new WebSocket(url);
+               else if ('MozWebSocket' in window)
+                    socket = new MozWebSocket(url);
 
-           socket.onopen = function() {
-              var d={
-                 avatar:"<%=user.avatar%>",
-                 num:"<%=user.num%>",
-                 name:"<%=user.name%>"
-              };
-              
-              socket.send(JSON.stringify(d));
-           };
-           getWidthAndHeigth();
-        })
-
-        function getWidthAndHeigth(){
-            var width = $(window).height();
-            var heigth = $(window).width();
-            $("#bodyId").css({
-                "heigth":heigth,
-                "width":width
+               socket.onopen = function() {
+                  var d={
+                     avatar:"<%=user.avatar%>",
+                     num:"<%=user.num%>",
+                     name:"<%=user.name%>"
+                  };
+                  
+                  socket.send(JSON.stringify(d));
+               };
             })
-        }
-    </script>
+        </script>
 </html>

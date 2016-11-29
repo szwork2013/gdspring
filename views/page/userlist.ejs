@@ -5,51 +5,31 @@
     <title>用户列表</title>  
     <link rel="stylesheet" href="../css/bootstrap.css">  
 
-    <script src="../js/li/jquery.min.js"></script>  
+    <script src="../js/jquery.min.js"></script>  
     <script src="../js/bootstrap.js"></script>
 </head>  
 <body>
-<div class="container" style="margin-top: 80px;">
+<div class="container">
     <div class="row">
       <div class="span6">
-          <div class="span2" style="float: left;">
-              <label class="checkbox">姓名</label>
-              <input type="text" class="input-small" placeholder="姓名" id="userName">
+          <div class="span2">
+              <label class="checkbox">姓名</label><input type="text" class="input-small" placeholder="姓名">
           </div>
-          <div class="span2" style="margin-left: 50px; float: left;">  
-              <label class="checkbox" style="width: 150px;">部门</label>
-              <select id="selectDepartment" style="width: 150px;height: 25px;">
+          <div class="span2">
+              <label class="checkbox">姓名</label>
+              <select>
                   <option>7</option>
                   <option>8</option>
                   <option>9</option>
                   <option>10</option>
                   <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
-                  <option>15</option>
-                  <option>16</option>
-                  <option>17</option>
-                  <option>18</option>
-                  <option>35</option>
-                  <option>36</option>
-                  <option>37</option>
               </select>
           </div>
-          <div class="span2" style="margin-left: 50px; float: left;padding-top: 10px;" >
-            <label class="" style="width: 150px;">签到情况</label>
-            <div>
-              已签到:&nbsp;<input type="radio" name="issign" value="1" title="已签到" style="width: 20px;height: 20px;">&nbsp;&nbsp;&nbsp;
-              未签到:&nbsp;<input type="radio" name="issign" value="0" title="未签到" style="width: 20px;height: 20px;">
-            </div>
-          </div>
-          <div class="span2" style="margin-left: 700px;" >
-            <div style="height:30px;">
-            </div>
-            <button type="submit" class="btn" onclick="searchFun();">查询</button>
+          <div class="span2">
+               <button type="submit" class="btn">查询</button>
           </div>
       </div>
-      <div class="span6" style="margin-top: 30px;">
+      <div class="span6">
           <table class="table table-bordered table-striped table-hover">  
             <tr>  
                 <td>序号</td>  
@@ -71,8 +51,8 @@
                     <td><img src="<%=items[i].avatar%>" style="width:40px;height:40px"/></td>
                     <td><%=items[i].issign%></td>
                     <td>
-                        <button value="<%=items[i].userid%>" style="margin-left: 200px;" onclick="resetSignup( '<%=items[i].userid%>');">签到重置</button>
-                        <button value="<%=items[i].userid%>" style="margin-left: 200px;" onclick="resetInfo('<%=items[i].userid%>');">修改信息</button>
+                        <button style="margin-left: 200px;">签到重置</button>
+                        <button style="margin-left: 200px;">修改信息</button>
                     </td> 
                 </tr>
                 <%}%>  
@@ -80,60 +60,5 @@
         </div>
     </div>
        </div>
-</body> 
-<script type="text/javascript">
-  function searchFun(){
-     var name = $("#userName").val();
-     var department = $("#selectDepartment option:selected").val();
-     var issign = $("input[type=radio] option:selected").val();
-     if(name == '' || name == null || name == undefined){
-        name='';
-     }
-     if(department == '' || department == null || department == undefined){
-        department='';
-     }
-     if(issign == '' || issign == null || issign == undefined){
-        issign='';
-     }
-    var data = {
-      "name":name,
-      "department":department,
-      "issign":issign
-     }
-
-     $.ajax({
-        url:'',//http://localhost:9999/api/user/reguserlist
-        type:'get',
-        async:false,
-        data:data,
-        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-        success:function(data){
-          // this.set("items",data)
-        },
-        error:function(){
-          console.log("没有从数据库中搜索到数据!");
-        }
-    })
-  }
-  function resetSignup(uid){ 
-     $.ajax({
-        url:'http://localhost:9999/api/user/resetuser?UserId='+uid,
-        type:'get',
-        async:false,
-        data:{issign:0},
-        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-        success:function(data){
-           
-        },
-        error:function(){
-          console.log("没有从数据库中搜索到数据!");
-        }
-    })
-      console.log(uid);
-  }
-  function resetInfo(uid){
-
-      console.log(uid);
-  }
-</script> 
+</body>  
 </html>  
