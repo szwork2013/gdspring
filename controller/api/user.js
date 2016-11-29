@@ -33,11 +33,11 @@ exports.getreguserlist = function(req, res) {
 
 exports.getfetchallusers = function(req, res) {
   api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
-     async.each(data.userlist,(user, rcallback) => {
+    async.each(data.userlist,(user, rcallback) => {
       //初始化桌号
-      $.extend(user, {
-        table: 0
-      });
+      // $.extend(user, {
+      //   table: 0
+      // });
       user.department = JSON.stringify(user.department);
        //保存数据
       redis.hmset(util.format(KEY.USER, user.userid), user, (err, data) => {

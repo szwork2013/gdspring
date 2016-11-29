@@ -110,7 +110,7 @@
         <script type="text/javascript">
             var host= window.location.host;
             var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-            var socket = new wsCtor("ws://"+host+"/1", 'echo-protocol');
+            var socket = new wsCtor("ws://"+host+"/tugofwar", 'echo-protocol');
 
             $(function() {
                 listen();

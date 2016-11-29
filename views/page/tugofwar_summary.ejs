@@ -4,43 +4,77 @@
        <meta charset="utf-8">
        <title> 拔河比赛 </title>
     </head>
-    
-    <body>
-        <ul></ul>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <body style=""><!-- background: url(../../img/headBackImage.jpg) no-repeat;background-size: cover; -->
+      <div style="display: block;">
+        <button style="margin-left: 80px;margin-top: 50px;position: relative;" class="btn btn-lg btn-info" onclick="addLarge();">增加</button>
+        <button style="margin-left: 160px;margin-top: 50px;position: relative;" class="btn btn-lg btn-info" onclick="add();">增加user</button>
+        <ul style="margin-top: 280px;position: fixed;">
+          <div class="progress progress-striped" style="width:300px;height:50px;transform: rotate(-90deg);">
+              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+               style="width: 0%;"></div>
+          </div>
+        </ul>
+      </div>  
     </body>
 
      <script src="../js/jquery.js"></script>
+     <script type="text/javascript" src="../js/bootstrap.js"></script>
         <script type="text/javascript">
-            var logger = document.getElementsByTagName('ul')[0], index  = 0;
-            var host= window.location.host;
-            var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-            var url= "ws://"+host+"/1";
-            var socket = new wsCtor(url, 'echo-protocol');
-            var log = function(text) {
-                logger.innerHTML += '<li>' + text + '</li>';
+          var logger = document.getElementsByTagName('ul')[0], index  = 0;
+          var host= window.location.host;
+          var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+          var url= "ws://"+host+"/tugofwar";
+          var socket = new wsCtor(url);//, 'echo-protocol'
+          var log = function(text) {
+              logger.innerHTML += '<li>' + text + '</li>';
+          };
+
+          $(function() {
+              listen();
+          })
+
+          function listen() {
+            //打开连接时触发
+            socket.onopen = function() {
+                log('OPEN: ' + socket.protocol);
             };
-
-            $(function() {
-                listen();
-            })
-
-            function listen() {
-              //打开连接时触发
-              socket.onopen = function() {
-                  log('OPEN: ' + socket.protocol);
-              };
-              //收到消息时触发
-              socket.onmessage = function(evt) {
-                  log('MESSAGE: ' + evt.data);
-              };
-              //关闭连接时触发
-              socket.onclose = function(evt) {
-                  log('CLOSE: ' + evt);
-              };
-              //连接错误时触发
-              socket.onerror = function(evt) {
-                  log('CLOSE: ' + evt.code + ', ' + evt.reason);
-              };
+            //收到消息时触发
+            socket.onmessage = function(evt) {
+                log('MESSAGE: ' + evt.data);
+                addLarge();
+            };
+            //关闭连接时触发
+            socket.onclose = function(evt) {
+                log('CLOSE: ' + evt);
+            };
+            //连接错误时触发
+            socket.onerror = function(evt) {
+                log('CLOSE: ' + evt.code + ', ' + evt.reason);
+          };
         };
+        var userNum=0;
+        var tem = 0;
+        var template = 0;
+        function addLarge(){
+          // tem +=1;
+          // if(tem/10==1){
+          //   tem = 0;
+            template += 1;
+          // }
+          
+ 
+          $("ul").html(
+            ' <div class="progress progress-striped" style="width:300px;height:50px;transform: rotate(-90deg);">'+
+             '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" '+
+             'style="width: '+template+'%;"></div>'+
+           ' </div>'
+          );
+        }
+        function add(){
+          alert("功能暂时未做")
+          // userNum +=1
+          // $("body").append('<ul id="'+userNum+'"></ul><button class="btn btn-lg btn-info" onclick="addLarge();">增加</button>')
+        }
         </script>
 </html>
