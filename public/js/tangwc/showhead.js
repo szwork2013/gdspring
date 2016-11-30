@@ -3,8 +3,8 @@
     var flag=1;
 
     $(function() {
-        getData();
-        // getwebsocket();
+        // getData();
+        getwebsocket();
     })
 	// 连接websocket  服务
 	function getwebsocket(){
@@ -94,7 +94,7 @@
     }
 
     // 间隔一段时间,执行该程序
-    // window.setInterval("AnimationFun()",6000);
+    window.setInterval("AnimationFun()",6000);
 
     function AnimationFun(){
     	if(flag % 2==1){
