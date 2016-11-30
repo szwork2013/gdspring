@@ -5,5 +5,5 @@ exports.getchat = function(req, res) {
 	var code = req.query.code;
 	var state = req.query.state;
 
-	res.render('page/wechatwall');
+	res.render('page/chatwall');
 };

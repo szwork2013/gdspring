@@ -5,6 +5,6 @@ exports.gethead = function(req, res) {
 	var code = req.query.code;
 	var state = req.query.state;
 
-	res.render('page/headscrean');
+	res.render('page/showhead');
 	// res.render('page/bubble');
 };
