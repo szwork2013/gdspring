@@ -62,68 +62,109 @@
                 <td>操作</td>
             </tr>  
             <%for(var i = 0;i<items.length;i++){%>  
-                <tr>  
+                <tr id='<%=items[i].num%>'>  
                     <td><%=items[i].num%></td>  
                     <td><%=items[i].name%></td>  
                     <td><%=items[i].userid%></td>
                     <td><%=items[i].department%></td>
-                    <td><%=items[i].table%></td>
+                    <td class="tablenumber"><%=items[i].table%></td>
                     <td><img src="<%=items[i].avatar%>" style="width:40px;height:40px"/></td>
-                    <td><%=items[i].issign%></td>
+                    <td id="<%=items[i].userid%>"><%=items[i].issign%></td>
                     <td>
                         <button value="<%=items[i].userid%>" style="margin-left: 200px;" onclick="resetSignup( '<%=items[i].userid%>');">签到重置</button>
-                        <button value="<%=items[i].userid%>" style="margin-left: 200px;" onclick="resetInfo('<%=items[i].userid%>');">修改信息</button>
+                        <button value="<%=items[i].userid%>" style="margin-left: 200px;" 
+                        onclick="popUpWindow('<%=items[i].userid%>','<%=items[i].department%>','<%=items[i].num%>');">修改信息</button>
                     </td> 
                 </tr>
-                <%}%>  
-            </table>  
+            <%}%>  
+          </table> 
+      </div>
+    </div>
+</div>
+<div id="setTable" class="modal fade" style="display: none; width: 100% ;height: 100%;">
+    <div class="box box-default extensionDiv" style="margin-left: 42%;margin-top: 100px;width: 300px;height: 200px;background-color: #fff;text-align: center;">
+        <div class="box-body">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+            </div>
+            <div class="modal-body">
+              <div>
+                <span>请选择部门:</span>
+                <select id="setInfoDepartment" style="width: 150px;height: 25px;">
+                    <option value="">修改整个部门</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                </select>
+              </div>
+              <div style="margin-top: 20px;">
+                修改桌号:&nbsp;&nbsp;<input id="tableNumber" type="text" name="" value="" placeholder="请输入桌号">
+                
+              </div>
+            </div>
+            <div class="modal-footer" style="height: 50px;">
+                <a href="#" class="btn" onclick="changeInfo();">确定</a>
+                <a href="#" class="btn" data-dismiss="modal">关闭</a>
+            </div>
         </div>
     </div>
-       </div>
+</div>
 </body> 
+<script type="text/javascript" src></script>
 <script type="text/javascript">
+var user_id;
+var user_department;
+var user_num;
   function searchFun(){
-     var name = $("#userName").val();
-     var department = $("#selectDepartment option:selected").val();
-     var issign = $("input[type=radio] option:selected").val();
-     if(name == '' || name == null || name == undefined){
-        name='';
-     }
-     if(department == '' || department == null || department == undefined){
-        department='';
-     }
-     if(issign == '' || issign == null || issign == undefined){
-        issign='';
-     }
-    var data = {
-      "name":name,
-      "department":department,
-      "issign":issign
-     }
-
-     $.ajax({
-        url:'',//http://localhost:9999/api/user/reguserlist
-        type:'get',
-        async:false,
-        data:data,
-        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-        success:function(data){
-          // this.set("items",data)
-        },
-        error:function(){
-          console.log("没有从数据库中搜索到数据!");
-        }
-    })
+      var name = $("#userName").val();
+      var department = $("#selectDepartment option:selected").val();
+      var issign = $("input[type=radio] option:selected").val();
+      if(name == '' || name == null || name == undefined){
+          name='';
+      }
+      if(department == '' || department == null || department == undefined){
+          department='';
+      }
+      if(issign == '' || issign == null || issign == undefined){
+          issign='';
+      }
+      if(name =='' && department == '' && issign == '')
+        return;
+      var data = {"name":name,"department":department, "issign":issign}
+       $.ajax({
+          url:'http://localhost:9999/api/user/selectUsers',
+          type:'post',
+          async:false,
+          data:data,
+          dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          success:function(data){
+            // this.set("items",data)
+          },
+          error:function(){
+            console.log("没有从数据库中搜索到数据!");
+          }
+      })
   }
   function resetSignup(uid){ 
      $.ajax({
-        url:'http://localhost:9999/api/user/resetuser?UserId='+uid,
+        url:'http://localhost:9999/api/user/resetuser?UserId='+uid+"&issign=0&table=0",
         type:'get',
         async:false,
-        data:{issign:0},
         dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
         success:function(data){
-           
+           $("#"+uid).html(data);
         },
         error:function(){
           console.log("没有从数据库中搜索到数据!");
@@ -131,9 +172,44 @@
     })
       console.log(uid);
   }
-  function resetInfo(uid){
+  function popUpWindow(uid,department,num){
+    user_id = '';
+    user_department = '';
+    user_num = '';
+    $("#setTable").modal("show");
+    user_id = uid;
+    user_department = department;
+    user_num = num;
 
-      console.log(uid);
   }
+  function changeInfo(){
+    var department = $("#setInfoDepartment option:selected").val();
+    var table = $("#tableNumber").val();
+    $("#tableNumber").val('');
+    if(isNaN(table)){
+        alert("请输入正确的桌号");
+        return ;
+    }
+    if(department == '' || department == null || department == undefined){
+        department = ''
+    }
+    $.ajax({
+        url:'http://localhost:9999/api/user/resetuserinfo',
+        type:'post',
+        async:false,
+        data:{"UserId":user_id,"table":table,"department":department},
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success:function(data){
+          alert("修改成功!");
+          $("#setTable").modal("hide");
+          location.reload(true);
+        },
+        error:function(){
+          alert("修改桌号失败, 请重新修改!");
+        }
+    })
+    
+  }
+  
 </script> 
 </html>  

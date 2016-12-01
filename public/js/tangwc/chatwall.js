@@ -1,4 +1,9 @@
-var socket = '';
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl="";
+
+// 次监听socket
+    var socket = '';
     var url = "ws://www.jskplx.com/wxmsg";
     var flag=1;
     var temp = 0;
