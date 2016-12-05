@@ -1,6 +1,6 @@
     // 主监听socket   用来控制 次监听socket
     var mainSocket='';
-    var mainUrl="";
+    var mainUrl="ws://www.jskplx.com/mainsocket";
 
 // 次监听socket
     var socket = '';
@@ -10,9 +10,41 @@
      // var chars = ['0','1','2','3','4','5','6','7','8','9','啊','哦','额','一','五','与','波','破','莫','分','的','特','了','内','个','可','和','一','五','与','字','次','是','值','吃','是'];
    
     $(function() {
+        mainWebSocket();
         getwebsocket();
 
     })
+
+// 连接mainWebSocket  服务
+    function mainWebSocket(){
+        if ('WebSocket' in window)
+            mainSocket = new WebSocket(url);
+        else if ('MozWebSocket' in window)
+            mainSocket = new MozWebSocket(url);
+        //打开连接时触发
+        mainSocket.onopen = function() {
+            console.log('OPEN: ' + mainSocket.protocol);
+        };
+        //收到消息时触发
+        mainSocket.onmessage = function(message) {
+            console.log("mainsocket收到消息了"+message);
+            var string = message.split(":");
+            var objMsg = string[0];
+            var controlMsg = string[0];
+            if(objMsg == "chat"){
+                if(controlMsg == "open"){
+                    getwebsocket
+                }else if(controlMsg == "close"){
+                    if(socket != '' && socket != undefined && socket != null){
+                        socket.close();
+                    }
+                }
+                console.log("mainsocket处理完消息了"+message);
+            }
+        };  
+    }
+
+
     // 连接websocket  服务
     function getwebsocket(){
         if ('WebSocket' in window)
@@ -31,7 +63,6 @@
             if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
                insertMessage(data);
             }
-
         };
     }
     // window.setInterval("insertMessage()",3000);

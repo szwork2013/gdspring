@@ -111,14 +111,186 @@ exports.postresetuserinfo = function(req, res) {
         );
     }
 };
-// 按照条件修改信息
+// 按照条件查找users
 exports.postselectUsers = function(req, res) {
-  var name = req.body.name;
-  var department = req.body.department;
-  var issign = req.body.issign;
+  var _table = req.body.table;
+  var _department = req.body.department;
+  var _issign = req.body.issign;
+
+  var _data = {};
+  _data.items = [];
+  var i=1;
+// 获取到所有user 的数据
+  var tempData = {};
+  redis.keys(util.format(KEY.USER, "*"), function (err, result) {
+     tempData = result;
+  if(_table == '' && _department == '' && _issign ==''){
+     async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+            var issign_ = user.issign 
+            if(issign_ == '' || issign_ == undefined || issign_ == null){
+                issign_ = 0;
+            }
+            $.extend(user,{
+                num: i++,
+                issign:issign_
+            });
+            _data.items.push(user);
+            rcallback();
+         });
+      }, function (err){
+        res.send(_data);
+      });
+  }else if(_table != '' && _department == '' && _issign ==''){
+      async.each(tempData, (userid, rcallback) => {
+          redis.hgetall(userid, (err, user) => {
+              var issign_ = user.issign 
+              if(issign_ == '' || issign_ == undefined || issign_ == null){
+                  issign_ = 0;
+              }
+              if(user.table == _table){
+               $.extend(user,{
+                   num: i++,
+                   issign:issign_
+               });
+
+               _data.items.push(user);
+                 // console.log(_data);
+              }
+              rcallback();
+          });
+      }, function (err){
+        res.send(_data);
+      });
+      
+  }else if(_table == '' && _department != '' && _issign ==''){
+     async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+              var issign_ = user.issign 
+              if(issign_ == '' || issign_ == undefined || issign_ == null){
+                  issign_ = 0;
+              }
+             if(user.department == "["+_department+"]"){
+              $.extend(user,{
+                  num: i++,
+                  issign:issign_
+              });
+              _data.items.push(user);
+             }
+             rcallback();
+         });
+      }, function (err){
+         res.send(_data);
+      });
+
+  }else if(_table == '' && _department == '' && _issign !=''){
+    async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+              var issign_ = user.issign 
+              if(issign_ == '' || issign_ == undefined || issign_ == null){
+                  issign_ = 0;
+              }
+             if(user.issign == _issign){
+              $.extend(user,{
+                  num: i++,
+                  issign:issign_
+              });
+              _data.items.push(user);
+             }
+             rcallback();
+         });
+      }, function (err){
+        res.send(_data);
+      });
+  }else if(_table != '' && _department != '' && _issign ==''){
+    async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+
+          var issign_ = user.issign 
+          if(issign_ == '' || issign_ == undefined || issign_ == null){
+              issign_ = 0;
+          }
+             if(user.table == _table && user.department =="["+_department+"]"){
+              $.extend(user,{
+                  num: i++,
+                  issign:issign_
+              });
+              _data.items.push(user);
+             }
+             rcallback();
+         });
+      }, function (err){
+        res.send(_data);
+      });
+
+  }else if(_table != '' && _department == '' && _issign !=''){
+    async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+
+          var issign_ = user.issign 
+          if(issign_ == '' || issign_ == undefined || issign_ == null){
+              issign_ = 0;
+          }
+             if(user.table == _table && user.issign == _issign){
+              $.extend(user,{
+                  num: i++,
+                   issign:issign_
+              });
+              _data.items.push(user);
+             }
+             rcallback();
+         });
+     }, function (err){
+        res.send(_data);
+     });
+
+  }else if(_table == '' && _department != '' && _issign !=''){
+    async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+
+          var issign_ = user.issign 
+          if(issign_ == '' || issign_ == undefined || issign_ == null){
+              issign_ = 0;
+          }
+             if(user.department == "["+_department+"]" && user.issign == _issign){
+              $.extend(user,{
+                  num: i++,
+                  issign:issign_
+              });
+              _data.items.push(user);
+             }
+             rcallback();
+         });
+     }, function (err){
+        res.send(_data);
+     });
+
+  }else if(_table != '' && _department != '' && _issign !=''){
+     async.each(tempData, (userid, rcallback) => {
+         redis.hgetall(userid, (err, user) => {
+          var issign_ = user.issign 
+          if(issign_ == '' || issign_ == undefined || issign_ == null){
+              issign_ = 0;
+          }
+             if(user.table == _table && user.department == "["+_department+"]" && user.issign == _issign){
+              $.extend(user,{
+                  num: i++,
+                  issign:issign_
+              });
+              _data.items.push(user);
+             }
+             rcallback();
+         });
+     }, function (err){
+        res.send(_data);
+     });
+  }
 
   
+
+ })
 };
+
 
 
 

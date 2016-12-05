@@ -9,38 +9,84 @@
     <script src="../js/bootstrap.js"></script>
 </head>  
 <body>
-<div class="container" style="margin-top: 80px;">
+
+<div style="margin-top:50px;width: 100%">
+
+<div class="container" style="display: block;">
+    <table class="table table-hover">
+        <thead>
+            <tr style="">
+                <th style="text-align:center;">名称</th>
+                <th style="text-align:center;">是否开启</th>
+            </tr>
+        </thead>
+        <tbody>
+              <tr>
+                  <th style="text-align: center;"><span name="p_name">签到头像页面</span></th>
+                  <th style="text-align: center;">
+                      <select id="headselect" onchange='sendMsgFun("head");'>
+                          <option value="0">否</option>
+                          <option value="1">是</option>
+                      </select>
+                  </th>
+              </tr>
+              <tr>
+                  <th style="text-align: center;"><span name="p_name">聊天墙页面</span></th>
+                  <th style="text-align: center;">
+                      <select id="chatselect" onchange='sendMsgFun("chat");'>
+                          <option value="0">否</option>
+                          <option value="1">是</option>
+                      </select>
+                  </th>
+              </tr>
+              <tr>
+                  <th style="text-align: center;"><span name="p_name">抽奖页面</span></th>
+                  <th style="text-align: center;">
+                      <select id="luckselect" onchange='sendMsgFun("luck");'>
+                          <option value="0">否</option>
+                          <option value="1">是</option>
+                      </select>
+                  </th>
+              </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+<div class="container" style="margin-top: 20px;">
     <div class="row">
       <div class="span6">
           <div class="span2" style="float: left;">
-              <label class="checkbox">姓名</label>
-              <input type="text" class="input-small" placeholder="姓名" id="userName">
+              <label class="checkbox">桌号</label>
+              <input type="text" class="input-small" placeholder="填入桌号" id="tableNo">
           </div>
           <div class="span2" style="margin-left: 50px; float: left;">  
               <label class="checkbox" style="width: 150px;">部门</label>
               <select id="selectDepartment" style="width: 150px;height: 25px;">
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
-                  <option>15</option>
-                  <option>16</option>
-                  <option>17</option>
-                  <option>18</option>
-                  <option>35</option>
-                  <option>36</option>
-                  <option>37</option>
+                  <option value="">选择部门</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="35">35</option>
+                  <option value="36">36</option>
+                  <option value="37">37</option>
               </select>
           </div>
           <div class="span2" style="margin-left: 50px; float: left;padding-top: 10px;" >
             <label class="" style="width: 150px;">签到情况</label>
-            <div>
-              已签到:&nbsp;<input type="radio" name="issign" value="1" title="已签到" style="width: 20px;height: 20px;">&nbsp;&nbsp;&nbsp;
-              未签到:&nbsp;<input type="radio" name="issign" value="0" title="未签到" style="width: 20px;height: 20px;">
+            <div id="radioDivId">
+              已签到:&nbsp;<input type="radio" name="issignRadio" value="1" title="已签到" style="width: 20px;height: 20px;">&nbsp;&nbsp;&nbsp;
+              未签到:&nbsp;<input type="radio" name="issignRadio" value="0" title="未签到" style="width: 20px;height: 20px;">
             </div>
           </div>
           <div class="span2" style="margin-left: 700px;" >
@@ -50,14 +96,14 @@
           </div>
       </div>
       <div class="span6" style="margin-top: 30px;">
-          <table class="table table-bordered table-striped table-hover">  
+          <table class="table table-bordered table-striped table-hover" id="AnchorTable">  
             <tr>  
                 <td>序号</td>  
                 <td>姓名</td>  
                 <td>ID</td> 
                 <td>部门</td>
                 <td>桌号</td>
-                <td>桌号</td>
+                <td>头像</td>
                 <td>签到情况</td>
                 <td>操作</td>
             </tr>  
@@ -124,15 +170,19 @@
 </body> 
 <script type="text/javascript" src></script>
 <script type="text/javascript">
+
 var user_id;
 var user_department;
 var user_num;
   function searchFun(){
-      var name = $("#userName").val();
+    var that = this;
+      var table = $("#tableNo").val();
       var department = $("#selectDepartment option:selected").val();
-      var issign = $("input[type=radio] option:selected").val();
-      if(name == '' || name == null || name == undefined){
-          name='';
+
+      var issign = $('#radioDivId input[name="issignRadio"]:checked ').val();
+
+      if(table == '' || table == null || table == undefined){
+          table='';
       }
       if(department == '' || department == null || department == undefined){
           department='';
@@ -140,9 +190,9 @@ var user_num;
       if(issign == '' || issign == null || issign == undefined){
           issign='';
       }
-      if(name =='' && department == '' && issign == '')
-        return;
-      var data = {"name":name,"department":department, "issign":issign}
+      // if(table =='' && department == '' && issign == '')
+      //   return;
+      var data = {"table":table,"department":department, "issign":issign}
        $.ajax({
           url:'http://localhost:9999/api/user/selectUsers',
           type:'post',
@@ -150,7 +200,25 @@ var user_num;
           data:data,
           dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
           success:function(data){
-            // this.set("items",data)
+            $("#AnchorTable tr:first").nextAll().remove();
+            for(var i=0;i<data.items.length;i++){
+              var item = data.items[i];
+              $("#AnchorTable tr:nth-child("+(i+1)+")").after(
+                '<tr id='+item.num+'>'  +
+                  '<td>'+item.num+'</td>' +
+                  '<td>'+item.name+'</td>' +
+                  '<td>'+item.userid+'</td>' +
+                  '<td>'+item.department+'</td>' +
+                  '<td class="tablenumber">'+item.table+'</td>' +
+                  '<td><img src="'+item.avatar+'" style="width:40px;height:40px"/></td>' +
+                  '<td id='+item.userid+'>'+item.issign+'</td>' +
+                  '<td>' +
+                    '<button value='+item.userid+' style="margin-left: 200px;"" onclick="resetSignup('+item.userid+');">签到重置</button>' +
+                    '<button value='+item.userid+' style="margin-left: 200px;"" onclick="popUpWindow('+item.userid+','+item.department+','+item.num+');">修改信息</button>' +
+                  '</td>' +
+                '</tr>'
+              );
+            }
           },
           error:function(){
             console.log("没有从数据库中搜索到数据!");
@@ -170,7 +238,6 @@ var user_num;
           console.log("没有从数据库中搜索到数据!");
         }
     })
-      console.log(uid);
   }
   function popUpWindow(uid,department,num){
     user_id = '';
@@ -210,6 +277,34 @@ var user_num;
     })
     
   }
+
+
+// 页面socket连接控制方法
+  function sendMsgFun(param){
+      var value = $("#"+param+"select option:selected").val();
+      var msg = '';
+      if(value == 0){
+        msg = param+":close";
+      }else if(value == 1){
+        msg = param+":open";
+      }
+      $.ajax({
+          url:'http://localhost:9999/management/mainsocketcontrol?meassage='+msg,
+          type:'get',
+          async:false,
+          
+          dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          success:function(data){
+            console.log("消息发送成功");
+           
+          },
+          error:function(){
+            console.log("消息发送失败");
+          }
+      })
+  }
+
+
   
 </script> 
 </html>  
