@@ -37,7 +37,10 @@
 .backcolor{
     background: #999999;
 }
-
+.chatAwardImgStyle{
+	height: 40px;
+	width: 40px;
+}
 /*css 动画  效果*/
 /*翻转效果  动画的 帧 */
 @-webkit-keyframes revolving{

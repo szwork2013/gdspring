@@ -321,12 +321,17 @@ exports.postrecordpeopleOfaward = function(req,res){
             })
             // 改变被抽中的奖品数量
             result.DrawedNumber = _DrawedNumber +1;
+            if((_DrawedNumber +1) == _Number){
+               result.Status = 0;
+            }
             redis.hmset("award:"+aName, result, (err, data) => {
-                res.send({"AwardsID":id_,"DrawedNumber":_DrawedNumber,"status":status});
+                res.send({"AwardsID":id_,"DrawedNumber":_DrawedNumber,"status":status,"msg":"恭喜中奖!"});
             });
         }else{
-            result.Status = 0;
+          console.log(result);
             status = 0;
+            result.Status = 0;
+            console.log(result.Status);
             redis.hmset("award:"+aName, result, (err, data) => {
                 res.send({"AwardsID":id_,"DrawedNumber":_DrawedNumber,"status":status,"msg":"奖品已经抽完!"});
             });

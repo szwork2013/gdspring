@@ -358,6 +358,7 @@ var recordWinInfo = function(userid,nickname,department,headportrait) {
             if(data.status == 0){
                 currAwards.count = 0;
             }
+            layer.msg(data.msg);
             delCookie('failureSave');
         },
         error: function() {
@@ -705,6 +706,8 @@ function mainWebSocket() {
                 }
             }
             console.log("mainsocket收到消息了::" + message);
+        }else if(objMsg == "url"){
+            window.location.href = controlMsg;
         }
     };
 }

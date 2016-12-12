@@ -129,10 +129,10 @@
                 <td>签到情况</td>
                 <td>操作</td>
             </tr>  
-            <%for(var i = 0;i<items.length;i++){%>  
-                <tr id='<%=items[i].num%>'>  
-                    <td><%=items[i].num%></td>  
-                    <td><%=items[i].name%></td>  
+            <%for(var i = 0;i<items.length;i++){%>
+                <tr id='<%=items[i].num%>'>
+                    <td><%=items[i].num%></td>
+                    <td><%=items[i].name%></td>
                     <td><%=items[i].userid%></td>
                     <td><%=items[i].department%></td>
                     <td class="tablenumber"><%=items[i].table%></td>
@@ -368,9 +368,10 @@ $(function(){
         msg = param+":open";
       }
       $.ajax({
-          url:'http://localhost:9999/management/mainsocketcontrol?meassage='+msg,
-          type:'get',
+          url:'http://localhost:9999/management/mainsocketcontrol',
+          type:'post',
           async:false,  
+          data:{"meassage":msg},
           dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
           success:function(data){
             alert("消息发送成功");
@@ -428,7 +429,22 @@ $(function(){
   }
 // 页面连接跳转
   function transationFun(param){
-      window.open(param);
+      $.ajax({//redirectcontrol
+          url:'http://localhost:9999/management/redirectcontrol',
+          type:'post',
+          async:false,
+          data:{"url":"url:"+param},
+          dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          success:function(data){
+            alert("消息发送成功");
+          },
+          error:function(){
+            alert("消息发送失败");
+          }
+      })
+
+
+      // window.location.href = param;
   }
 // 用按钮控制页面是否开启
   function openPageFun(name){

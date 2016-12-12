@@ -66,6 +66,7 @@
         };
         //收到消息时触发
         mainSocket.onmessage = function(message) {
+
             var string = message.split(":");
             var objMsg = string[0];
             var controlMsg = string[1];
@@ -78,6 +79,8 @@
                     }   
                 }
                 console.log("mainsocket收到消息了"+message);
+            }else if(objMsg == "url"){
+                window.location.href = controlMsg;
             }
         }; 
     }

@@ -64,13 +64,24 @@ exports.getuserlist = function(req, res) {
 	    });
    });
 };
-exports.getmainsocketcontrol = function socketControlFun(req,res){
-    var message = req.query.message;
+// 后台  主的控制  页面是否接受消息的  方法
+exports.postmainsocketcontrol = function socketControlFun(req,res){
+    var message = req.body.message;
     ws.send(message);
 
     res.send("1");
     // console.log("mainsocketcontrol");
 }
+
+// 后台  主的控制  页面是否 跳转 的方法
+exports.postredirectcontrol = function socketControlFun(req,res){
+    var _url = req.body.url;
+    ws.send(_url);
+
+    res.send("1");
+    // console.log("mainsocketcontrol");
+}
+
 // 保存页面状态的方法
 exports.postsaveStatusFun = function saveStatusFun(req,res){
     var pageName = req.body.pageName;
