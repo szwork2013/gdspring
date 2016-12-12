@@ -33,7 +33,7 @@
             var controlMsg = string[0];
             if(objMsg == "chat"){
                 if(controlMsg == "open"){
-                    getwebsocket
+                    getwebsocket();
                 }else if(controlMsg == "close"){
                     if(socket != '' && socket != undefined && socket != null){
                         socket.close();

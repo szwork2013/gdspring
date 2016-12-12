@@ -17,7 +17,9 @@
         <thead>
             <tr style="">
                 <th style="text-align:center;">名称</th>
-                <th style="text-align:center;">是否开启</th>
+                <th style="text-align:center;">页面开关</th>
+                <th style="text-align:center;">跳转到该页面</th>
+
             </tr>
         </thead>
         <tbody>
@@ -28,15 +30,24 @@
                           <option value="0">否</option>
                           <option value="1">是</option>
                       </select>
+                      <button class="btn btn-warning" onclick="openPageFun('head')">是否开启</button>
+
+                  </th>
+                  <th style="text-align: center;">
+                    <button class="btn btn-info" onclick="transationFun('/showhead/head/head')">跳转</button>
                   </th>
               </tr>
               <tr>
                   <th style="text-align: center;"><span name="p_name">聊天墙页面</span></th>
                   <th style="text-align: center;">
                       <select id="chatselect" onchange='sendMsgFun("chat");'>
-                          <option value="0">否</option>
+                          <option value="0" >否</option>
                           <option value="1">是</option>
                       </select>
+                      <button class="btn btn-warning" onclick="openPageFun('chat')">是否开启</button>
+                  </th>
+                  <th style="text-align: center;">
+                    <button class="btn btn-info" onclick="transationFun('/chatwall/chat/chat')">跳转</button>
                   </th>
               </tr>
               <tr>
@@ -46,6 +57,10 @@
                           <option value="0">否</option>
                           <option value="1">是</option>
                       </select>
+                      <button class="btn btn-warning" onclick="openPageFun('luck')">是否开启</button>
+                  </th>
+                  <th style="text-align: center;">
+                    <button class="btn btn-info" onclick="transationFun()">跳转</button>
                   </th>
               </tr>
         </tbody>
@@ -93,9 +108,16 @@
             <div style="height:30px;">
             </div>
             <button type="submit" class="btn" onclick="searchFun();">查询</button>
+            <button style="margin-left: 80px; " type="submit" class="btn" onclick="popUpWindow()">批量修改信息</button>
+            
           </div>
       </div>
+
       <div class="span6" style="margin-top: 30px;">
+        <div class=" row" style="">
+          <span style="float: left;margin-left: 20px;padding-bottom:  20px;">查询总人数:&nbsp;</span>
+          <div id="totalNum"><%=items.length%></div>
+        </div>
           <table class="table table-bordered table-striped table-hover" id="AnchorTable">  
             <tr>  
                 <td>序号</td>  
@@ -119,7 +141,7 @@
                     <td>
                         <button value="<%=items[i].userid%>" style="margin-left: 200px;" onclick="resetSignup( '<%=items[i].userid%>');">签到重置</button>
                         <button value="<%=items[i].userid%>" style="margin-left: 200px;" 
-                        onclick="popUpWindow('<%=items[i].userid%>','<%=items[i].department%>','<%=items[i].num%>');">修改信息</button>
+                        onclick="popUpWindowSingle('<%=items[i].userid%>','<%=items[i].department%>','<%=items[i].num%>');">修改信息</button>
                     </td> 
                 </tr>
             <%}%>  
@@ -167,6 +189,25 @@
         </div>
     </div>
 </div>
+<div id="setTableSingle" class="modal fade" style="display: none; width: 100% ;height: 100%;">
+    <div class="box box-default extensionDiv" style="margin-left: 42%;margin-top: 100px;width: 300px;height: 200px;background-color: #fff;text-align: center;">
+        <div class="box-body">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+            </div>
+            <div class="modal-body">
+              <div style="margin-top: 20px;">
+                修改桌号:&nbsp;&nbsp;<input id="tableNumberSingle" type="text" name="" value="" placeholder="请输入桌号">
+                
+              </div>
+            </div>
+            <div class="modal-footer" style="height: 50px;">
+                <a href="#" class="btn" onclick="changeInfoSingle();">确定</a>
+                <a href="#" class="btn" data-dismiss="modal">关闭</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body> 
 <script type="text/javascript" src></script>
 <script type="text/javascript">
@@ -174,6 +215,13 @@
 var user_id;
 var user_department;
 var user_num;
+var flag = 1;
+
+$(function(){
+  getSatausFun();
+})
+
+
   function searchFun(){
     var that = this;
       var table = $("#tableNo").val();
@@ -201,6 +249,8 @@ var user_num;
           dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
           success:function(data){
             $("#AnchorTable tr:first").nextAll().remove();
+            var number_ = data.items.length;
+            $("#totalNum").html(number_);
             for(var i=0;i<data.items.length;i++){
               var item = data.items[i];
               $("#AnchorTable tr:nth-child("+(i+1)+")").after(
@@ -239,15 +289,44 @@ var user_num;
         }
     })
   }
-  function popUpWindow(uid,department,num){
+  function popUpWindow(){
+    $("#setTable").modal("show");
+  }
+  function popUpWindowSingle(uid,department,num){
     user_id = '';
     user_department = '';
     user_num = '';
-    $("#setTable").modal("show");
+    $("#setTableSingle").modal("show");
     user_id = uid;
     user_department = department;
     user_num = num;
 
+  }
+  function changeInfoSingle(){
+
+    var table = $("#tableNumberSingle").val();
+    $("#tableNumberSingle").val('');
+    if(isNaN(table)){
+        alert("请输入正确的桌号");
+        return ;
+    }
+
+    $.ajax({
+        url:'http://localhost:9999/api/user/resetuserinfo',
+        type:'post',
+        async:false,
+        data:{"UserId":user_id,"table":table,"department":''},
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success:function(data){
+          alert("修改成功!");
+          $("#setTableSingle").modal("hide");
+          location.reload(true);
+        },
+        error:function(){
+          alert("修改桌号失败, 请重新修改!");
+        }
+    })
+    
   }
   function changeInfo(){
     var department = $("#setInfoDepartment option:selected").val();
@@ -291,20 +370,77 @@ var user_num;
       $.ajax({
           url:'http://localhost:9999/management/mainsocketcontrol?meassage='+msg,
           type:'get',
-          async:false,
-          
+          async:false,  
           dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
           success:function(data){
-            console.log("消息发送成功");
-           
+            alert("消息发送成功");
           },
           error:function(){
-            console.log("消息发送失败");
+            alert("消息发送失败");
+          }
+      })
+      saveStatusFun(param,value);
+  }
+  // 在数据库中保存页面修改的状态
+  function saveStatusFun(param,value){
+      $.ajax({
+          url:'http://localhost:9999/management/saveStatusFun',
+          type:'post',
+          async:false, 
+          data:{"pageName":param,"value":value}, 
+          dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          success:function(data){
+            console.log("页面状态修改成功");
+          },
+          error:function(){
+            console.log("页面状态修改失败");
           }
       })
   }
+  // 获取数据库中的页面状态
+  function getSatausFun(){
+    
+    $.ajax({
+        url:'http://localhost:9999/management/statusFun',
+        type:'get',
+        async:false, 
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success:function(data){
+          var len = data.items.length;
 
-
+          for(var x=0; x<len ;x++){
+            var name = data.items[x].pageName;
+            var status = data.items[x].status;
+            var count=$("#"+name+"select").get(0).options.length;
+            for(var i=0;i<count;i++){
+              if($("#"+name+"select").get(0).options[i].value == status){
+                $("#"+name+"select").get(0).options[i].selected = true;          
+                break;  
+              }  
+            }
+          }
+        
+        },
+        error:function(){
+          console.log("获取页面状态失败");
+        }
+    })
+  }
+// 页面连接跳转
+  function transationFun(param){
+      window.open(param);
+  }
+// 用按钮控制页面是否开启
+  function openPageFun(name){
+      var value = $("#"+name+"select option:selected").val();
+      if(value % 2==0){
+          saveStatusFun(name,1);      
+          $("#"+name+"select").get(0).options[1].selected = true;     
+      }else if(value % 2==1){
+          saveStatusFun(name,0);      
+          $("#"+name+"select").get(0).options[0].selected = true;     
+      }
+  }
   
 </script> 
 </html>  

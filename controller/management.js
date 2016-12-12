@@ -11,7 +11,7 @@ var KEY = {
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
-var WebSocket = require('faye-websocket');
+var WebSocket = require('faye-websocket'),
     ws = new WebSocket.Client('ws://www.jskplx.com/mainsocket'),
     util = require('util'),
     redis = $.redis.createClient($.config.redis.server);
@@ -41,7 +41,7 @@ exports.getuserlist = function(req, res) {
 	data.items = [];
     var i=1;
 	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
-	    console.log(replies.length + " replies:");
+	    // console.log(replies.length + " replies:");
 	    async.each(replies, (userid, rcallback) => {
 
             
@@ -66,13 +66,43 @@ exports.getuserlist = function(req, res) {
 };
 exports.getmainsocketcontrol = function socketControlFun(req,res){
     var message = req.query.message;
-    
-
     ws.send(message);
 
     res.send("1");
-    console.log("mainsocketcontrol");
+    // console.log("mainsocketcontrol");
 }
+// 保存页面状态的方法
+exports.postsaveStatusFun = function saveStatusFun(req,res){
+    var pageName = req.body.pageName;
+    var status = req.body.value;
+
+    redis.hmset("pageName:"+pageName, {"pageName":pageName,"status":status}, (err, data) => {
+        res.send("1");
+        // rcallback();
+    });
+    // res.send("1");
+}
+// 获取页面状态的方法
+exports.getstatusFun = function StatusFun(req,res){
+
+   var data = {};
+   data.items = [];
+   redis.keys("pageName:*", function (err, replies) {
+
+        async.each(replies, (statusInfo, rcallback) => {
+
+            redis.hgetall(statusInfo, (err, result) => {
+
+               data.items.push(result);
+               rcallback();
+            });
+        }, function (err){
+
+            res.send(data);
+        });
+   });
+}
+
 
 
 

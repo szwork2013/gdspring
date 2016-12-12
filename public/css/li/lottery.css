@@ -3,76 +3,104 @@ html {
     min-height: 100%;
 }
 
+
 /*公共隐藏样式(常用与GridView列隐藏)*/
+
 .smartCommonCssUnvisiable {
     display: none;
 }
 
+
 /*清除左侧浮动*/
+
 .clearLeft {
     clear: left;
 }
 
+
 /*清除右侧浮动*/
+
 .clearRight {
     clear: right;
 }
 
+
 /*清除浮动*/
+
 .clearBoth {
     clear: both;
 }
 
+
 /*向左浮动*/
+
 .floatLeft {
     float: left;
 }
 
+
 /*向又浮动*/
+
 .floatRight {
     float: right;
 }
 
+
 /*列表页面操作列内部图标样式*/
+
 .smartListOperIconCss {
     margin: 10px 0 0 0;
     cursor: pointer;
 }
 
+
 /*列表页面状态列内部图标样式*/
+
 .smartListStatusIconCss {
     margin: 10px 0 0 0;
 }
 
+
 /*列表页面选择框样式(全选框)*/
+
 .chkAllCss {
     margin: 10px 0 0 2px;
     *+margin: 0 0 0 5px;
 }
 
+
 /*列表页面选择框样式(单个选择)*/
+
 .listChkCss {
     margin: 10px 0 0 0;
     *+margin: 0 0 0 5px;
 }
 
+
 /*编辑页面必输项前型号样式*/
+
 .redStarCss {
     color: red;
     margin: 3px 0 0 0;
 }
 
+
 /*通用A标签样式*/
+
 .aCommonCss {
     color: #2897e8;
 }
 
+
 /*文本框不可用公用样式*/
+
 .txtDisableCommonCss {
     background-color: #e5e5e5;
 }
 
+
 /*ActivityEdit*/
+
 .ulEditContent .smartEditRightCss {
     color: #878D92;
     font-family: Tahoma;
@@ -266,7 +294,9 @@ html {
     vertical-align: text-bottom;
 }
 
+
 /*Activity页面Css*/
+
 .dvFrameBg {
     width: 100%;
     background-color: #eae6e6;
@@ -349,8 +379,7 @@ html {
     background-repeat: no-repeat;
 }
 
-.dvFrameBg .dvActivtiyContent .dvStatistics {
-}
+.dvFrameBg .dvActivtiyContent .dvStatistics {}
 
 .dvFrameBg .dvActivtiyContent .displayNone {
     display: none;
@@ -512,18 +541,20 @@ html {
     float: left;
 }
 
+
 /*NewActivity页面Css*/
+
 body {
     margin: 0;
     padding: 0;
-    /*background: url("/Content/Img/Demo/LuckDraw_bj.jpg") no-repeat scroll center center transparent;*/
-    /*background: url(/Content/Img/Demo/523LuckDraw_bg.jpg) no-repeat center;*/
-    /*background: url(/Content/Img/Demo/LuckDraw_bj2.jpg) center center no-repeat;*/
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-color: #df3538;
+
+    background:  url(../../img/luckyBG.jpg)no-repeat;   /*  整个 背景  图片的位置 +++++++++++++++++++++++++++++++++ */
+    -webkit-background-size: 100% 100% ;
+    -moz-background-size: 100% 100% ;
+    -o-background-size: 100% 100% ;
+    background-size: 100% 100% ;
+    
+    
 }
 
 .dvNewFrameBg {
@@ -544,13 +575,12 @@ body {
     width: 1024px;
     height: 768px;
     margin: 0 auto;
-    background: url(http://139.196.189.2:8080/Content/Img/Demo/smart-sjbg.png);
-}
-
-.dvNewFrameBg .dvMiddleBg {
-    /*background: url(/Content/Img/Demo/523LuckDraw_bg.png);*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: center 16px;*/
+    background: url(../../img/luckyFont.png) no-repeat;/* 中心图片的位置 +++++++++++++++++++++++++++++++++++*/
+    -webkit-background-size:  100% 30%;
+    -moz-background-size:  100% 30%;
+    -o-background-size:  100% 30%;
+    background-size:  100% 30%;
+     /*background-positon: 100%,100%;*/
 }
 
 .dvNewFrameBg .dvActivityContent .dvActivityLeft {
@@ -617,7 +647,7 @@ body {
     display: inline;
     float: right;
     width: 100%;
-    margin-top: 2px;
+    margin-top: 2px;     /*转动时候的 抽奖人之间的距离++++++++++++++++++++++*/
     color: #543b3b;
 }
 
@@ -640,7 +670,7 @@ body {
     height: 172px;
     background-repeat: no-repeat;
     margin-left: 97px;
-    margin-top: 40px;
+    margin-top: 26x;
     cursor: pointer;
 }
 
@@ -685,7 +715,7 @@ body {
     overflow: hidden;
     clear: left;
     float: left;
-    margin-top: 10px;
+    margin-top: 60px;    /* 奖品模块的高度++++++++++++++++++++++++++++++  */
 }
 
 .dvNewFrameBg .dvActivityContent .dvActivityLeft .dvDisplayRewards .lblCurrentAward {
@@ -701,7 +731,7 @@ body {
 
 .dvDisplayRewards div {
     color: #fff;
-    line-height: 60px;
+    line-height: 40px; /* 奖品名称 的高度 +++++++++++++++++++++++++++++++++++++++  */
     text-align: center;
     font-size: 20px;
 }
@@ -746,7 +776,8 @@ body {
 
 .dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle {
     width: 254px;
-    height: 270px;;
+    height: 270px;
+    ;
 }
 
 .dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultBottom {
@@ -771,7 +802,7 @@ body {
 }
 
 .dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .dvResultTitle .lblLuckyList {
-    color: #FAF3BC;
+    color: #F9FF06;    /* 中奖名单  的字体颜色+++++++++++++++++++++++++++++++++++++*/
     font-size: 34px;
     font-family: 'Microsoft YaHei';
     height: 100%;
@@ -794,7 +825,7 @@ body {
 .dvNewFrameBg .dvActivityContent .dvActivityRight .dvResultFrame .dvResult .dvResultMiddle .ulLuckList li {
     width: 254px;
     height: 100%;
-    color: #FFF5B5;
+    color: #F9FF06; /* 中奖 人员 姓名的  的字体颜色+++++++++++++++++++++++++++++++++++++*/
     font-size: 30px;
     font-family: 'Microsoft YaHei';
 }
@@ -975,7 +1006,8 @@ body {
     margin: 0;
 }
 
-.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd, .dlCheckAll dd {
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd,
+.dlCheckAll dd {
     width: 48px;
     height: 80px;
     margin: 0 8px 0 8px;
@@ -983,7 +1015,8 @@ body {
     overflow: hidden;
 }
 
-.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd .activityImg, .dlCheckAll dd .activityImg {
+.dvNewFrameBg .dvActivityBottom .dvPitureList .dvPitureListMiddle ul li dl dd .activityImg,
+.dlCheckAll dd .activityImg {
     cursor: pointer;
     width: 48px;
     height: 48px;
@@ -1076,7 +1109,9 @@ body {
     width: 500px;
 }
 
+
 /*活动推广编辑页面Css*/
+
 .dvSpread {
     width: 700px;
     height: 400px;

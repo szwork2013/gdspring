@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +9,9 @@
     <script src="../../js/li/iframeTools.js" type="text/javascript"></script>
     <script src="../../js/plugins/layer/layer.js"></script>
 
-    <title>车信网年终抽奖</title>
-     <link href="../../css/li/lottery.css" rel="stylesheet">
+    <title>高达计算机年终抽奖</title>
+    <link href="../../css/li/lottery.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <script src="../../js/li/lotteryApp.js"></script>
 
     <!--边框平铺背景-start-->
@@ -37,13 +37,14 @@
                                 <td colspan="2" class="aui_header">
                                     <div class="aui_titleBar">
                                         <div class="aui_title" style="cursor: move;"></div>
-                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a></div>
+                                        <a class="aui_close" href="javascript:/*artDialog*/;">×</a>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="aui_icon">
-                                    <div class="aui_iconBg"
-                                         style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
+                                    <div class="aui_iconBg" 
+                                        style="background-image: url(&quot;http://139.196.189.2:8080/Scripts/Plugin/artDialog4.1.7/skins/icons/warning.png&quot;);"></div>
                                 </td>
                                 <td class="aui_main" style="width: auto; height: auto;">
                                     <div class="aui_content" style="padding: 20px 25px;"></div>
@@ -336,16 +337,14 @@
             <div class="dvActivityLeft">
                 <!--奖项（显示）-start-->
                 <div class="dvDisplayRewards">
-                    <img id="imgAwards" alt="" style="max-width: 260px; max-height: 233px"
-                         src="http://7xnwvr.com2.z0.glb.qiniucdn.com/lottery_logo_20160108133110567.jpg">
-
-                    <div>珍珠项链</div>
+                    <img id="imgAwards" alt="" style="max-width: 260px; max-height: 233px;" src=""><!-- http://7xnwvr.com2.z0.glb.qiniucdn.com/lottery_logo_20160108133110567.jpg -->
+                    <div></div><!-- 珍珠项链 -->
                 </div>
                 <!--奖项（显示）-end-->
                 <!--奖项选择-start-->
                 <div class="dvAwardSelect">
                     <div class="dvAwardSelectLeft"></div>
-                    <div class="dvAwardSelectMiddleTitle">二等奖</div>
+                    <div class="dvAwardSelectMiddleTitle"></div><!-- 二等奖 -->
                     <div class="dvAwardSelectMiddleArrow">
                         <div class="dvAwardArrow"></div>
                     </div>
@@ -354,11 +353,10 @@
                 <!--奖项选择-end-->
                 <div class="dvAwardSelectContent" style="display: none;">
                     <ul>
-                        <li id="fab7feb4-d8a9-4c4b-b869-35663a400d69" awardlevel="3" awardcount="1" awardphoto="lottery_logo_20160108133143505.jpg" prizename="苏绣摆台">三等奖
-                        </li>
-                        <li id="151f67f7-5ca6-47a6-a8f2-369c789a0c42" awardlevel="2" awardcount="1" awardphoto="lottery_logo_20160108133110567.jpg" prizename="珍珠项链">二等奖
-                        </li>
+<!--  <li id="fab7feb4-d8a9-4c4b-b869-35663a400d69" awardlevel="3" awardcount="1" awardphoto="lottery_logo_20160108133143505.jpg" prizename="苏绣摆台">三等奖</li>
+      <li id="151f67f7-5ca6-47a6-a8f2-369c789a0c42" awardlevel="2" awardcount="1" awardphoto="lottery_logo_20160108133110567.jpg" prizename="珍珠项链">二等奖</li> -->
                     </ul>
+                        
                 </div>
             </div>
             <!--左侧-end-->
@@ -366,34 +364,15 @@
             <div class="dvActivityMiddle">
                 <!--参与滚动名单-start-->
                 <div class="dvNewActivityList">
-                    <div class="NewActivityListUlFrame">
+                    <div class="NewActivityListUlFrame" style="margin-top: 40px;"><!--   滚动的抽奖人员的位置+++++++++++++++++++++ -->
                         <ul class="ulNewActivityList" id="ulPerPool" style="top: -92px;">
-                            <%for(var j= 0; j < data.length; j++) { %>
 
-                                <li id="f3fa1c42-227b-46ca-afb9-68f67b26c76e" openid="oRpPlwUe7Ic2WiFBlgFGIok09tCQ"
-                                        class=""><img
-                                        src=<%= data[j].src %>
-                                        height="35px" width="35px"><span><%= data[j].name %></span></li>
-
-                            <%}%>
-                            <!--<li id="f3fa1c42-227b-46ca-afb9-68f67b26c76e" openid="oRpPlwUe7Ic2WiFBlgFGIok09tCQ"
-                                class=""><img
-                                        src="http://wx.qlogo.cn/mmopen/mLa0XfyP8X1f7dBDov2EILvHgBn7tJdKEoEFibcDUfHVwnibAZicenCSB5HY9OJItOAhNmGeBXvwrVzAzOs5FXJhrMqM9ia4GVTic/0"
-                                        height="35px" width="35px"><span>罗湘洲·姑苏老三</span></li>
-                            <li id="46e0df30-526e-48c7-97e6-54294d73c866" openid="oRpPlwRXaz8lkVOzX1uuQc2mQnTU"
-                                class=""><img
-                                        src="http://wx.qlogo.cn/mmopen/2BT80xmOuLPhMB2IdGLCiakf0CWUiaoIDnyQCHKhicLkLXGRPibUcZ3AsUn8nIXyzEyibUhhuwfBxpVhgRhVXwAFDFg/0"
-                                        height="35px" width="35px"><span>Linda</span></li>
-                            <li id="3b9f3ec5-bdbd-4eab-ab26-99ebc4e9153c" openid="oRpPlwZGsNRs7RQqDkXx6Q2eYayQ"
-                                class=""><img
-                                        src="http://wx.qlogo.cn/mmopen/mLa0XfyP8X21ia9uMyicWS3nuh44ehK7SwY8NaHKql7vBuLTAC700Rv4NupvGaZU6m2yVuGicQ3jicgOCyH3LicwoicA/0"
-                                        height="35px" width="35px"><span> Tomato baby</span></li>-->
-                        </ul>
+                        <!-- 从js中的 getdata() 方法插入数据 -->
+  
                     </div>
 
                     <!--操作按钮-start-->
-                    <div class="dvStartButton dvBackrgoundStart">
-                    </div>
+                    <div class="dvStartButton dvBackrgoundStart"></div>
                     <!--操作按钮-end-->
                 </div>
                 <!--参与滚动名单-end-->
@@ -402,7 +381,7 @@
             <!--右侧-start-->
             <div class="dvActivityRight">
                 <!--中奖名单-start-->
-                <div class="dvResultFrame">
+                <div class="dvResultFrame" style="margin-top: 40px;">
                     <div class="dvResult">
                         <div class="dvResultMiddle">
                             <div class="dvResultTitle">
@@ -410,17 +389,14 @@
                             </div>
                             <!--中奖名单-start-->
                             <ul class="ulLuckList">
-                                <li id="37889484-2074-469f-8507-15b42605ee19"
-                                    ondblclick="delLuckDog('oRpPlwYU_dfedweCJwMgHlUaSbNA','151f67f7-5ca6-47a6-a8f2-369c789a0c42')">
-                                    <img src="http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0"
-                                         height="100px" width="100px"><label class="lblName"
-                                                                             style="font-size:30px;width:100%;text-align:center;float: left;">Tim</label><label
-                                            class="lblNumber smartCommonCssUnvisiable">oRpPlwYU_dfedweCJwMgHlUaSbNA</label>
+                                <li id="37889484-2074-469f-8507-15b42605ee19" ondblclick="delLuckDog('oRpPlwYU_dfedweCJwMgHlUaSbNA','151f67f7-5ca6-47a6-a8f2-369c789a0c42')">
+                                    <img src="../../img/gaoda.png" height="100px" width="100px">
+                                         <label class="lblName" style="font-size:30px;width:100%;text-align:center;float: left;">高达计算机技术(苏州)有限公司</label>
+                                         <label class="lblNumber smartCommonCssUnvisiable">oRpPlwYU_dfedweCJwMgHlUaSbNA</label>
                                 </li>
                             </ul>
                             <!--中奖名单-end-->
-                            <label id="lblCheckList" class="lblCheckList" onclick="checkLuckList()"
-                                   style="margin-left: 80px;">中奖名单</label>
+                            <label id="lblCheckList" class="lblCheckList" onclick="checkLuckList()" style="margin-left: 80px;margin-top: 50px;color: #F0B74B;font-size: 16pt;font-weight: bold;  ">中奖名单</label>
                         </div>
                     </div>
                 </div>
@@ -472,5 +448,13 @@
     <!--内容区域-end-->
 </div>
 <div style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; background: rgb(255, 255, 255);"></div>
+
+<!-- 展示中奖人员的列表 -->
+<div id="showawardlist" style="width: 850px;height: 500px;">
+    
+</div>
+
+
+
 </body>
 </html>
