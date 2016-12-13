@@ -694,7 +694,7 @@ function mainWebSocket() {
     };
     //收到消息时触发
     mainSocket.onmessage = function(message) {
-        var string = message.split(":");
+        var string = message.data.split(":");
         var objMsg = string[0];
         var controlMsg = string[1];
         if (objMsg == "luck") {
