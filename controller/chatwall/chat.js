@@ -9,8 +9,9 @@ var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsec
 exports.getchat = function(req, res) {
 	var code = req.query.code;
 	var state = req.query.state;
-
-	res.render('page/chatwall');
+    var data = {};
+    data.ip = global.IP;
+	res.render('page/chatwall',data);
 };
 exports.getchatmessage = function(req, res) {
 	redis.keys("message:*", (err, reply)=>{

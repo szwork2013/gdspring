@@ -22,7 +22,7 @@ var config = module.exports = {
     // 执行超过此值记日志
     time: 50,
     // 入口服务器地址
-    nginxUrl: "http://192.168.51.4",
+    nginxUrl: "http://localhost:9999/"  ,//"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
     //testhostname: "http://172.28.184.75:9091",
     // 程序路由结构
     routes: {
@@ -61,3 +61,4 @@ if (config.debug) {
     config.port = 9999;
 	config.static = 'minify';
 }
+IP = "http://localhost:9999/" ;//"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/

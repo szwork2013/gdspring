@@ -9,9 +9,12 @@
 
     // 记录签到人员数量
     var signNumber=0;
+    var ip = "";
 
     window.onresize = adjust();
     $(function() {
+        ip = $("#mainIP").html();
+
         // var width = $(document).width()*0.6;
         // var height = $(document).width()*0.6;
 
@@ -119,7 +122,7 @@
     //ajax 请求头像数据
     function getData(){
         $.ajax({
-            url:'http://localhost:9999/api/user/reguserlist',
+            url:ip+'api/user/reguserlist',//http://localhost:9999/
             type:'get',
             async:false,
             // data:{name:'yang',age:25},
@@ -243,7 +246,7 @@
             })
 
             var imgsrc = $("#"+number)[0].src;
-            if(imgsrc != "http://localhost:9999/img/green.jpg"){
+            if(imgsrc != ip+ "img/green.jpg"){ //http://localhost:9999/
                 // smallAndBig(number);
                 $("#"+number).css({
                     "animation":arr[temp_num]+" 4s 0s 1"

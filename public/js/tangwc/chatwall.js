@@ -10,8 +10,9 @@
      // var chars = ['0','1','2','3','4','5','6','7','8','9','啊','哦','额','一','五','与','波','破','莫','分','的','特','了','内','个','可','和','一','五','与','字','次','是','值','吃','是'];
    
     var msgNumber=0;
-
+    var ip = ""; 
     $(function() {
+        ip = $("#mainIP").html();
         mainWebSocket();
         getwebsocket();
 
@@ -88,7 +89,7 @@
     }
     function saveawardOfChat(data){
         $.ajax({
-            url:'http://localhost:9999/chatwall/chat/recordChatAwardPeople',
+            url:ip+'chatwall/chat/recordChatAwardPeople',//http://localhost:9999/
             type:'post',
             async:false,
             data:data,
@@ -116,7 +117,7 @@
     }
     function getsavedawardOfChat(){
         $.ajax({
-            url:'http://localhost:9999/chatwall/chat/chatRecordAward',
+            url:ip+'chatwall/chat/chatRecordAward',//http://localhost:9999/
             type:'get',
             async:false,
             dataType:'json', 
@@ -205,7 +206,7 @@
     // 初始化获取消息的数量的方法
     function getmessages(){
         $.ajax({
-            url:'http://localhost:9999/chatwall/chat/chatmessage',
+            url:ip+'chatwall/chat/chatmessage',//http://localhost:9999/
             type:'get',
             async:false,
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text

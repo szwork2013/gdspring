@@ -39,6 +39,7 @@ exports.getfetchallusers = function(req, res) {
 exports.getuserlist = function(req, res) {
 	var data = {};
 	data.items = [];
+    data.ip = '';
     var i=1;
 	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
 	    // console.log(replies.length + " replies:");
@@ -59,7 +60,7 @@ exports.getuserlist = function(req, res) {
          	   rcallback();
 		 	});
 	    }, function (err){
-	    	//console.log(data.items);
+	    	data.ip = global.IP;
 	        res.render('page/userlist', data);
 	    });
    });

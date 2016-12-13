@@ -208,6 +208,7 @@
         </div>
     </div>
 </div>
+<div id="mainIP" style="display: none;"><%= ip%></div><!-- var ip = ""; --><!-- ip = $("#mainIP").html(); -->
 </body> 
 <script type="text/javascript" src></script>
 <script type="text/javascript">
@@ -216,8 +217,10 @@ var user_id;
 var user_department;
 var user_num;
 var flag = 1;
+var ip = "";
 
 $(function(){
+  ip = $("#mainIP").html();
   getSatausFun();
 })
 
@@ -242,7 +245,7 @@ $(function(){
       //   return;
       var data = {"table":table,"department":department, "issign":issign}
        $.ajax({
-          url:'http://localhost:9999/api/user/selectUsers',
+          url:ip+'api/user/selectUsers',//http://localhost:9999/
           type:'post',
           async:false,
           data:data,
@@ -277,7 +280,7 @@ $(function(){
   }
   function resetSignup(uid){ 
      $.ajax({
-        url:'http://localhost:9999/api/user/resetuser?UserId='+uid+"&issign=0&table=0",
+        url:ip+'api/user/resetuser?UserId='+uid+"&issign=0&table=0",//http://localhost:9999/
         type:'get',
         async:false,
         dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -312,7 +315,7 @@ $(function(){
     }
 
     $.ajax({
-        url:'http://localhost:9999/api/user/resetuserinfo',
+        url:ip+'api/user/resetuserinfo',//http://localhost:9999/
         type:'post',
         async:false,
         data:{"UserId":user_id,"table":table,"department":''},
@@ -340,7 +343,7 @@ $(function(){
         department = ''
     }
     $.ajax({
-        url:'http://localhost:9999/api/user/resetuserinfo',
+        url:ip+'api/user/resetuserinfo',//http://localhost:9999/
         type:'post',
         async:false,
         data:{"UserId":user_id,"table":table,"department":department},
@@ -368,7 +371,7 @@ $(function(){
         msg = param+":open";
       }
       $.ajax({
-          url:'http://localhost:9999/management/mainsocketcontrol',
+          url:ip+'management/mainsocketcontrol',//http://localhost:9999/
           type:'post',
           async:false,  
           data:{"meassage":msg},
@@ -385,7 +388,7 @@ $(function(){
   // 在数据库中保存页面修改的状态
   function saveStatusFun(param,value){
       $.ajax({
-          url:'http://localhost:9999/management/saveStatusFun',
+          url:ip+'management/saveStatusFun',//http://localhost:9999/
           type:'post',
           async:false, 
           data:{"pageName":param,"value":value}, 
@@ -402,7 +405,7 @@ $(function(){
   function getSatausFun(){
     
     $.ajax({
-        url:'http://localhost:9999/management/statusFun',
+        url:ip+'management/statusFun',//http://localhost:9999/
         type:'get',
         async:false, 
         dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -430,7 +433,7 @@ $(function(){
 // 页面连接跳转
   function transationFun(param){
       $.ajax({//redirectcontrol
-          url:'http://localhost:9999/management/redirectcontrol',
+          url:ip+'management/redirectcontrol',//http://localhost:9999/
           type:'post',
           async:false,
           data:{"url":"url:"+param},
