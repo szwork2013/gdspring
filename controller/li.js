@@ -26,7 +26,7 @@ exports.gettugofwarsummary = function(req, res) {
     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人3"});
     var data_object = new Object();
     data_object.data = data_json;*/
-    var data = new Object();
+    var data = {};
     data.ip = global.IP;
 
     res.render('page/lottery',data)

@@ -96,7 +96,7 @@ var InitAwards = function() {
 
     $.ajax({
         type: "get",
-        url: "/api/user/awardlist",
+        url: lotteryApp.ip+"api/user/awardlist",
         contentType: "application/json; charset=utf-8",
         data: null,
         async: false,
@@ -160,7 +160,7 @@ var InitAwards = function() {
 /* 初始化  人员列表 */
 var InitPerlist = function() {
 
-    $.get("http://localhost:9999/api/user/reguserlist", null, function(perlist) {
+    $.get(lotteryApp.ip+"api/user/reguserlist", null, function(perlist) {
         if (perlist == null || perlist.length === 0) {
             alert("获取参与人员失败");
             return;
@@ -338,7 +338,7 @@ var recordWinInfo = function(userid,nickname,department,headportrait) {
 //提交数据
     $.ajax({
         type: "post",
-        url: "/api/user/recordpeopleOfaward",
+        url: lotteryApp.ip+"api/user/recordpeopleOfaward",
         data: JSON.stringify(json),//JSON.stringify(json);
         contentType: "application/json; charset=utf-8",
         async: true,
@@ -479,7 +479,7 @@ var delLuckDog = function(openid, awardsid) {
         lock: true,
         ok: function() {
             $.ajax({
-                url: "/api/Lottery/WaiverDrawResult/" + id + "/" + openid + "/" + awardsid,
+                url: lotteryApp.ip+"api/Lottery/WaiverDrawResult/" + id + "/" + openid + "/" + awardsid,
                 type: "GET",
                 async: true,
                 cache: false,
@@ -528,7 +528,7 @@ var checkLuckList = function() {
 */  
 
     $.ajax({
-        url:'http://localhost:9999/api/user/fetchallawardpelple',
+        url:lotteryApp.ip+'api/user/fetchallawardpelple',
         type:'get',
         async:false,
         
