@@ -24,8 +24,33 @@ $(document).ready(function () {
         var nowdo = $(this);
         var baby = nowdo.parent().parent().find(".tag_txt").html();
         var nowvote = nowdo.parent().find(".cvotenum b").html();
-        nowdo.parent().find(".cvotenum b").html(parseInt(nowvote) + 1);
-        alert("亲！您为征名【" + baby + "】投了一票！谢谢您的投票！");
+
+        var key = nowdo.parent().find(".vote-key").html();
+
+        var data = new Object();
+        data.number = parseInt(nowvote) + 1;
+        data.name = nowdo.parent().parent().find(".tag_txt").html();
+        data.key = key;
+       // alert("亲！您为征名【" + baby + "】投了一票！谢谢您的投票！");
+        //alert(data.name);
+        $.ajax({
+            url:'http://localhost:9999/li/changenumber',
+            type:'post',
+            async:false,
+            data:data,
+            dataType:'text',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success:function(data){
+
+                if(data == "OK"){
+                    nowdo.parent().find(".cvotenum b").html(parseInt(nowvote) + 1);
+                }
+
+            },
+            error:function(data){
+                console.log("更新失败" + data);
+            }
+        })
 
     });
 });
+

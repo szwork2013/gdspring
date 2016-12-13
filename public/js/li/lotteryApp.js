@@ -2,10 +2,15 @@
  * Created by lixy on 2016/11/24.
  */
 
+    var lotteryApp = {
+    ip:"",
+}
+
 var id = "b51eddfa-19ae-4c96-bc9c-a6da0ae96e52";
 var currTotalCount = 0; //所有奖项剩余数
 var logAwards = new Array(); //存储已经抽奖过的奖项id
 var luckIndex = 2;
+var ip = "";
 
 var isDuringRquest = false; //控制快速
 //var audio;   //背景音乐
@@ -20,6 +25,10 @@ var currAwards = {
 };
 
 $(function() {
+
+
+    lotteryApp.ip = $("#mainIP").html();
+
     InitAwards();
     InitPerlist();
 

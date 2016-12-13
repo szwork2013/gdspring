@@ -1,6 +1,5 @@
 var urlstr = window.location.href;
 urlstr = urlstr.substring(0, urlstr.indexOf('/', 9));
-
 /*获取url中的参数*/
 function QueryString() {
     var name, value, i;

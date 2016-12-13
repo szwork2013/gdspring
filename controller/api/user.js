@@ -316,8 +316,8 @@ exports.postrecordpeopleOfaward = function(req,res){
                     "luckid":(data.length+1)
                 })
                 redis.hmset("luckyaward:"+(data.length+1), body, (err, data) => {
-                    // res.send("1");
-                });
+                // res.send("1");
+            });
             })
             // 改变被抽中的奖品数量
             result.DrawedNumber = _DrawedNumber +1;

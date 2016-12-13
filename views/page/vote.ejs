@@ -23,22 +23,28 @@
 </head>
 <body style=" background-color:#cb0000">
 <div class="itagBox">
+
     <ul class="artist_l">
+        <%for (var i=0;i<data.length;i++){
+        console.log(data[i].name)
+        %>
         <li class="tag1">
             <div class="votetext">
-                <div class="tag_txt">
-                    节目一
-                </div>
+                <div class="tag_txt"><%=data[i].name%></div>
                 <a href="#">
                     征名释义：征名1
                 </a>
             </div>
             <div class="votedo">
-                <div class="cvotenum"><b>1002</b>票</div>
+                <div class="cvotenum"><b><%=data[i].number%></b>票</div>
+                <div hidden = hidden class="vote-key"> <%=data[i].key%></div>
                 <div class="cvote">投票</div>
             </div>
         </li>
-        <li class="tag1 ">
+        <% }%>
+
+
+       <!-- <li class="tag1 ">
             <div class="votetext">
                 <div class="tag_txt">
                     节目2
@@ -93,7 +99,7 @@
                 <div class="cvotenum"><b>1008</b>票</div>
                 <div class="cvote">投票</div>
             </div>
-        </li>
+        </li>-->
     </ul>
 </div>
 
