@@ -57,9 +57,9 @@
 // 连接mainWebSocket  服务
     function mainWebSocket(){
         if ('WebSocket' in window)
-            mainSocket = new WebSocket(url);
+            mainSocket = new WebSocket(mainUrl);
         else if ('MozWebSocket' in window)
-            mainSocket = new MozWebSocket(url);
+            mainSocket = new MozWebSocket(mainUrl);
         //打开连接时触发
         mainSocket.onopen = function() {
             console.log('OPEN: ' + mainSocket.protocol);

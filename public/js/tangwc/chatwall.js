@@ -25,9 +25,9 @@
 // 连接mainWebSocket  服务
     function mainWebSocket(){
         if ('WebSocket' in window)
-            mainSocket = new WebSocket(url);
+            mainSocket = new WebSocket(mainUrl);
         else if ('MozWebSocket' in window)
-            mainSocket = new MozWebSocket(url);
+            mainSocket = new MozWebSocket(mainUrl);
         //打开连接时触发
         mainSocket.onopen = function() {
             console.log('OPEN: ' + mainSocket.protocol);
@@ -93,10 +93,10 @@
             async:false,
             data:data,
             dataType:'json', 
-            success:function(reply){//存取成功后 返回 "1"
+            success:function(reply){//存入成功后 返回 "1"
 
-                $("#"+data.userid).css({  //可以定位到  中奖消息的id 
-
+                $("#"+data.userid+">img").css({  //可以定位到  中奖消息的id 
+                    "animation":"bigPicture 3s 0s infinite"
                 })
                 $(".chatAwardImgStyle").each(function(){
                     
