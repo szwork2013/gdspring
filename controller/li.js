@@ -19,12 +19,23 @@ exports.gettugofwar = function(req, res) {
 };
 
 exports.gettugofwarsummary = function(req, res) {
-    var data_json = new Array();
+   /* var data_json = new Array();
     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人"});
     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人1"});
     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人2"});
     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人3"});
     var data_object = new Object();
-    data_object.data = data_json;
-    res.render('page/lottery',data_object);
+    data_object.data = data_json;*/
+    res.render('page/lottery');
+};
+
+exports.getvote = function(req, res) {
+    /* var data_json = new Array();
+     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人"});
+     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人1"});
+     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人2"});
+     data_json.push({src:"http://wx.qlogo.cn/mmopen/2BT80xmOuLNuPRrn0EcfvIUEUyNC2dKe3icOFJB7I0ESNIruiaPlBuYBDvDtcqWNRsB34pBo6ZOgH9D5RS00rkBQwOjjUDlU4k/0",name:"超级赛亚人3"});
+     var data_object = new Object();
+     data_object.data = data_json;*/
+    res.render('page/vote');
 };
