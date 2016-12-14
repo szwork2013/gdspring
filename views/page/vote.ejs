@@ -12,6 +12,20 @@
     <script type="text/javascript" src="../../js/li/jquery.min.js"></script>
     <script type="text/javascript" src="../../js/li/script.js"  ></script>
     <script type="text/javascript">
+
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl= socketUrl +'mainsocket';
+    // 次监听socket
+    var socket = '';
+    var url = socketUrl+'';
+
+
+    
         $(document).ready(function () {
 
         });
@@ -102,7 +116,7 @@
         </li>-->
     </ul>
 </div>
-
+<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 
 </body>
 </html>

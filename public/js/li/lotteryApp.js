@@ -2,15 +2,25 @@
  * Created by lixy on 2016/11/24.
  */
 
-    var lotteryApp = {
-    ip:"",
+
+ var ip;
+ var socketUrl;
+ // 主监听socket   用来控制 次监听socket
+ var mainSocket='';
+ var mainUrl;
+ // 次监听socket
+ var socket = '';
+ var url ;// var url = "ws://www.jskplx.com/lukysocket";
+
+var lotteryApp = {
+    ip:'',
 }
 
 var id = "b51eddfa-19ae-4c96-bc9c-a6da0ae96e52";
 var currTotalCount = 0; //所有奖项剩余数
 var logAwards = new Array(); //存储已经抽奖过的奖项id
 var luckIndex = 2;
-var ip = "";
+
 
 var isDuringRquest = false; //控制快速
 //var audio;   //背景音乐
@@ -25,9 +35,13 @@ var currAwards = {
 };
 
 $(function() {
+     var connectIP = $("#mainIP").html();
+     lotteryApp.ip =connectIP.split("|")[0];
+     socketUrl=connectIP.split("|")[1];
 
+     mainUrl = socketUrl +'mainsocket';
+     url = socketUrl+'lukysocket';
 
-    lotteryApp.ip = $("#mainIP").html();
 
     InitAwards();
     InitPerlist();
@@ -162,7 +176,7 @@ var InitPerlist = function() {
 
     $.get(lotteryApp.ip+"api/user/reguserlist", null, function(perlist) {
         if (perlist == null || perlist.length === 0) {
-            alert("获取参与人员失败");
+            layer.msg("获取参与人员失败");
             return;
         }
 
@@ -239,7 +253,7 @@ var startScroll = function() {
 
     $('.liLuckyDog').remove();
         if ($("#ulPerPool li").length <= 5) {
-        artWarning('参与人员不足,至少需要5人！');
+        layer.msg('参与人员不足,至少需要5人！');
         return;
     }
 
@@ -685,12 +699,8 @@ function insertData(data){
     }
 }*/
 
-// 主监听socket   用来控制 次监听socket
-var mainSocket = '';
-var mainUrl = "ws://www.jskplx.com/mainsocket";
-// 次监听socket
-var socket = '';
-var url = "ws://www.jskplx.com/lukysocket";
+
+
 // 连接mainWebSocket  服务
 function mainWebSocket() {
     if ('WebSocket' in window)

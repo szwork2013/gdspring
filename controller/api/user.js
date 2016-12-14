@@ -14,14 +14,15 @@ var management = require("../management.js");
 exports.getreguserlist = function(req, res) {
   	var data = [];
     var i = 1;
-  	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
+  	redis.keys("useduser:*", function (err, replies) {
   	    // console.log(replies.length + " replies:");
   	    async.each(replies, (userid, rcallback) => {
            	redis.hgetall(userid, (err, result) => {
-                $.extend(result,{
-                    num: i++
-                });
-           	    data.push(result);
+                if(parseInt(result.issign)==1){
+                    
+                    data.push(result);
+                }
+                
            	    rcallback();
   		 	    });
   	    }, function (err){
@@ -43,7 +44,7 @@ exports.getfetchallusers = function(req, res) {
 
             // console.log(user.department+"::::"+user.table);
              //保存数据
-            redis.hmset(util.format(KEY.USER, user.userid), user, (err, data) => {
+            redis.hmset("useduser:"+user.userid, user, (err, data) => {
                 // console.log(data);
                 rcallback();
             });
@@ -55,24 +56,26 @@ exports.getfetchallusers = function(req, res) {
 };
 // 签到重置
 exports.getresetuser = function(req, res) {
-    var key = util.format(KEY.USER, req.query.UserId);
+    var key = "useduser:"+req.query.UserId;
     var _issign = req.query.issign;
-    var _table = req.query.table;
+    // var _table = req.query.table;
     redis.hgetall(key, (err, user)=>{
         $.extend(user, {
-            table: _table,
+            // table: _table,
             issign: _issign
         });
        
         redis.hmset(key, user, (err, data) => {
-            console.log(data);
+            // console.log(data);
+            res.send({issign:0});
         });
-        res.send("0");
+        
     });
 };
 // 修改信息
 exports.postresetuserinfo = function(req, res) {
-    var key = util.format(KEY.USER, req.body.UserId);
+    // var key = util.format(KEY.USER, req.body.UserId);
+    var key = "useduser:"+req.body.UserId;
     var _table = req.body.table;
     var department = req.body.department;
     if(department == ''){
@@ -89,26 +92,24 @@ exports.postresetuserinfo = function(req, res) {
         var i = 1;
         var data = {};
         data.items = [];
-        redis.keys(util.format(KEY.USER, "*"), 
-            function (err, data) {
-                var item = [];
-                async.each(data, (userid, rcallback) => {
-                    redis.hgetall(userid, (err, _user) => {
-                        if("["+department+"]" ==_user.department){
-                            $.extend(_user,{
-                                table: _table
-                            });
-                            redis.hmset(util.format(KEY.USER, _user.userid), _user, (err, data) => {
-                                console.log( _user.userid+"修改成功");
-                            });
-                        }
-                    });
-                    rcallback();
-                }, function (err){
-                     return res.send("1"); 
+        redis.keys("useduser:*", function (err, data) {
+            var item = [];
+            async.each(data, (userid, rcallback) => {
+                redis.hgetall(userid, (err, _user) => {
+                    if("["+department+"]" ==_user.department){
+                        $.extend(_user,{
+                            table: _table
+                        });
+                        redis.hmset("useduser:"+_user.userid, _user, (err, data) => {
+                            console.log( _user.userid+"修改成功");
+                        });
+                    }
                 });
-            }
-        );
+                rcallback();
+            }, function (err){
+                 return res.send("1"); 
+            });
+        });
     }
 };
 // 按照条件查找users
@@ -122,18 +123,18 @@ exports.postselectUsers = function(req, res) {
   var i=1;
 // 获取到所有user 的数据
   var tempData = {};
-  redis.keys(util.format(KEY.USER, "*"), function (err, result) {
+  redis.keys("useduser:*", function (err, result) {
     tempData = result;
     if(_table == '' && _department == '' && _issign ==''){
        async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
-              var issign_ = user.issign 
-              if(issign_ == '' || issign_ == undefined || issign_ == null){
-                  issign_ = 0;
-              }
+              // var issign_ = user.issign 
+              // if(issign_ == '' || issign_ == undefined || issign_ == null){
+              //     issign_ = 0;
+              // }
               $.extend(user,{
                   num: i++,
-                  issign:issign_
+                  // issign:issign_
               });
               _data.items.push(user);
               rcallback();
@@ -144,14 +145,14 @@ exports.postselectUsers = function(req, res) {
     }else if(_table != '' && _department == '' && _issign ==''){
         async.each(tempData, (userid, rcallback) => {
             redis.hgetall(userid, (err, user) => {
-                var issign_ = user.issign 
-                if(issign_ == '' || issign_ == undefined || issign_ == null){
-                    issign_ = 0;
-                }
+                // var issign_ = user.issign 
+                // if(issign_ == '' || issign_ == undefined || issign_ == null){
+                //     issign_ = 0;
+                // }
                 if(user.table == _table){
                  $.extend(user,{
                      num: i++,
-                     issign:issign_
+                     // issign:issign_
                  });
 
                  _data.items.push(user);
@@ -165,14 +166,14 @@ exports.postselectUsers = function(req, res) {
     }else if(_table == '' && _department != '' && _issign ==''){
        async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
-                var issign_ = user.issign 
-                if(issign_ == '' || issign_ == undefined || issign_ == null){
-                    issign_ = 0;
-                }
+                // var issign_ = user.issign 
+                // if(issign_ == '' || issign_ == undefined || issign_ == null){
+                //     issign_ = 0;
+                // }
                if(user.department == "["+_department+"]"){
                 $.extend(user,{
                     num: i++,
-                    issign:issign_
+                    // issign:issign_
                 });
                 _data.items.push(user);
                }
@@ -184,14 +185,14 @@ exports.postselectUsers = function(req, res) {
     }else if(_table == '' && _department == '' && _issign !=''){
       async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
-                var issign_ = user.issign 
-                if(issign_ == '' || issign_ == undefined || issign_ == null){
-                    issign_ = 0;
-                }
+                // var issign_ = user.issign 
+                // if(issign_ == '' || issign_ == undefined || issign_ == null){
+                //     issign_ = 0;
+                // }
                if(user.issign == _issign){
                 $.extend(user,{
                     num: i++,
-                    issign:issign_
+                    // issign:issign_
                 });
                 _data.items.push(user);
                }
@@ -204,14 +205,14 @@ exports.postselectUsers = function(req, res) {
       async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
 
-            var issign_ = user.issign 
-            if(issign_ == '' || issign_ == undefined || issign_ == null){
-                issign_ = 0;
-            }
+            // var issign_ = user.issign 
+            // if(issign_ == '' || issign_ == undefined || issign_ == null){
+            //     issign_ = 0;
+            // }
                if(user.table == _table && user.department =="["+_department+"]"){
                 $.extend(user,{
                     num: i++,
-                    issign:issign_
+                    // issign:issign_
                 });
                 _data.items.push(user);
                }
@@ -224,14 +225,14 @@ exports.postselectUsers = function(req, res) {
       async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
 
-            var issign_ = user.issign 
-            if(issign_ == '' || issign_ == undefined || issign_ == null){
-                issign_ = 0;
-            }
+            // var issign_ = user.issign 
+            // if(issign_ == '' || issign_ == undefined || issign_ == null){
+            //     issign_ = 0;
+            // }
                if(user.table == _table && user.issign == _issign){
                 $.extend(user,{
                     num: i++,
-                     issign:issign_
+                     // issign:issign_
                 });
                 _data.items.push(user);
                }
@@ -244,14 +245,14 @@ exports.postselectUsers = function(req, res) {
       async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
 
-            var issign_ = user.issign 
-            if(issign_ == '' || issign_ == undefined || issign_ == null){
-                issign_ = 0;
-            }
+            // var issign_ = user.issign 
+            // if(issign_ == '' || issign_ == undefined || issign_ == null){
+            //     issign_ = 0;
+            // }
                if(user.department == "["+_department+"]" && user.issign == _issign){
                 $.extend(user,{
                     num: i++,
-                    issign:issign_
+                    // issign:issign_
                 });
                 _data.items.push(user);
                }
@@ -263,14 +264,14 @@ exports.postselectUsers = function(req, res) {
     }else if(_table != '' && _department != '' && _issign !=''){
        async.each(tempData, (userid, rcallback) => {
            redis.hgetall(userid, (err, user) => {
-            var issign_ = user.issign 
-            if(issign_ == '' || issign_ == undefined || issign_ == null){
-                issign_ = 0;
-            }
+            // var issign_ = user.issign 
+            // if(issign_ == '' || issign_ == undefined || issign_ == null){
+            //     issign_ = 0;
+            // }
                if(user.table == _table && user.department == "["+_department+"]" && user.issign == _issign){
                 $.extend(user,{
                     num: i++,
-                    issign:issign_
+                    // issign:issign_
                 });
                 _data.items.push(user);
                }
@@ -292,7 +293,7 @@ exports.postrecordpeopleOfaward = function(req,res){
         "imgsrc":req.body.imgsrc,
         "awardimg":req.body.awardimg,
         "awardsname":req.body.awardsname,
-        "prizename":req.body.prizename,        
+        "prizename":req.body.prizename,
     };
     
     var aName = "";//奖品的id

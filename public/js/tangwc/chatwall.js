@@ -1,18 +1,22 @@
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+
     // 主监听socket   用来控制 次监听socket
     var mainSocket='';
-    var mainUrl="ws://www.jskplx.com/mainsocket";
-
-// 次监听socket
+    var mainUrl= socketUrl +'mainsocket';
+    // 次监听socket
     var socket = '';
-    var url = "ws://www.jskplx.com/wxmsg";
+    var url = socketUrl+'wxmsg';//"ws://www.jskplx.com/wxmsg";
+
     var flag=1;
     var temp = 0;
      // var chars = ['0','1','2','3','4','5','6','7','8','9','啊','哦','额','一','五','与','波','破','莫','分','的','特','了','内','个','可','和','一','五','与','字','次','是','值','吃','是'];
    
     var msgNumber=0;
-    var ip = ""; 
+
     $(function() {
-        ip = $("#mainIP").html();
+
         mainWebSocket();
         getwebsocket();
 

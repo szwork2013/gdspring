@@ -8,13 +8,16 @@ var  redis = $.plug.redis.redisserver;
 exports.gettugofwar = function(req, res) {
     var code = req.query.code;
     var state = req.query.state;
-    var data='';
+    // var data='';
 
     // api.getUserIdByCode(code, (data)=>{
     //     data = data;
     //     console.log(data);
     // });
  //console.log
+    var data = {};
+    data.httpUrl = $.config.httpUrl;
+    data.socketUrl = $.config.socketUrl;
     res.render('page/tugofwar',data);
 };
 
@@ -27,7 +30,8 @@ exports.gettugofwarsummary = function(req, res) {
     var data_object = new Object();
     data_object.data = data_json;*/
     var data = {};
-    data.ip = global.IP;
+    data.httpUrl = $.config.httpUrl;
+    data.socketUrl = $.config.socketUrl;
 
     res.render('page/lottery',data)
 };
@@ -39,21 +43,19 @@ exports.getvote = function(req, res) {
         // console.log(replies.length + " replies:");
         async.each(replies, (userid, rcallback) => {
 
-
             redis.hgetall(userid, (err, result) => {
 
-
-
-
-            result.key = userid
-        data.data.push(result);
-        rcallback();
+                result.key = userid
+                data.data.push(result);
+                rcallback();
+            });
+        }, function (err){
+            //console.log(data.items);
+            data.httpUrl = $.config.httpUrl;
+            data.socketUrl = $.config.socketUrl;
+            res.render('page/vote', data);
+        });
     });
-}, function (err){
-    //console.log(data.items);
-    res.render('page/vote', data);
-});
-});
 };
 
 exports.postchangenumber = function(req, res) {

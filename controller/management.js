@@ -11,8 +11,9 @@ var KEY = {
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
+var mainUrl = $.config.socketUrl+"mainsocket";
 var WebSocket = require('faye-websocket'),
-    ws = new WebSocket.Client('ws://www.jskplx.com/mainsocket'),
+    ws = new WebSocket.Client(mainUrl),
     util = require('util'),
     redis = $.redis.createClient($.config.redis.server);
 
@@ -39,28 +40,30 @@ exports.getfetchallusers = function(req, res) {
 exports.getuserlist = function(req, res) {
 	var data = {};
 	data.items = [];
-    data.ip = '';
+    
     var i=1;
-	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
+	redis.keys("useduser:*", function (err, replies) {
 	    // console.log(replies.length + " replies:");
 	    async.each(replies, (userid, rcallback) => {
 
             
          	redis.hgetall(userid, (err, result) => {
 
-                var issign_ = result.issign 
-                if(issign_ == '' || issign_ == undefined || issign_ == null){
-                    issign_ = 0;
-                }
-         	   $.extend(result,{
-                   num: i++,
-                   issign:issign_
-               });
-         	   data.items.push(result);
-         	   rcallback();
+                // var issign_ = parseInt(result.issign);
+                // if(issign_ == '' || issign_ == undefined || issign_ == null){
+                //     issign_ = 0;
+                // }
+         	    // $.extend(result,{
+                    
+              //       issign:parseInt(result.issign)
+              //   });
+         	    data.items.push(result);
+         	    rcallback();
 		 	});
 	    }, function (err){
-	    	data.ip = global.IP;
+	    	
+            data.httpUrl = $.config.httpUrl;
+            data.socketUrl = $.config.socketUrl;
 	        res.render('page/userlist', data);
 	    });
    });
@@ -115,13 +118,114 @@ exports.getstatusFun = function StatusFun(req,res){
    });
 }
 
+//重置 聊天页面数据库中的数据
+exports.postresetChatDB = (req,res)=>{
 
+   redis.keys("message:*", (err, replies)=>{
+        async.each(replies, (messageInfo, rcallback) => {
 
+            redis.del(messageInfo, (err, reply)=>{  
+                rcallback();
+            });
+        }, function (err){
+            console.log("1:::"+err);
+            redis.keys("chataward:*", (err, replies)=>{
+                async.each(replies, (chatawardInfo, rcallback) => {
 
+                    redis.del(chatawardInfo, (err, reply)=>{  
+                        rcallback();
+                    });
+                }, function (err){
+                    console.log("2:::"+err);
+                    res.send("重置数据库成功")
+                });
+            })
+        });
+   });
+}
+//重置 聊天页面数据库中的数据
+exports.postresetLuckDB = (req,res)=>{
 
+   redis.keys("award:*", (err, replies)=>{
+        async.each(replies, (awardInfo, rcallback) => {
 
+            redis.hgetall(awardInfo, (err, result) => {
+                result.DrawedNumber = 0;
+                result.Status = 1;
+                redis.hmset(awardInfo, result, (err, data) => {
+                    
+                    // rcallback();
+                });
+                rcallback();
+            });
+        }, function (err){
+            // console.log("1:::"+err);
+            redis.keys("luckyaward:*", (err, replies)=>{
+                async.each(replies, (luckyawardInfo, rcallback) => {
 
+                    redis.del(luckyawardInfo, (err, reply)=>{  
+                        rcallback();
+                    });
+                }, function (err){
+                    // console.log("2:::"+err);
+                    res.send("重置数据库成功")
+                });
+            })
+        });
+   });
+}
 
+//重置 高达/头像 页面数据库中的数据
+exports.postresetHeadDB = (req,res)=>{
+
+    redis.keys("useduser:*", function (err, replies) {
+
+            async.each(replies, (userid, rcallback) => {
+                
+                redis.hgetall(userid, (err, result) => {
+
+                    $.extend(result,{
+                        issign:0
+                    });
+                    redis.hmset("useduser:"+result.userid, result, (err, data) => {
+                       // console.log(data);
+                    });
+                   
+                    rcallback();
+                });
+            }, function (err){
+                
+                res.send("重置数据库成功")
+            });
+       });
+   /*redis.keys("award:*", (err, replies)=>{
+        async.each(replies, (awardInfo, rcallback) => {
+
+            redis.hgetall(awardInfo, (err, result) => {
+                result.DrawedNumber = 0;
+                result.Status = 1;
+                redis.hmset(awardInfo, result, (err, data) => {
+                    
+                    // rcallback();
+                });
+                rcallback();
+            });
+        }, function (err){
+            console.log("1:::"+err);
+            redis.keys("luckyaward:*", (err, replies)=>{
+                async.each(replies, (luckyawardInfo, rcallback) => {
+
+                    redis.del(luckyawardInfo, (err, reply)=>{  
+                        rcallback();
+                    });
+                }, function (err){
+                    console.log("2:::"+err);
+                    res.send("重置数据库成功")
+                });
+            })
+        });
+   });*/
+}
 
 
 

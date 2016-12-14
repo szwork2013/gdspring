@@ -16,15 +16,28 @@
           </div>
         </ul>
       </div>  
+      <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
     </body>
 
-     <script src="../js/jquery.js"></script>
-     <script type="text/javascript" src="../js/bootstrap.js"></script>
+     <script src="../../js/jquery.js"></script>
+     <script type="text/javascript" src="../../js/bootstrap.js"></script>
         <script type="text/javascript">
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl= socketUrl +'mainsocket';
+    // 次监听socket
+    var socket = '';
+    var url = socketUrl+'tugofwar';
+
+
           var logger = document.getElementsByTagName('ul')[0], index  = 0;
           var host= window.location.host;
           var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-          var url= "ws://"+host+"/tugofwar";
+          // var url= "ws://"+host+"/tugofwar";
           var socket = new wsCtor(url);//, 'echo-protocol'
           var log = function(text) {
               logger.innerHTML += '<li>' + text + '</li>';

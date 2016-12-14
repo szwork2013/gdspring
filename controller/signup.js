@@ -11,9 +11,11 @@ var KEY = {
     Table: 'user_table:%s'
 };
 
-var message=["来得早不如来得巧,{0}的桌号是{1},速速前往!", 
-             "{0},都在等你吃饭呢,还不赶快去!记得是第{1}桌!", 
-             "Hi {0},你的中奖机会已经报爆表,再不落座{1}号桌就归零了哦!5,4,3,2,1! 0!"];
+var message= $.config.signup_message;
+
+
+var httpUrl = $.config.httpUrl;
+var socketUrl = $.config.socketUrl;
 
 exports.getreg = function(req, res) {
 	var code = req.query.code;
@@ -27,37 +29,38 @@ exports.getreg = function(req, res) {
         // 获取不到Code或者拿不到UserId
  		if(!code || !data.UserId) {
 		   $.extend(user,{
-		   	    message:"我猜你是大BOSS，不在五行中！请联系工作人员获取桌号，谢谢！"
+		   	    message:$.config.signup_cantgetuserid
 		   });
 
-		   res.render('page/signup',{user: user});
+		   res.render('page/signup',{user: user,httpUrl:httpUrl,socketUrl:socketUrl});
  		}
 
 		if(data.UserId){
-		   var key = util.format(KEY.USER, data.UserId);
-		   redis.hgetall(key, (err, user)=>{
-		   	  console.log(user.issign);
-		   	  
-		   	  if(!user.issign || user.issign === "1"){
-		   	  	 $.extend(user, {
-			   	    message: "签到了就去吃饭，还愣着干嘛！桌号是{0}".format(user.table? user.table:0)
-			     });
-		   	  	 return res.render('page/signup', {user: user});
-		   	  }
-
-              //签到成功
-              $.extend(user,{
-              	  num: $.plug.sms.getRandomInt(1,230),
-			   	  issign: 1,
-			   	  message: message[$.plug.sms.getRandomInt(0,3)].format(user.name, user.table? user.table:0)
-			  });
-
-              redis.hmset(key, user, (err, data) => {
-		         console.log(data);
-		      });
-
-		   	  res.render('page/signup',{user: user});
-		   });
+		    var key = util.format(KEY.USER, data.UserId);
+		    redis.hgetall(key, (err, user)=>{
+		   	    console.log(user.issign);
+		   	  	//已经签到了
+		   	    if(user.issign === "1"){ //  !user.issign || 
+		   	    	$.extend(user, {
+			   	    	message: $.config.signup_getuserid.format(user.table? user.table:0)
+			        });
+		   	  	    res.render('page/signup', {user: user,httpUrl:httpUrl,socketUrl:socketUrl});
+		   	    }else{
+	                //签到成功
+	                $.extend(user,{
+	              	    //num: $.plug.sms.getRandomInt(1,232),//最大值按照高达字体样式的个数  留两个空位
+				   	    issign: 1,
+				   	    message: message[$.plug.sms.getRandomInt(0,3)].format(user.name, user.table? user.table:0)
+				    });
+	                redis.hmset(key, user, (err, data) => {
+			           console.log(data);
+			        });
+	                redis.hmset("useduser:"+data.UserId, user, (err, data) => {
+			           // console.log(data);
+			        });
+			   	    res.render('page/signup',{user: user,httpUrl:httpUrl,socketUrl:socketUrl});
+		   	    }
+		    });
 		}
     });
 };

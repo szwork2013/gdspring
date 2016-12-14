@@ -6,7 +6,7 @@
         <style type="text/css">
             *{padding:0;margin: 0}
             .shake_box {
-                background: url(../img/xiaolian.png) no-repeat #1e2020 center center;
+                background: url(../../img/xiaolian.png) no-repeat #1e2020 center center;
                 position: fixed;
                 top : 0;
                 left: 0;
@@ -24,7 +24,7 @@
             .shakBottom {bottom : 0;}
 
             .shakTop span,.shakBottom span{
-                background: url(../img/shakBox.png) no-repeat;
+                background: url(../../img/shakBox.png) no-repeat;
                 position : absolute;
                 left: 50%;
                 width : 450px;
@@ -103,14 +103,28 @@
             <div class="shakTop"><span></span></div>
             <div class="shakBottom"><span></span></div>
         </div>
+<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
     </body>
 
-        <script src="../js/jquery.js"></script>
+        <script src="../../js/jquery.js"></script>
         <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
         <script type="text/javascript">
+
+
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl= socketUrl +'mainsocket';
+    // 次监听socket
+    var socket = '';
+    var url = socketUrl+'tugofwar';
+
             var host= window.location.host;
             var wsCtor = window['MozWebSocket'] ? MozWebSocket : WebSocket;
-            var socket = new wsCtor("ws://"+host+"/tugofwar");//, 'echo-protocol'
+            var socket = new wsCtor(url);//, 'echo-protocol'
 
             $(function() {
                 listen();
@@ -191,7 +205,7 @@
 
             //预加摇一摇声音
             var shakeAudio = new Audio();
-                shakeAudio.src = '../sound/shake_sound.mp3';
+                shakeAudio.src = '../../sound/shake_sound.mp3';
             var shake_options = {
                 preload  : 'auto'
             }

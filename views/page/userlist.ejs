@@ -37,7 +37,7 @@
                     <button class="btn btn-info" onclick="transationFun('/showhead/head/head')">跳转</button>
                   </th>
                   <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="changeDBFun()">重置数据库</button>
+                    <button class="btn btn-warning" onclick="resetHeadDBFun()">重置数据库</button>
                   </th>
               </tr>
               <tr>
@@ -53,7 +53,7 @@
                     <button class="btn btn-info" onclick="transationFun('/chatwall/chat/chat')">跳转</button>
                   </th>
                   <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="changeDBFun()">重置数据库</button>
+                    <button class="btn btn-warning" onclick="resetChatDBFun()">重置数据库</button>
                   </th>
               </tr>
               <tr>
@@ -69,7 +69,7 @@
                     <button class="btn btn-info" onclick="transationFun('/li/tugofwarsummary')">跳转</button>
                   </th>
                   <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="changeDBFun()">重置数据库</button>
+                    <button class="btn btn-warning" onclick="resetLuckDBFun()">重置数据库</button>
                   </th>
               </tr>
               <tr>
@@ -233,21 +233,22 @@
         </div>
     </div>
 </div>
-<div id="mainIP" style="display: none;"><%= ip%></div><!-- var ip = ""; --><!-- ip = $("#mainIP").html(); -->
+<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 </body> 
-<script type="text/javascript" src></script>
+<script src="../../js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
 
 var user_id;
 var user_department;
 var user_num;
 var flag = 1;
-var ip = "";
 
-$(function(){
-  ip = $("#mainIP").html();
-  getSatausFun();
-})
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+
+  $(function(){
+    getSatausFun();
+  })
 
 
   function searchFun(){
@@ -305,12 +306,12 @@ $(function(){
   }
   function resetSignup(uid){ 
      $.ajax({
-        url:ip+'api/user/resetuser?UserId='+uid+"&issign=0&table=0",//http://localhost:9999/
+        url:ip+'api/user/resetuser?UserId='+uid+"&issign=0",//http://localhost:9999/   &table=0
         type:'get',
         async:false,
         dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
         success:function(data){
-           $("#"+uid).html(data);
+           $("#"+uid).html(data.issign);
         },
         error:function(){
           console.log("没有从数据库中搜索到数据!");
@@ -384,7 +385,6 @@ $(function(){
     })
     
   }
-
 
 // 页面socket连接控制方法
   function sendMsgFun(param){
@@ -479,6 +479,77 @@ $(function(){
           }
       })
   }
+//重置 聊天页面数据库中的数据
+  function resetChatDBFun(){
+      layer.confirm('删除 聊天页面 数据库中的数据？ 请谨慎操作!!!', {
+          btn: ['是的','不要了'] //按钮
+      }, function(){
+          layer.closeAll();
+          $.ajax({//redirectcontrol
+              url:ip+'management/resetChatDB',//http://localhost:9999/
+              type:'post',
+              async:false,
+              // data:{"url":"url:"+param},
+              // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+              success:function(data){
+                alert(data);
+              },
+              error:function(){
+                alert("数据库中没有数据");
+              }
+          })
+      }, function(){
+          layer.closeAll();
+      }); 
+  }
+//重置 抽奖 页面数据库中的数据
+  function resetLuckDBFun(){
+      layer.confirm('删除 抽奖页面 数据库中的数据？ 请谨慎操作!!!', {
+          btn: ['是的','不要了'] //按钮
+      }, function(){
+          layer.closeAll();
+          $.ajax({//redirectcontrol
+              url:ip+'management/resetLuckDB',//http://localhost:9999/
+              type:'post',
+              async:false,
+              // data:{"url":"url:"+param},
+              // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+              success:function(data){
+                alert(data);
+              },
+              error:function(){
+                alert("数据库中没有数据");
+              }
+          })
+      }, function(){
+          layer.closeAll();
+      }); 
+  }
+
+//重置 签到 页面数据库中的数据
+  function resetHeadDBFun(){
+      layer.confirm('删除 抽奖页面 数据库中的数据？ 请谨慎操作!!!', {
+          btn: ['是的','不要了'] //按钮
+      }, function(){
+          layer.closeAll();
+          $.ajax({//redirectcontrol
+              url:ip+'management/resetHeadDB',//http://localhost:9999/
+              type:'post',
+              async:false,
+              // data:{"url":"url:"+param},
+              // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+              success:function(data){
+                alert(data);
+              },
+              error:function(){
+                alert("数据库中没有数据");
+              }
+          })
+      }, function(){
+          layer.closeAll();
+      }); 
+  }
+
 
 </script> 
 </html>  

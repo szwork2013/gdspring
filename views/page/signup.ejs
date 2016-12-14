@@ -6,7 +6,7 @@
          <style type="text/css">
             body {
                 margin: 0;
-                background: url(../img/signup.png) no-repeat center center;
+                background: url(../../img/signup.png) no-repeat center center;
                 position: fixed;
                 background-position:0% 0%;  
                 background-size:cover; 
@@ -37,12 +37,27 @@
                <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/>
             </div>
             <div class="message"><%=user.message%></div>
-
+<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
     </body>
-    <script src="../js/jquery.js"></script>
+    <script src="../../js/jquery.js"></script>
     <script type="text/javascript">
-        var socket = null;
-        var url = "ws://"+ window.location.host +"/signup";
+
+
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl= socketUrl +'mainsocket';
+    // 次监听socket
+    var socket = '';
+    var url = socketUrl+'signup';
+
+
+
+
+
         $(function() {
            if ('WebSocket' in window)
                 socket = new WebSocket(url);

@@ -10,7 +10,8 @@ exports.getchat = function(req, res) {
 	var code = req.query.code;
 	var state = req.query.state;
     var data = {};
-    data.ip = global.IP;
+    data.httpUrl = $.config.httpUrl;
+    data.socketUrl = $.config.socketUrl;
 	res.render('page/chatwall',data);
 };
 exports.getchatmessage = function(req, res) {

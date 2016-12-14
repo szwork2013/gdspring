@@ -1,19 +1,23 @@
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+
     // 主监听socket   用来控制 次监听socket
     var mainSocket='';
-    var mainUrl="ws://www.jskplx.com/mainsocket";
-
+    var mainUrl= socketUrl +'mainsocket';
     // 次监听socket
     var socket = '';
-    var url = "ws://www.jskplx.com/signup";
-    var flag=1;
+    var url = socketUrl+'signup';
 
+    // var mainUrl="ws://www.jskplx.com/mainsocket";
+    // var url = "ws://www.jskplx.com/signup";
+
+    var flag=1;
     // 记录签到人员数量
     var signNumber=0;
-    var ip = "";
-
+    
     window.onresize = adjust();
     $(function() {
-        ip = $("#mainIP").html();
 
         // var width = $(document).width()*0.6;
         // var height = $(document).width()*0.6;
@@ -148,7 +152,7 @@
         while(i<data.length){
             var imgSrc = data[i].avatar;
             var num = data[i].num;
-            if(num>230){
+            if(num>235){
                 return;
             }
             var name = data[i].name; 

@@ -17,6 +17,13 @@ exports.gettugofwar = function(req, res) {
                 //     avata:"http://shp.qpic.cn/bizmp/ic7zogWndTyW6bS7qiaa6CDAptkLKrTPFMTk9hNUFpGYL9tn2fES2Bjw/"
                 //  };
                 // console.log(result1);
+
+
+/*var data = {};
+    data.httpUrl = $.config.httpUrl;
+    data.socketUrl = $.config.socketUrl;*/
+
+                
 		    	res.render('page/tugofwar',result);
 		    });
 	    });
@@ -24,5 +31,8 @@ exports.gettugofwar = function(req, res) {
 };
 
 exports.gettugofwarsummary = function(req, res) {
-	res.render('page/tugofwar_summary');
+    var data = {};
+    data.httpUrl = $.config.httpUrl;
+    data.socketUrl = $.config.socketUrl;
+	res.render('page/tugofwar_summary',data);
 };
