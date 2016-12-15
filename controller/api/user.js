@@ -6,7 +6,7 @@ var wechat = require('wechat-enterprise'),
 
 var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,"41");
 var KEY = {
-    USER         : 'user:%s',
+    USER   : 'user:%s',
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
@@ -14,7 +14,7 @@ var management = require("../management.js");
 exports.getreguserlist = function(req, res) {
   	var data = [];
     var i = 1;
-  	redis.keys("useduser:*", function (err, replies) {
+  	redis.keys(util.format(KEY.USER,"*"), function (err, replies) {
   	    // console.log(replies.length + " replies:");
   	    async.each(replies, (userid, rcallback) => {
            	redis.hgetall(userid, (err, result) => {
@@ -36,15 +36,16 @@ exports.getfetchallusers = function(req, res) {
     api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
         async.each(data.userlist,(user, rcallback) => {
             //初始化桌号
-            // $.extend(user, {
-            //   table: 0
-            // });
+            $.extend(user, {
+                table: 0,
+                issign:0
+            });
             user.department = JSON.stringify(user.department);
 
 
             // console.log(user.department+"::::"+user.table);
              //保存数据
-            redis.hmset("useduser:"+user.userid, user, (err, data) => {
+            redis.hmset(util.format(KEY.USER,user.userid), user, (err, data) => {
                 // console.log(data);
                 rcallback();
             });
@@ -56,7 +57,7 @@ exports.getfetchallusers = function(req, res) {
 };
 // 签到重置
 exports.getresetuser = function(req, res) {
-    var key = "useduser:"+req.query.UserId;
+    var key = util.format(KEY.USER,req.query.UserId );
     var _issign = req.query.issign;
     // var _table = req.query.table;
     redis.hgetall(key, (err, user)=>{
@@ -75,7 +76,7 @@ exports.getresetuser = function(req, res) {
 // 修改信息
 exports.postresetuserinfo = function(req, res) {
     // var key = util.format(KEY.USER, req.body.UserId);
-    var key = "useduser:"+req.body.UserId;
+    var key = util.format(KEY.USER,req.body.UserId);
     var _table = req.body.table;
     var department = req.body.department;
     if(department == ''){
@@ -92,7 +93,7 @@ exports.postresetuserinfo = function(req, res) {
         var i = 1;
         var data = {};
         data.items = [];
-        redis.keys("useduser:*", function (err, data) {
+        redis.keys(util.format(KEY.USER,"*"), function (err, data) {
             var item = [];
             async.each(data, (userid, rcallback) => {
                 redis.hgetall(userid, (err, _user) => {
@@ -100,7 +101,7 @@ exports.postresetuserinfo = function(req, res) {
                         $.extend(_user,{
                             table: _table
                         });
-                        redis.hmset("useduser:"+_user.userid, _user, (err, data) => {
+                        redis.hmset(util.format(KEY.USER,_user.userid), _user, (err, data) => {
                             console.log( _user.userid+"修改成功");
                         });
                     }
@@ -123,7 +124,7 @@ exports.postselectUsers = function(req, res) {
   var i=1;
 // 获取到所有user 的数据
   var tempData = {};
-  redis.keys("useduser:*", function (err, result) {
+  redis.keys(util.format(KEY.USER, "*"), function (err, result) {
     tempData = result;
     if(_table == '' && _department == '' && _issign ==''){
        async.each(tempData, (userid, rcallback) => {

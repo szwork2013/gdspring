@@ -7,7 +7,7 @@ var wechat = require('wechat-enterprise'),
 
 var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,"41");
 var KEY = {
-    USER         : 'user:%s',
+    USER  : 'user:%s',
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
@@ -19,10 +19,13 @@ var WebSocket = require('faye-websocket'),
 
 exports.getfetchallusers = function(req, res) {
  	api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
-	   async.each(data.userlist,(user, rcallback) => {
+        var i = 1;
+	    async.each(data.userlist,(user, rcallback) => {
              //初始化桌号
              $.extend(user, {
-			   	table: 0
+			   	table: 0,
+                issign:0,
+                num:i++
 			 });
 			 user.department = JSON.stringify(user.department);
 			 //保存数据
@@ -31,32 +34,24 @@ exports.getfetchallusers = function(req, res) {
              	rcallback();
 			 });
 	    },(err) => {
-	       console.log(err);
+	       res.send("拉取数据成功");
 	    });
     });
-    res.send("0");
 };
 
 exports.getuserlist = function(req, res) {
 	var data = {};
 	data.items = [];
     
-    var i=1;
-	redis.keys("useduser:*", function (err, replies) {
-	    // console.log(replies.length + " replies:");
+    
+	redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
+        var i=1;
 	    async.each(replies, (userid, rcallback) => {
 
-            
          	redis.hgetall(userid, (err, result) => {
-
-                // var issign_ = parseInt(result.issign);
-                // if(issign_ == '' || issign_ == undefined || issign_ == null){
-                //     issign_ = 0;
-                // }
-         	    // $.extend(result,{
-                    
-              //       issign:parseInt(result.issign)
-              //   });
+         	    $.extend(result,{
+                    num:i++
+                });
          	    data.items.push(result);
          	    rcallback();
 		 	});
@@ -178,7 +173,7 @@ exports.postresetLuckDB = (req,res)=>{
 //重置 高达/头像 页面数据库中的数据
 exports.postresetHeadDB = (req,res)=>{
 
-    redis.keys("useduser:*", function (err, replies) {
+    redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
 
             async.each(replies, (userid, rcallback) => {
                 
@@ -187,7 +182,7 @@ exports.postresetHeadDB = (req,res)=>{
                     $.extend(result,{
                         issign:0
                     });
-                    redis.hmset("useduser:"+result.userid, result, (err, data) => {
+                    redis.hmset(util.format(KEY.USER,result.userid), result, (err, data) => {
                        // console.log(data);
                     });
                    

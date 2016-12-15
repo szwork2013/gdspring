@@ -9,10 +9,10 @@
     <script src="../js/bootstrap.js"></script>
 </head>  
 <body>
-
 <div style="margin-top:50px;width: 100%">
 
 <div class="container" style="display: block;">
+    <div style="text-align: right;padding-bottom: 30px;" ><button class="btn btn-default" onclick="fetchAllUser();">重新拉取微信数据</button></div>
     <table class="table table-hover">
         <thead>
             <tr style="">
@@ -549,7 +549,19 @@ var flag = 1;
           layer.closeAll();
       }); 
   }
-
-
+//重新拉取微信数据库信息
+  function fetchAllUser(){
+      $.ajax({//redirectcontrol
+          url:ip+'management/fetchallusers',//http://localhost:9999/
+          type:'get',
+          async:true,
+          success:function(data){
+            layer.msg(data);
+          },
+          error:function(){
+            layer.msg("没有获取到数据");
+          }
+      })
+  }
 </script> 
 </html>  

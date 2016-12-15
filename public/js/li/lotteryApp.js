@@ -252,10 +252,10 @@ var startScroll = function() {
     }
 
     $('.liLuckyDog').remove();
-        if ($("#ulPerPool li").length <= 5) {
-        layer.msg('参与人员不足,至少需要5人！');
-        return;
-    }
+        if ($("#ulPerPool li").length <= 4) {
+            layer.msg('参与人员不足,至少需要5人！');
+            return;
+        }
 
     //luckIndex = 2;
     interval = setInterval(scrollList, 50);

@@ -55,9 +55,6 @@ exports.getreg = function(req, res) {
 	                redis.hmset(key, user, (err, data) => {
 			           console.log(data);
 			        });
-	                redis.hmset("useduser:"+data.UserId, user, (err, data) => {
-			           // console.log(data);
-			        });
 			   	    res.render('page/signup',{user: user,httpUrl:httpUrl,socketUrl:socketUrl});
 		   	    }
 		    });
