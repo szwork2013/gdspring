@@ -34,7 +34,7 @@
     </head>
     <body id="bodyId">
             <div class="avatar">
-               <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/>
+               <!-- <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/> -->
             </div>
             <div class="message"><%=user.message%></div>
 <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
@@ -42,38 +42,28 @@
     <script src="../../js/jquery.js"></script>
     <script type="text/javascript">
 
-
     var connectIP = $("#mainIP").html();
-    var ip =connectIP.split("|")[0];
     var socketUrl=connectIP.split("|")[1];
 
-    // 主监听socket   用来控制 次监听socket
-    var mainSocket='';
-    var mainUrl= socketUrl +'mainsocket';
-    // 次监听socket
     var socket = '';
     var url = socketUrl+'signup';
 
-
-
-
-
         $(function() {
-           if ('WebSocket' in window)
+            if ('WebSocket' in window){
                 socket = new WebSocket(url);
-           else if ('MozWebSocket' in window)
+            }else if ('MozWebSocket' in window){
                 socket = new MozWebSocket(url);
+            }
 
-           socket.onopen = function() {
-              var d={
-                 avatar:"<%=user.avatar%>",
-                 num:"<%=user.num%>",
-                 name:"<%=user.name%>"
-              };
-              
-              socket.send(JSON.stringify(d));
-           };
-           getWidthAndHeigth();
+            socket.onopen = function() {
+                var d={
+                    avatar:"<%=user.avatar%>",
+                    num:"<%=user.num%>",
+                    name:"<%=user.name%>"
+                };
+                socket.send(JSON.stringify(d));
+            };
+            getWidthAndHeigth();
         })
 
         function getWidthAndHeigth(){

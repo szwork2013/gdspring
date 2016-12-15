@@ -14,18 +14,24 @@
      // var chars = ['0','1','2','3','4','5','6','7','8','9','啊','哦','额','一','五','与','波','破','莫','分','的','特','了','内','个','可','和','一','五','与','字','次','是','值','吃','是'];
    
     var msgNumber=0;
-
+    var chatarrList = [];
     $(function() {
-
         mainWebSocket();
         getwebsocket();
 
         getmessages();//初始化获取  发送的消息数量
 
-
-
         getsavedawardOfChat();
+        getarray();
     })
+    function getarray(){
+        var chatArr = [];
+        var arrayString = $("#configChatArray").html().split(",");
+        for(var key in arrayString){
+            chatArr.push(parseInt(arrayString[key]));
+        }
+        chatarrList = chatArr;
+    }
 
 // 连接mainWebSocket  服务
     function mainWebSocket(){
@@ -57,8 +63,6 @@
             }
         };  
     }
-
-
     // 连接websocket  服务
     function getwebsocket(){
         if ('WebSocket' in window)
@@ -75,7 +79,6 @@
             var data=JSON.parse(evt.data);
             var imgSrc = data.avatar;
 
-
             if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
                 insertMessage(data);
             }else{
@@ -86,7 +89,7 @@
             $("#messageCount").html((parseInt(num)+1));
 
             msgNumber = parseInt(num)+1;
-            if(msgNumber==8||msgNumber==88||msgNumber==188){    //  消息达到多少条  对用发奖品+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            if(chatarrList.indexOf(msgNumber)==0){    //  消息达到多少条  发奖品+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 saveawardOfChat(data); 
             }
         };
@@ -103,14 +106,12 @@
                 $("#"+data.userid+">img").css({  //可以定位到  中奖消息的id 
                     "animation":"bigPicture 3s 0s infinite"
                 })
-                $(".chatAwardImgStyle").each(function(){
-                    
+                $(".chatAwardImgStyle").each(function(){ 
                     if($(this)[0].src == ''){
                         $(this)[0].src = data.avatar;
                         $(this)[0].title = data.name;
                         return false;//用于跳出each循环
                     }
-
                 })
             },
             error:function(){
@@ -131,13 +132,6 @@
                     $(".chatAwardImgStyle:eq("+i+")")[0].src = reply[i].avatar;
                     $(".chatAwardImgStyle:eq("+i+")")[0].title = reply[i].name;
                 }
-
-                /*$(".chatAwardImgStyle").each(function(index){
-                    if($(this)[0].src == ''){
-                        $(this)[0].src = reply[index].avatar;
-                        $(this)[0].title = reply[index].name;
-                    }
-                })*/
             },
             error:function(){
                 console.log("未获取到数据!");
@@ -165,21 +159,21 @@
         $("#rootwall").append(
             "<marquee direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div id='"+id+"' class='' style='background:url(../../img/111.jpg) no-repeat;background-size:cover;width:"+(messageLength)+"px;'>" +
-                    "<img src='"+data.avatar+"' style='height: 100px;width: 100px;float: left;'>" +
-                    "<div style='height: 80px;width: "+messageLength+"px;padding-top: 20px;font-size: 17pt;'>"+message+"</div>" +
+                    "<img src='"+data.avatar+"' style='height: 40px;width: 40px;float: left;'>" +
+                    "<div style='height: 40px;max-width:280px;padding-top: 20px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>"+message+"</div>" +
                 "</div>" +
             "</marquee>"
         );
     }
-    // 接受到图片
+    // 接受到图片    
     function appendImage(position,image,data,id){
         $("#rootwall").append(
             "<marquee direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
-                "<div id='"+id+"' style='width: 380px;'>"+
+                "<div id='"+id+"' style='width: 280px;'>"+
                     "<div class='' style=''>" +
-                        "<img src='"+data.avatar+"' style='height: 80px;width:80px;float:left;'>" +
+                        "<img src='"+data.avatar+"' style='height: 40px;width:40px;float:left;'>" +
                     "</div>" +
-                    "<img src='"+image+"' style='max-width: 300px;max-height:300px;'>" +
+                    "<img src='"+image+"' style='max-width: 280px;max-height:280px;'>" +
                 "</div>"+
             "</marquee>"
         );

@@ -56,18 +56,15 @@ exports.getfetchallusers = function(req, res) {
     });
 };
 // 签到重置
-exports.getresetuser = function(req, res) {
-    var key = util.format(KEY.USER,req.query.UserId );
-    var _issign = req.query.issign;
+exports.postresetuser = function(req, res) {
+    var key = util.format(KEY.USER,req.body.UserId );
+    // var _issign = req.query.issign;
     // var _table = req.query.table;
     redis.hgetall(key, (err, user)=>{
         $.extend(user, {
-            // table: _table,
-            issign: _issign
+            issign: 0
         });
-       
         redis.hmset(key, user, (err, data) => {
-            // console.log(data);
             res.send({issign:0});
         });
         
@@ -345,14 +342,27 @@ exports.postrecordpeopleOfaward = function(req,res){
 // 获取 抽奖页面的 奖品的方法
 exports.getawardlist = function(req,res){
     var arr = [];
+    var arr1 = [];
+    var arr2 = [];
+    var arr3 = [];
     redis.keys("award:*",function (err,replies){
         async.each(replies, (userid, rcallback) => {
             redis.hgetall(userid, (err, result) => {
-                arr.push(result);
+                if(parseInt(result.AwardsLevel)==1){
+                    arr1.push(result);
+                }else if(parseInt(result.AwardsLevel)==2){
+                    arr2.push(result);
+                }else if(parseInt(result.AwardsLevel)==3){
+                    arr3.push(result);
+                }
+                
                 rcallback();//应该放在  hgetall 里面 作为回调函数  否则  下面的 arr 则发出去 是空的
             });
         },function (err){
-            res.send(arr);
+            var a = arr.concat(arr1);
+            var b = a.concat(arr2);
+            var c = b.concat(arr3);
+            res.send(c); 
         });
     })
 }

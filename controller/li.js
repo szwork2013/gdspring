@@ -62,14 +62,20 @@ exports.postchangenumber = function(req, res) {
 
    var newBody = new Object();
     newBody.number = req.body.number;
-    newBody.name = "111";
+    newBody.name = "111";   
 
     //console.log(req.body.key.trim())
     redis.hmset(req.body.key.trim(), newBody, (err, data) => {
         console.log(data);
         res.send(data)
     });
+};
+exports.postsaveluckyawardmessage = function(req, res) {
 
+    var key ="award:"+req.body.AwardsLevel;
 
-
+    redis.hmset(key, req.body, (err, data) => {
+        
+        res.send("保存成功")
+    });
 };

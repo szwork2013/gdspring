@@ -85,7 +85,7 @@ var config = module.exports = {
 
     signup_cantgetuserid: "我猜你是大BOSS，不在五行中！请联系工作人员获取桌号，谢谢！",
     signup_getuserid: "签到了就去吃饭，还愣着干嘛！桌号是{0}",
-
+    chatarray:[28,38,58,66,88] //消息强页面的  中奖  号码
 };
 
 

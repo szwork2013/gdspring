@@ -21,14 +21,12 @@
 
         // var width = $(document).width()*0.6;
         // var height = $(document).width()*0.6;
-
         // $(".firstDiv").css({
         //     // "margin":"auto",
         //     "width": width+"px !important",
         //     "height": height+"px !important",
         //     "display": "block",
         //     "margin-left":width*0.3+"px",
-
         //     // "width": "100%",
         //     // "text-align": "center"
         // })
@@ -50,7 +48,7 @@
 
 
         getData();
-        // getwebsocket();
+        getwebsocket();
 
         $('.demo').fireworks({ 
               sound: false, // sound effect
@@ -109,7 +107,7 @@
 	       	var imgSrc = data.avatar;
 	    	var num = data.num;
 	    	var name = data.name;
-            if(num>230){
+            if(num>232){
                 reutrn;
             }
 	        if(num != "" && num != undefined && num != null){

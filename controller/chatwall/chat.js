@@ -12,6 +12,7 @@ exports.getchat = function(req, res) {
     var data = {};
     data.httpUrl = $.config.httpUrl;
     data.socketUrl = $.config.socketUrl;
+    data.array = $.config.chatarray;
 	res.render('page/chatwall',data);
 };
 exports.getchatmessage = function(req, res) {
