@@ -13,8 +13,12 @@ var config = module.exports = {
         corpId: 'wxbea72108079dcb26',
         corpsecret: 'wbqx1xWAELa3HmdJLqjpOk4FXkWh6UjF_kc4mPlwjz9Hlj8yOf-9u5s9TFzhSSWz',
         token: '1iBZ',
-        encodingAESKey: '4JdmSv43zuTE8D8rECS45XTvs1dHc5uyUwaOpKUNyHg'
+        encodingAESKey: '4JdmSv43zuTE8D8rECS45XTvs1dHc5uyUwaOpKUNyHg',
+        access_token:'',
+        access_token_time:''
     },
+    useridToOpenid:"https://qyapi.weixin.qq.com/cgi-bin/user/convert_to_openid?access_token=",//getAccessToken在调用的时候赋值
+    agentid:41,
     // 程序路由指定
     dir: "controller",
     // 调试日志开关

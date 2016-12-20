@@ -77,6 +77,12 @@
         socket.onmessage = function(evt) {
             console.log(evt.data);
             var data=JSON.parse(evt.data);
+
+
+               /* var message = json_encode(data); //暴露出unicode
+                var tmpStr = preg_replace("#(\\\ue[0-9a-f]{3})#ie","addslashes('\\1')",message); //将emoji的unicode留下，其他不动
+                message = json_decode(tmpStr);*/
+
             var imgSrc = data.avatar;
 
             if(imgSrc != undefined && imgSrc != '' && imgSrc != null){

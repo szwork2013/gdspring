@@ -2,11 +2,12 @@ var wechat = require('wechat-enterprise'),
     fs =require("fs"),
     async = $.async,
     util = require('util'),
-    redis = $.plug.redis.redisserver;
+    redis = $.plug.redis.redisserver,
+    wcqy_wechat = $.proxy_wcqy.wechat;
 
-var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,"41");
+var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,$.config.agentid);//$.config.agentid  = 41
 var KEY = {
-    USER   : 'user:%s',
+    USER   : 'users:%s',
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
@@ -19,10 +20,8 @@ exports.getreguserlist = function(req, res) {
   	    async.each(replies, (userid, rcallback) => {
            	redis.hgetall(userid, (err, result) => {
                 if(parseInt(result.issign)==1){
-                    
                     data.push(result);
                 }
-                
            	    rcallback();
   		 	    });
   	    }, function (err){
@@ -31,30 +30,48 @@ exports.getreguserlist = function(req, res) {
   	    });
     });
 };
+//重新获取ACCESS_TOKEN
+// exports.getACCESS_TOKEN = function(req, res) {
+//     wcqy_wechat.getAccessTokenAnother(req,function(){console.log("重新获取ACCESS_TOKEN失败")});
+//     res.send("1");
+// };
 
-exports.getfetchallusers = function(req, res) {
-    api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
+//重新拉取用户数据
+exports.getfetchallusers =function (req, res){
+
+    api.getDepartmentUsersDetail(1, 1, 1, (err, data)=>{
+        var x=1;
         async.each(data.userlist,(user, rcallback) => {
-            //初始化桌号
-            $.extend(user, {
-                table: 0,
-                issign:0
-            });
-            user.department = JSON.stringify(user.department);
 
-
-            // console.log(user.department+"::::"+user.table);
-             //保存数据
-            redis.hmset(util.format(KEY.USER,user.userid), user, (err, data) => {
-                // console.log(data);
-                rcallback();
+            api.getUserOpenId({"userid": user.userid/*,"agentid":41*/},(err,reply)=>{
+                /*if(reply.errcode==43013){
+                    $.extend(reply, {
+                        openid :"undefined"
+                    })
+                }*/
+                $.extend(user, {
+                    "table": 0,
+                    "issign":0,
+                    "isaward":0,
+                    "openid": reply.openid,
+                    "appid":"wxb702524cb9c3b9c7",/*reply.appid,*/
+                    "num":x++
+                })
+                user.department = JSON.stringify(user.department);
+                // console.log("reply:::"+JSON.stringify(reply));
+                 //保存数据
+                redis.hmset(util.format(KEY.USER,user.userid), user, (err, result) => {
+                    rcallback();
+                });
             });
+         
         },(err) => {
-            console.log(err);
-            res.send("0");
+            res.send("1");
         });
     });
-};
+} 
+
+
 // 签到重置
 exports.postresetuser = function(req, res) {
     var key = util.format(KEY.USER,req.body.UserId );
@@ -67,7 +84,6 @@ exports.postresetuser = function(req, res) {
         redis.hmset(key, user, (err, data) => {
             res.send({issign:0});
         });
-        
     });
 };
 // 修改信息
@@ -294,16 +310,9 @@ exports.postrecordpeopleOfaward = function(req,res){
         "prizename":req.body.prizename,
     };
     
-    var aName = "";//奖品的id
-    var id_ = req.body.AwardsID;
-    if(id_ == 1){
-        aName = "numberOne";
-    }else if(id_ == 2){
-        aName = "numberTwo";
-    }else if(id_ == 3){
-        aName = "numberThree";
-    }
-    redis.hgetall("award:"+aName, (err, result) => {
+    var id_ = parseInt(req.body.AwardsID);
+
+    redis.hgetall("award:"+id_, (err, result) => {
         var _DrawedNumber = parseInt(result.DrawedNumber);
         var _Number = parseInt(result.Number);
         var status = parseInt(result.Status);
@@ -311,27 +320,32 @@ exports.postrecordpeopleOfaward = function(req,res){
         if(_DrawedNumber < _Number){
           //记录中奖人员的信息
             redis.keys("luckyaward:*",(err, data)=>{
-                $.extend(body,{
-                    "luckid":(data.length+1)
-                })
-                redis.hmset("luckyaward:"+(data.length+1), body, (err, data) => {
-                // res.send("1");
-            });
+                
+                redis.hgetall("luckyaward:"+data.length),(err, reply)=>{
+                    var luckid_ = parseInt(reply.luckid)+1;
+                    $.extend(body,{
+                        "luckid": luckid_
+                    })
+                    redis.hmset("luckyaward:"+luckid_, body, (err, data) => {
+                    // res.send("1");
+                    });
+                }
+                
             })
             // 改变被抽中的奖品数量
             result.DrawedNumber = _DrawedNumber +1;
             if((_DrawedNumber +1) == _Number){
                result.Status = 0;
             }
-            redis.hmset("award:"+aName, result, (err, data) => {
+            redis.hmset("award:"+id_, result, (err, data) => {
                 res.send({"AwardsID":id_,"DrawedNumber":_DrawedNumber,"status":status,"msg":"恭喜中奖!"});
             });
         }else{
-          console.log(result);
+
             status = 0;
             result.Status = 0;
-            console.log(result.Status);
-            redis.hmset("award:"+aName, result, (err, data) => {
+
+            redis.hmset("award:"+id_, result, (err, data) => {
                 res.send({"AwardsID":id_,"DrawedNumber":_DrawedNumber,"status":status,"msg":"奖品已经抽完!"});
             });
         }

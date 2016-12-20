@@ -16,6 +16,7 @@ exports.getAccessToken = function(req, callback) {
             }, function(err, data) {
                 // 缓存access_token
                 (function (data) {
+                    var data = eval('(' + data + ')');
                     if (data && data.errcode) {
                         callback(err, {});
                     } else {
@@ -35,7 +36,26 @@ exports.getAccessToken = function(req, callback) {
         );
     }
 };
+/*// my get access_token
+exports.getAccessTokenAnother = (req, callback)=>{
+    // 是否过期
+    if ($.config.enterprise.access_token_time && (new Date()).getTime() < $.config.enterprise.access_token_time) {
+        callback(null, $.config.enterprise.access_token);
+    }else {
+        // 获取凭证接口
+        $.ajax(
+            {
+                url: "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid="+$.config.enterprise.corpId+"&corpsecret="+$.config.enterprise.corpsecret,
+                type:"get"
+            }, 
+            function(err, data){  
+                var data = eval('(' + data + ')');    
+                $.config.enterprise.access_token = data.access_token;
 
+            }
+        )
+    }
+}*/
 /* *
  * 获取jsapi_ticket
  * */

@@ -3,102 +3,103 @@
 <head>  
     <meta charset="UTF-8">  
     <title>用户列表</title>  
-    <link rel="stylesheet" href="../css/bootstrap.css">  
+    <link rel="stylesheet" href="../../css/bootstrap.css">  
 
-    <script src="../js/li/jquery.min.js"></script>  
-    <script src="../js/bootstrap.js"></script>
+    <script src="../../js/li/jquery.min.js"></script>  
+    <script src="./../js/bootstrap.js"></script>
 </head>  
 <body>
+<!-- 消息开关控制 -->
 <div style="margin-top:50px;width: 100%">
+  <div class="container" style="display: block;">
+      <div style="padding-bottom: 30px;text-align: right;" >
+        <button class="btn btn-default" onclick="createTimes();">生成随机时间</button>
+        <button class="btn btn-default" onclick="deleteTimes();">删除随机生成的时间</button>
+        <button class="btn btn-info" onclick="recordLukyAwardMessage();">录入抽奖页面奖品信息</button>
+        <button class="btn btn-info" onclick="getLukyAwardMessage();">获取抽奖页面奖品信息</button>
+        <button class="btn btn-danger" onclick="fetchAllUser();">重新拉取微信数据</button>
+      </div>
+      <!-- 总体开关 -->
+      <table class="table table-hover">
+          <thead>
+              <tr style="">
+                  <th style="text-align:center;">名称</th>
+                  <th style="text-align:center;">页面消息开关</th>
+                  <th style="text-align:center;">跳转到该页面</th>
+                  <th style="text-align:center;">重置数据库数据</th>
+              </tr>
+          </thead>
+          <tbody>
+                <tr>
+                    <th style="text-align: center;"><span name="p_name">签到~页面</span></th>
+                    <th style="text-align: center;">
+                        <select id="headselect" onchange='sendMsgFun("head");'>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-default" onclick="sendMsgFun('head')">是否开启</button>
 
-<div class="container" style="display: block;">
-    <div style="padding-bottom: 30px;text-align: right;" >
-      <button class="btn btn-default" onclick="recordLukyAwardMessage();">录入抽奖页面奖品信息</button>
-      <button class="btn btn-default" onclick="getLukyAwardMessage();">获取抽奖页面奖品信息</button>
-      <button class="btn btn-default" onclick="fetchAllUser();">重新拉取微信数据</button>
-    </div>
-    <!-- <div style="padding-bottom: 30px;" ><button class="btn btn-default" onclick="fetchAllUser();">重新拉取微信数据</button></div> -->
-    <table class="table table-hover">
-        <thead>
-            <tr style="">
-                <th style="text-align:center;">名称</th>
-                <th style="text-align:center;">页面开关</th>
-                <th style="text-align:center;">跳转到该页面</th>
-                <th style="text-align:center;">重置数据库数据</th>
-            </tr>
-        </thead>
-        <tbody>
-              <tr>
-                  <th style="text-align: center;"><span name="p_name">签到~页面</span></th>
-                  <th style="text-align: center;">
-                      <select id="headselect" onchange='sendMsgFun("head");'>
-                          <option value="0">否</option>
-                          <option value="1">是</option>
-                      </select>
-                      <button class="btn btn-warning" onclick="sendMsgFun('head')">是否开启</button>
-
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-info" onclick="transationFun('/showhead/head/head')">跳转</button>
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="resetHeadDBFun()">重置数据库</button>
-                  </th>
-              </tr>
-              <tr>
-                  <th style="text-align: center;"><span name="p_name">聊天~页面</span></th>
-                  <th style="text-align: center;">
-                      <select id="chatselect" onchange='sendMsgFun("chat");'>
-                          <option value="0" >否</option>
-                          <option value="1">是</option>
-                      </select>
-                      <button class="btn btn-warning" onclick="sendMsgFun('chat')">是否开启</button>
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-info" onclick="transationFun('/chatwall/chat/chat')">跳转</button>
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="resetChatDBFun()">重置数据库</button>
-                  </th>
-              </tr>
-              <tr>
-                  <th style="text-align: center;"><span name="p_name">抽奖~页面</span></th>
-                  <th style="text-align: center;">
-                      <select id="luckselect" onchange='sendMsgFun("luck");'>
-                          <option value="0">否</option>
-                          <option value="1">是</option>
-                      </select>
-                      <button class="btn btn-warning" onclick="sendMsgFun('luck')">是否开启</button>
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-info" onclick="transationFun('/li/tugofwarsummary')">跳转</button>
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="resetLuckDBFun()">重置数据库</button>
-                  </th>
-              </tr>
-              <tr>
-                  <th style="text-align: center;"><span name="p_name">投票~页面</span></th>
-                  <th style="text-align: center;">
-                      <select id="voteselect" onchange='sendMsgFun("vote");'>
-                          <option value="0">否</option>
-                          <option value="1">是</option>
-                      </select>
-                      <button class="btn btn-warning" onclick="sendMsgFun('vote')">是否开启</button>
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-info" >跳转</button><!-- 投票结果展示页面的  路由 onclick="transationFun()"  -->
-                  </th>
-                  <th style="text-align: center;">
-                    <button class="btn btn-warning" onclick="changeDBFun()">重置数据库</button>
-                  </th>
-              </tr>
-        </tbody>
-    </table>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-info" onclick="transationFun('/showhead/head/head')">跳转</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-danger" onclick="resetHeadDBFun()">重置数据库</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;"><span name="p_name">聊天~页面</span></th>
+                    <th style="text-align: center;">
+                        <select id="chatselect" onchange='sendMsgFun("chat");'>
+                            <option value="0" >否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-default" onclick="sendMsgFun('chat')">是否开启</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-info" onclick="transationFun('/chatwall/chat/chat')">跳转</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-danger" onclick="resetChatDBFun()">重置数据库</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;"><span name="p_name">抽奖~页面</span></th>
+                    <th style="text-align: center;">
+                        <select id="luckselect" onchange='sendMsgFun("luck");'>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-default" onclick="sendMsgFun('luck')">是否开启</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-info" onclick="transationFun('/li/tugofwarsummary')">跳转</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-danger" onclick="resetLuckDBFun()">重置数据库</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;"><span name="p_name">投票~页面</span></th>
+                    <th style="text-align: center;">
+                        <select id="voteselect" onchange='sendMsgFun("vote");'>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-default" onclick="sendMsgFun('vote')">是否开启</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-info" >跳转</button><!-- 投票结果展示页面的  路由 onclick="transationFun()"  -->
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-danger" onclick="changeDBFun()">重置数据库</button>
+                    </th>
+                </tr>
+          </tbody>
+      </table>
+  </div>
 </div>
-</div>
-
-
+<!-- 数据展示 -->
 <div class="container" style="margin-top: 20px;">
     <div class="row">
       <div class="span6">
@@ -134,11 +135,11 @@
               未签到:&nbsp;<input type="radio" name="issignRadio" value="0" title="未签到" style="width: 20px;height: 20px;">
             </div>
           </div>
-          <div class="span2" style="margin-left: 700px;" >
+          <div class="span2" style="margin-left: 670px;" >
             <div style="height:30px;">
             </div>
-            <button type="submit" class="btn" onclick="searchFun();">查询</button>
-            <button style="margin-left: 80px; " type="submit" class="btn" onclick="popUpWindow()">批量修改信息</button>
+            <button type="submit" class="btn btn-info" onclick="searchFun();">开始查询</button>
+            <button style="margin-left: 80px; " type="submit" class="btn btn-info" onclick="popUpWindow()">批量修改信息</button>
             
           </div>
       </div>
@@ -179,6 +180,7 @@
       </div>
     </div>
 </div>
+<!-- 整体设置桌号 -->
 <div id="setTable" class="modal fade" style="display: none; width: 100% ;height: 100%;">
     <div class="box box-default extensionDiv" style="margin-left: 42%;margin-top: 100px;width: 300px;height: 200px;background-color: #fff;text-align: center;">
         <div class="box-body">
@@ -219,6 +221,7 @@
         </div>
     </div>
 </div>
+<!-- 设置单个桌号 -->
 <div id="setTableSingle" class="modal fade" style="display: none; width: 100% ;height: 100%;">
     <div class="box box-default extensionDiv" style="margin-left: 42%;margin-top: 100px;width: 300px;height: 200px;background-color: #fff;text-align: center;">
         <div class="box-body">

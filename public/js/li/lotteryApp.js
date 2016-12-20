@@ -35,13 +35,12 @@ var currAwards = {
 };
 
 $(function() {
-     var connectIP = $("#mainIP").html();
-     lotteryApp.ip =connectIP.split("|")[0];
-     socketUrl=connectIP.split("|")[1];
+    var connectIP = $("#mainIP").html();
+    lotteryApp.ip =connectIP.split("|")[0];
+    socketUrl=connectIP.split("|")[1];
 
-     mainUrl = socketUrl +'mainsocket';
-     url = socketUrl+'lukysocket';
-
+    mainUrl = socketUrl +'mainsocket';
+    url = socketUrl+'lukysocket';
 
     InitAwards();
     InitPerlist();

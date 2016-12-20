@@ -6,7 +6,7 @@ var wechat = require('wechat-enterprise'),
 
 var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,"41");
 var KEY = {
-    USER         : 'user:%s',
+    USER         : 'users:%s',
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };

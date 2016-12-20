@@ -7,7 +7,7 @@ var wechat = require('wechat-enterprise'),
 
 var api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,"41");
 var KEY = {
-    USER  : 'user:%s',
+    USER  : 'users:%s',
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
@@ -17,7 +17,7 @@ var WebSocket = require('faye-websocket'),
     util = require('util'),
     redis = $.redis.createClient($.config.redis.server);
 
-exports.getfetchallusers = function(req, res) {
+/*exports.getfetchallusers = function(req, res) {
  	api.getDepartmentUsersDetail(1, 1, 0, (err, data)=>{
         var i = 1;
 	    async.each(data.userlist,(user, rcallback) => {
@@ -37,7 +37,7 @@ exports.getfetchallusers = function(req, res) {
 	       res.send("拉取数据成功");
 	    });
     });
-};
+};*/
 
 exports.getuserlist = function(req, res) {
 	var data = {};
@@ -175,52 +175,76 @@ exports.postresetHeadDB = (req,res)=>{
 
     redis.keys(util.format(KEY.USER, "*"), function (err, replies) {
 
-            async.each(replies, (userid, rcallback) => {
-                
-                redis.hgetall(userid, (err, result) => {
+        async.each(replies, (userid, rcallback) => {
+            
+            redis.hgetall(userid, (err, result) => {
 
-                    $.extend(result,{
-                        issign:0
-                    });
-                    redis.hmset(util.format(KEY.USER,result.userid), result, (err, data) => {
-                       // console.log(data);
-                    });
-                   
-                    rcallback();
+                $.extend(result,{
+                    issign:0
                 });
-            }, function (err){
-                
-                res.send("重置数据库成功")
-            });
-       });
-   /*redis.keys("award:*", (err, replies)=>{
-        async.each(replies, (awardInfo, rcallback) => {
-
-            redis.hgetall(awardInfo, (err, result) => {
-                result.DrawedNumber = 0;
-                result.Status = 1;
-                redis.hmset(awardInfo, result, (err, data) => {
-                    
-                    // rcallback();
+                redis.hmset(util.format(KEY.USER,result.userid), result, (err, data) => {
+                   // console.log(data);
                 });
+               
                 rcallback();
             });
         }, function (err){
-            console.log("1:::"+err);
-            redis.keys("luckyaward:*", (err, replies)=>{
-                async.each(replies, (luckyawardInfo, rcallback) => {
-
-                    redis.del(luckyawardInfo, (err, reply)=>{  
-                        rcallback();
-                    });
-                }, function (err){
-                    console.log("2:::"+err);
-                    res.send("重置数据库成功")
-                });
-            })
+            
+            res.send("重置数据库成功")
         });
-   });*/
+   });
 }
+//保存产生的时间
+exports.postsavetimes = (req,res)=>{
+    var date = req.body.date;
+    redis.keys("randomtime:*", function (err, replies) {
+        redis.hmset("randomtime:"+(replies.length+1), {"dates":date}, (err, data) => {
+            res.send("1");
+        });
+    });
+}
+//删除生成的时间
+exports.postdeletetimes = (req,res)=>{
 
-
+    redis.del("randomtime:*", function (err, replies) {
+        res.send("1");
+    });
+}
+// 按照生成的时间产生幸运中奖者
+exports.postgeneratetimeluky = (req,res)=>{
+    var data = req.body.data;
+    var mathArr = [];
+    redis.keys("randomtime:*", function (err, replies) {
+        redis.hgetall("randomtime:"+replies.length, (err, result) => {
+            var arrStr = result.dates.split(",");
+            for(var i=0;i<arrStr.length;i++){
+                mathArr.push(parseInt(arrStr[i]));
+            }
+        });
+    });
+    for(var i=0;i<arrStr.length;i++){
+        var datanum = banarySearch(data,arrStr[i]);
+        redis.keys("timeaward:*", function (err, _rep) {
+            redis.hmset("timeaward:"+(_rep.length+1), {"dates":date}, (err, data) => {
+                res.send("1");
+            });
+        })
+    }
+    
+}
+function banarySearch(array,num){
+    var low=0, high, mid;
+    high = array.length - 1;
+    while (low <= high){
+        mid =Math.ceil( (low + high) / 2);
+        if (array[mid] < num){
+            low = mid + 1;
+        }else if (array[mid]>num){
+            high = mid - 1;
+        }else{
+            return array[mid+1];
+        }
+    }
+    return array[mid+1];
+}
 

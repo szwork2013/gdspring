@@ -4,8 +4,8 @@ var user_department;
 var user_num;
 var flag = 1;
 
-    var connectIP = $("#mainIP").html();
-    var ip =connectIP.split("|")[0];
+var connectIP = $("#mainIP").html();
+var ip =connectIP.split("|")[0];
 
   $(function(){
     getSatausFun();
@@ -315,11 +315,11 @@ var flag = 1;
 //重新拉取微信数据库信息
   function fetchAllUser(){
       $.ajax({//redirectcontrol
-          url:ip+'management/fetchallusers',//http://localhost:9999/
+          url:ip+'api/user/fetchallusers',//http://localhost:9999/
           type:'get',
           async:true,
           success:function(data){
-            layer.msg(data);
+            layer.msg("拉取数据成功");
           },
           error:function(){
             layer.msg("没有获取到数据");
@@ -343,6 +343,7 @@ var flag = 1;
       }
 
       var data = {
+          "AwardsID":parseInt(AwardsLevel),
           "AwardsLevel":parseInt(AwardsLevel),
           "Number":parseInt(_Number),
           "Photo":Photo,
@@ -366,7 +367,7 @@ var flag = 1;
           }
       })
   }
-  //获取抽奖页面奖品信息
+  // 获取抽奖页面奖品信息
   function getLukyAwardMessage(){
       $("#AnchorluckyawarlistTable tr:first").nextAll().remove();
       $.ajax({//redirectcontrol
@@ -416,4 +417,46 @@ var flag = 1;
 
       
       $("#recordLukyAward").modal("show");
+  }
+  // 从当前开始随机生成时间
+  function createTimes(){
+      var date = new Date().getTime();//14818508 41108(前) |14818509 56992(当前)
+      var timeQuantum = 1000*60*1;//设置产生的时间在那个时间段内 
+      // var interval = 50;//设置每个时间点的最小间隔
+      var dateArr = [];
+      for(var i=0;i<10;i++){
+          dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
+      } 
+      dateArr=dateArr.sort();
+      $.ajax({
+          url:ip+'management/savetimes',//http://localhost:9999/
+          type:'post',
+          async:false, 
+          data:{"date":dateArr.toString()},
+          // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          success:function(data){
+              layer.msg("生成成功");
+          },
+          error:function(){
+              layer.msg("保存失败");
+          }
+      })
+  }
+  //删除随机生成的时间
+  function deleteTimes(){
+      $.ajax({
+          url:ip+'management/deletetimes',//http://localhost:9999/
+          type:'post',
+          async:false, 
+          // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          success:function(data){
+              layer.msg("删除成功");
+          },
+          error:function(){
+              layer.msg("删除失败");
+          }
+      })
+      
+
+
   }
