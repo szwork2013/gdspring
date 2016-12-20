@@ -65,7 +65,7 @@ function sendMassage(){
             $("#btnclsid").css({
                 "animation": "pulse 1s infinite alternate"
             })
-          // alert("消息发送成功");
+          alert("消息发送成功");
         },
         error:function(){
           alert("消息发送失败");

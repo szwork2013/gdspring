@@ -25,7 +25,16 @@ exports.getchatmessage = function(req, res) {
     	}
     });
 }
-
+//该方法迁移到了wechatreply里 的textOrImgSaveHandler 方法里面了
+exports.postrecordChatAwardPeople = function(req, res){
+	var body = req.body;
+	console.log(body)
+	redis.keys("chataward:*", (err, reply)=>{
+		redis.hmset("chataward:"+(reply.length+1),body,(err,data)=>{
+			res.send("1");
+		})
+	})
+}
 exports.getchatRecordAward = function(req, res){
 	redis.keys("chataward:*",  (err, data)=> {
         var item = [];
