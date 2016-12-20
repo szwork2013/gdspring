@@ -33,7 +33,9 @@
     "formidable": "*",
     "fs-extra":"*",
     "soap":"*",
-    "wechat-enterprise":"*"
+    "wechat-enterprise":"*",
+    "weixin-redpack":"*",
+    "amqplib":"*"
   },
   "devDependencies": {
     "jshint": "^2.9.3",
