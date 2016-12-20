@@ -74,44 +74,44 @@
             console.log('OPEN: ' + socket.protocol);
         };
         //收到消息时触发
-        socket.onmessage = function(evt) {
-            console.log(evt.data);
-            var data=JSON.parse(evt.data);
-
-
-               /* var message = json_encode(data); //暴露出unicode
-                var tmpStr = preg_replace("#(\\\ue[0-9a-f]{3})#ie","addslashes('\\1')",message); //将emoji的unicode留下，其他不动
-                message = json_decode(tmpStr);*/
-
-            var imgSrc = data.avatar;
-
-            if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
-                insertMessage(data);
+        socket.onmessage = function(data) {
+            var data = JSON.parse(data.data);
+            if(parseInt(data.flag) == 0){
+                showMessageFun(data);
             }else{
-                data.avatar = "../../img/xiaolian.png"
-                insertMessage(data);
-            }
-            var num = $("#messageCount").html();   
-            $("#messageCount").html((parseInt(num)+1));
-
-            msgNumber = parseInt(num)+1;
-            if(chatarrList.indexOf(msgNumber)==0){    //  消息达到多少条  发奖品+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                saveawardOfChat(data); 
+                showAwardOfChat(data);
             }
         };
     }
-    function saveawardOfChat(data){
-        $.ajax({
+    function showMessageFun(data){
+
+           /* var message = json_encode(data); //暴露出unicode
+            var tmpStr = preg_replace("#(\\\ue[0-9a-f]{3})#ie","addslashes('\\1')",message); //将emoji的unicode留下，其他不动
+            message = json_decode(tmpStr);*/
+
+        var imgSrc = data.avatar;
+        if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
+            insertMessage(data);
+        }else{
+            data.avatar = "../../img/xiaolian.png"
+            insertMessage(data);
+        }
+        var num = $("#messageCount").html();   
+        $("#messageCount").html((parseInt(num)+1));
+
+    }
+    function showAwardOfChat(data){
+      /*  $.ajax({
             url:ip+'chatwall/chat/recordChatAwardPeople',//http://localhost:9999/
             type:'post',
             async:false,
             data:data,
             dataType:'json', 
-            success:function(reply){//存入成功后 返回 "1"
+            success:function(reply){//存入成功后 返回 "1"*/
 
-                $("#"+data.userid+">img").css({  //可以定位到  中奖消息的id 
+                /*$("#"+data.userid+">img").css({  //可以定位到  中奖消息的id 
                     "animation":"bigPicture 3s 0s infinite"
-                })
+                })*/
                 $(".chatAwardImgStyle").each(function(){ 
                     if($(this)[0].src == ''){
                         $(this)[0].src = data.avatar;
@@ -119,12 +119,12 @@
                         return false;//用于跳出each循环
                     }
                 })
-            },
+           /* },
             error:function(){
                 var num = $("#messageCount").html();   
                 $("#messageCount").html((parseInt(num)-1));
             }
-        })
+        })*/
     }
     function getsavedawardOfChat(){
         $.ajax({

@@ -81,6 +81,15 @@ exports.postredirectcontrol = function socketControlFun(req,res){
     // console.log("mainsocketcontrol");
 }
 
+// 后台 主的控制  发送消息到  抽奖页面  点击开始抽奖
+exports.postclicktostartlucky = function socketControlFun(req,res){
+    var click = req.body.click;
+    ws.send(click);
+
+    res.send("1");
+    // console.log("mainsocketcontrol");
+}
+
 // 保存页面状态的方法
 exports.postsaveStatusFun = function saveStatusFun(req,res){
     var pageName = req.body.pageName;
@@ -196,9 +205,18 @@ exports.postresetHeadDB = (req,res)=>{
 }
 //保存产生的时间
 exports.postsavetimes = (req,res)=>{
-    var date = req.body.date;
+    var date = new Date().getTime();//14818508 41108(前) |14818509 56992(当前)
+    var timeQuantum = 1000*60*1;//设置产生的时间在那个时间段内 
+
+    var dateArr = [];
+    for(var i=0;i<10;i++){
+        dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
+    } 
+    dateArr=dateArr.sort();
+
+    // var date = req.body.date;
     redis.keys("randomtime:*", function (err, replies) {
-        redis.hmset("randomtime:"+(replies.length+1), {"dates":date}, (err, data) => {
+        redis.hmset("randomtime:"+(replies.length+1), {"dates":dateArr}, (err, data) => {
             res.send("1");
         });
     });

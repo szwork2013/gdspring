@@ -726,6 +726,8 @@ function mainWebSocket() {
             console.log("mainsocket收到消息了::" + message);
         }else if(objMsg == "url"){
             window.location.href = controlMsg;
+        }else if(objMsg == "click"){
+            $(".dvStartButton").click();
         }
     };
 }

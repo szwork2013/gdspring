@@ -25,6 +25,7 @@ exports.getchatmessage = function(req, res) {
     	}
     });
 }
+//该方法迁移到了wechatreply里 的textOrImgSaveHandler 方法里面了
 exports.postrecordChatAwardPeople = function(req, res){
 	var body = req.body;
 	console.log(body)

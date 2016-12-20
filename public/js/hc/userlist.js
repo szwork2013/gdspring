@@ -420,19 +420,19 @@ var ip =connectIP.split("|")[0];
   }
   // 从当前开始随机生成时间
   function createTimes(){
-      var date = new Date().getTime();//14818508 41108(前) |14818509 56992(当前)
+     /* var date = new Date().getTime();//14818508 41108(前) |14818509 56992(当前)
       var timeQuantum = 1000*60*1;//设置产生的时间在那个时间段内 
       // var interval = 50;//设置每个时间点的最小间隔
       var dateArr = [];
       for(var i=0;i<10;i++){
           dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
       } 
-      dateArr=dateArr.sort();
+      dateArr=dateArr.sort();*/
       $.ajax({
           url:ip+'management/savetimes',//http://localhost:9999/
           type:'post',
           async:false, 
-          data:{"date":dateArr.toString()},
+          data:{/*"date":dateArr.toString()*/},
           // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
           success:function(data){
               layer.msg("生成成功");

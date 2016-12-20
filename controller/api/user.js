@@ -43,7 +43,7 @@ exports.getfetchallusers =function (req, res){
         var x=1;
         async.each(data.userlist,(user, rcallback) => {
 
-            api.getUserOpenId({"userid": user.userid/*,"agentid":41*/},(err,reply)=>{
+            api.getUserOpenId({"userid": user.userid,"agentid":41},(err,reply)=>{
                 /*if(reply.errcode==43013){
                     $.extend(reply, {
                         openid :"undefined"
@@ -53,8 +53,13 @@ exports.getfetchallusers =function (req, res){
                     "table": 0,
                     "issign":0,
                     "isaward":0,
+                    //增加三个字段  记录 那个页面中奖了 不能重复 在一个活动中中奖
+                    "headaward":0,
+                    "luckyaward":0,
+                    "chataward":0,
+                    
                     "openid": reply.openid,
-                    "appid":"wxb702524cb9c3b9c7",/*reply.appid,*/
+                    "appid":reply.appid,/*"wxb702524cb9c3b9c7",*/
                     "num":x++
                 })
                 user.department = JSON.stringify(user.department);
