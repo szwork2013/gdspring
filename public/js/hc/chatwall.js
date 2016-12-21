@@ -234,7 +234,7 @@
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
             success:function(data){
                 msgNumber = data.len;
-                $("#messageCount").html(data.length);
+                $("#messageCount").html(msgNumber);
             },
             error:function(){
                 console.log("没有从数据库中搜索到数据!");
