@@ -82,25 +82,27 @@
     /*
      * 创建一个定时器  定时的读取存放消息的临时数组
      */
-    window.setInterval(readMsgArr(),1500);
-    function readMsgArr(){
-        // 如果数组的长度小于规定长度  那么就将数组直接传给消息展示的方法
-        if(msgArr.length <= 30){
-            showMessageFun(msgArr);
-        }
-        // 如果数组的长度大于规定长度 截取数组的后三十未数据
-        else{
-            var newarr = msgArr.slice(-30,-1);
-            showMessageFun(newarr); 
-        }
-    }
+     $(function() {
+           setInterval(function(){
+            if(msgArr.length <= 30){
+                showMessageFun(msgArr);
+            }
+            // 如果数组的长度大于规定长度 截取数组的后三十未数据
+            else{
+                var newarr = msgArr.slice(-30,-1);
+                showMessageFun(newarr); 
+             }
+           },1000);
+        })
+    // window.setInterval(readMsgArr(),1500);不同的浏览器,可能会出现问题
+
     /*
      *展示消息的方法(预处理)
      */
     function showMessageFun(data){
         for(var i=0;i<data.length;i++){
             var time = Math.ceil(Math.random()*800);
-            setTimeout(showmessage(data[i]),time)
+            setTimeout(showmessage(data.pop()),time);
         }
     }
     /*
