@@ -35,3 +35,11 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+cert/apiclient_cert.p12
+
+cert/apiclient_cert.pem
+
+cert/apiclient_key.pem
+
+cert/rootca.pem
