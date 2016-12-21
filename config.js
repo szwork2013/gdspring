@@ -9,6 +9,18 @@ var config = module.exports = {
             db: 8
         }
     },
+    mqconnOptions: {
+      hostname: '172.28.189.101',
+      port: 5672,
+      username: 'admin',
+      password: 'P@ssword0'
+    },
+    redpack:{
+        mch_id: '1415437202',
+        partner_key: 'DFanXJMxDQFqsKYz643v5ANWFeuMgOZ2',
+        pfx: require('fs').readFileSync('cert/apiclient_cert.p12'),
+        wxappid: 'wxb702524cb9c3b9c7'
+    },
     enterprise: {
         corpId: 'wxbea72108079dcb26',
         corpsecret: 'wbqx1xWAELa3HmdJLqjpOk4FXkWh6UjF_kc4mPlwjz9Hlj8yOf-9u5s9TFzhSSWz',
@@ -28,7 +40,7 @@ var config = module.exports = {
     // 入口服务器地址
     nginxUrl: "http://localhost:9999/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
     httpUrl: "http://localhost:9999/",
-    socketUrl: "ws://www.jskplx.com/",
+    socketUrl: "ws://localhost:9999/",
     //testhostname: "http://172.28.184.75:9091",
     // 程序路由结构
     routes: {
@@ -89,7 +101,7 @@ var config = module.exports = {
 
     signup_cantgetuserid: "我猜你是大BOSS，不在五行中！请联系工作人员获取桌号，谢谢！",
     signup_getuserid: "签到了就去吃饭，还愣着干嘛！桌号是{0}",
-    chatarray:[28,38,58,66,88] //消息强页面的  中奖  号码
+    chatarray:[188,1800,2800,3800,4800,5800,6800,7800] //消息强页面的  中奖  号码
 };
 
 
