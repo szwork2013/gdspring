@@ -245,17 +245,17 @@ var ip =connectIP.split("|")[0];
 //重置 聊天页面数据库中的数据
   function resetChatDBFun(){
       layer.confirm('删除 聊天页面 数据库中的数据？ 请谨慎操作!!!', {
-          btn: ['是的','不要了'] //按钮
+          btn: ['是的','不要了'] 
       }, function(){
           layer.closeAll();
-          $.ajax({//redirectcontrol
-              url:ip+'management/resetChatDB',//http://localhost:9999/
+          $.ajax({
+              url:ip+'management/resetChatDB',
               type:'post',
               async:false,
               // data:{"url":"url:"+param},
               // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
               success:function(data){
-                alert(data);
+                alert(data.data.text);
               },
               error:function(){
                 alert("数据库中没有数据");
@@ -278,10 +278,10 @@ var ip =connectIP.split("|")[0];
               // data:{"url":"url:"+param},
               // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
               success:function(data){
-                alert(data);
+                 alert(data.data.text);
               },
               error:function(){
-                alert("数据库中没有数据");
+                 alert("数据库中没有数据");
               }
           })
       }, function(){
@@ -302,7 +302,7 @@ var ip =connectIP.split("|")[0];
               // data:{"url":"url:"+param},
               // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
               success:function(data){
-                alert(data);
+                alert(data.data.text);
               },
               error:function(){
                 alert("数据库中没有数据");
@@ -359,7 +359,7 @@ var ip =connectIP.split("|")[0];
           data:data,
           async:true,
           success:function(data){
-            layer.msg(data);
+            layer.msg(data.data.text);
             $("#recordLukyAward").modal("hide");
           },
           error:function(){
@@ -459,4 +459,20 @@ var ip =connectIP.split("|")[0];
       
 
 
+  }
+  function showawardpeople(param){
+      if(param == 'chat'){
+          $.ajax({
+              url:ip+'management/chatawardpeople',//http://localhost:9999/
+              type:'get',
+              async:false, 
+              // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+              success:function(data){
+                  layer.msg("删除成功");
+              },
+              error:function(){
+                  layer.msg("删除失败");
+              }
+          })
+      }
   }

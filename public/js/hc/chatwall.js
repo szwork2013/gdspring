@@ -7,14 +7,14 @@
     var mainUrl= socketUrl +'mainsocket';
     // 次监听socket
     var socket = '';
-    var url = socketUrl+'wxmsg';//"ws://www.jskplx.com/wxmsg";
+    var url = socketUrl+'wxmsg';
 
     var flag=1;
     var temp = 0;
-     // var chars = ['0','1','2','3','4','5','6','7','8','9','啊','哦','额','一','五','与','波','破','莫','分','的','特','了','内','个','可','和','一','五','与','字','次','是','值','吃','是'];
-   
     var msgNumber=0;
-    var chatarrList = [];
+
+    var msgArr = [];//临时记录发送过来的消息
+
     $(function() {
         mainWebSocket();
         getwebsocket();
@@ -22,16 +22,9 @@
         getmessages();//初始化获取  发送的消息数量
 
         getsavedawardOfChat();
-        getarray();
+        
     })
-    function getarray(){
-        var chatArr = [];
-        var arrayString = $("#configChatArray").html().split(",");
-        for(var key in arrayString){
-            chatArr.push(parseInt(arrayString[key]));
-        }
-        chatarrList = chatArr;
-    }
+
 
 // 连接mainWebSocket  服务
     function mainWebSocket(){
@@ -77,62 +70,74 @@
         socket.onmessage = function(data) {
             var data = JSON.parse(data.data);
             if(parseInt(data.flag) == 0){
-                showMessageFun(data);
+                msgArr.push(data);
+                var num = $("#messageCount").html();   
+                $("#messageCount").html((parseInt(num)+1));
             }else{
                 showAwardOfChat(data);
             }
         };
     }
+
+    /*
+     * 创建一个定时器  定时的读取存放消息的临时数组
+     */
+    window.setInterval("readMsgArr()",1000);
+    function readMsgArr(){
+        // 如果数组的长度小于规定长度  那么就将数组直接传给消息展示的方法
+        if(msgArr.length <= 30){
+            showMessageFun(msgArr);
+        }
+        // 如果数组的长度大于规定长度 截取数组的后三十未数据
+        else{
+            var newarr = msgArr.slice(-30,-1);
+            showMessageFun(newarr); 
+        }
+    }
+    /*
+     *展示消息的方法(预处理)
+     */
     function showMessageFun(data){
-
-           /* var message = json_encode(data); //暴露出unicode
-            var tmpStr = preg_replace("#(\\\ue[0-9a-f]{3})#ie","addslashes('\\1')",message); //将emoji的unicode留下，其他不动
-            message = json_decode(tmpStr);*/
-
+        for(var i=0;i<data.length;i++){
+            var time = Math.ceil(Math.random()*800);
+            setTimeout("showmessage({0})".format(data[i]),time)
+        }
+    }
+    /*
+     * 展示消息的方法
+     */
+    function showmessage(data){
         var imgSrc = data.avatar;
         if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
             insertMessage(data);
         }else{
-            data.avatar = "../../img/xiaolian.png"
+            data.avatar = "../../img/xiaolian.png";
             insertMessage(data);
         }
-        var num = $("#messageCount").html();   
-        $("#messageCount").html((parseInt(num)+1));
-
     }
+    /*
+     * 展示中奖人员的方法的方法
+     */
     function showAwardOfChat(data){
-      /*  $.ajax({
-            url:ip+'chatwall/chat/recordChatAwardPeople',//http://localhost:9999/
-            type:'post',
-            async:false,
-            data:data,
-            dataType:'json', 
-            success:function(reply){//存入成功后 返回 "1"*/
-
-                /*$("#"+data.userid+">img").css({  //可以定位到  中奖消息的id 
-                    "animation":"bigPicture 3s 0s infinite"
-                })*/
-                $(".chatAwardImgStyle").each(function(){ 
-                    if($(this)[0].src == ''){
-                        $(this)[0].src = data.avatar;
-                        $(this)[0].title = data.name;
-                        return false;//用于跳出each循环
-                    }
-                })
-           /* },
-            error:function(){
-                var num = $("#messageCount").html();   
-                $("#messageCount").html((parseInt(num)-1));
+        $(".chatAwardImgStyle").each(function(){ 
+            if($(this)[0].src == ''){
+                $(this)[0].src = data.avatar;
+                $(this)[0].title = data.name;
+                return false;//用于跳出each循环
             }
-        })*/
+        })
     }
+    /*
+     * 获取 中奖人员的方法的方法
+     */
     function getsavedawardOfChat(){
         $.ajax({
-            url:ip+'chatwall/chat/chatRecordAward',//http://localhost:9999/
+            url:ip+'chatwall/chat/chatRecordAward',
             type:'get',
             async:false,
             dataType:'json', 
-            success:function(reply){//存取成功后 返回 "1"
+            success:function(data){
+                var reply = data.data;
                 var _length = reply.length;
                 for( var i=0;i<_length;i++){
                     $(".chatAwardImgStyle:eq("+i+")")[0].src = reply[i].avatar;
@@ -144,8 +149,9 @@
             }
         })
     }
-
-    // window.setInterval("insertMessage()",3000);
+    /*
+     * 插入消息
+     */
     function insertMessage(data){
 
         var position = getRandom()*20;
@@ -160,10 +166,14 @@
             appendImage(position,image,data,id);
         }
     }
-    // 接受到纯文字
+
+    /*
+     * 接受到纯文字
+     */
     function appendText(position,message,messageLength,data,id){
+        var speed = Math.ceil(Math.random()*90 +10);//移动的速度
         $("#rootwall").append(
-            "<marquee direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
+            "<marquee scrollamount="+speed+" direction=left style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div id='"+id+"' class='' style='background:url(../../img/111.jpg) no-repeat;background-size:cover;width:"+(messageLength)+"px;'>" +
                     "<img src='"+data.avatar+"' style='height: 40px;width: 40px;float: left;'>" +
                     "<div style='height: 40px;max-width:280px;padding-top: 20px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>"+message+"</div>" +
@@ -171,10 +181,14 @@
             "</marquee>"
         );
     }
-    // 接受到图片    
+  
+    /*
+     * 接受到图片
+     */  
     function appendImage(position,image,data,id){
+        var speed = Math.ceil(Math.random()*90 +10);//移动的速度
         $("#rootwall").append(
-            "<marquee direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
+            "<marquee scrollamount="+speed+" direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div id='"+id+"' style='width: 280px;'>"+
                     "<div class='' style=''>" +
                         "<img src='"+data.avatar+"' style='height: 40px;width:40px;float:left;'>" +
@@ -184,8 +198,9 @@
             "</marquee>"
         );
     }
-
-    // 获取随机数(确定弹出位置)
+    /*
+     * 获取随机数(确定弹出位置)
+     */
     function getRandom(){
         while(1){
             var num = Math.ceil(Math.random()*30);//生成 0 - 20 的随机数
@@ -195,7 +210,9 @@
             }
         }
     }
-    // 产生随机长度的字符串
+    /*
+     * 产生随机长度的字符串
+     */ 
     function generateMixed() {
          var res = "";
          var length =  Math.ceil(Math.random()*30);
@@ -206,17 +223,18 @@
          return res;
     }
 
-
-    // 初始化获取消息的数量的方法
+    /*
+     * 初始化获取消息的数量的方法
+     */
     function getmessages(){
         $.ajax({
             url:ip+'chatwall/chat/chatmessage',//http://localhost:9999/
             type:'get',
             async:false,
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-            success:function(reply){
-                msgNumber = reply.length;
-                $("#messageCount").html(reply.length);
+            success:function(data){
+                msgNumber = data.len;
+                $("#messageCount").html(data.length);
             },
             error:function(){
                 console.log("没有从数据库中搜索到数据!");
