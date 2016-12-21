@@ -82,7 +82,7 @@
     /*
      * 创建一个定时器  定时的读取存放消息的临时数组
      */
-    window.setInterval("readMsgArr()",1000);
+    window.setInterval(readMsgArr(),1500);
     function readMsgArr(){
         // 如果数组的长度小于规定长度  那么就将数组直接传给消息展示的方法
         if(msgArr.length <= 30){
@@ -100,7 +100,7 @@
     function showMessageFun(data){
         for(var i=0;i<data.length;i++){
             var time = Math.ceil(Math.random()*800);
-            setTimeout("showmessage({0})".format(data[i]),time)
+            setTimeout(showmessage(data[i]),time)
         }
     }
     /*
