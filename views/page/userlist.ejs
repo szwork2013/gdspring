@@ -24,7 +24,9 @@
           <thead>
               <tr style="">
                   <th style="text-align:center;">名称</th>
+                  <th style="text-align:center;">弹出新页面</th>
                   <th style="text-align:center;">页面消息开关</th>
+                  <th style="text-align:center;">后端消息开关</th>
                   <th style="text-align:center;">跳转到该页面</th>
                   <th style="text-align:center;">查看中奖信息</th>
                   <th style="text-align:center;">重置数据库数据</th>
@@ -34,11 +36,22 @@
                 <tr>
                     <th style="text-align: center;"><span name="p_name">签到~页面</span></th>
                     <th style="text-align: center;">
+                        <button class="btn btn-info" onclick="popNewPage('/showhead/head/head')">我弹</button>
+                    </th>
+                    <th style="text-align: center;">
                         <select id="headselect" onchange='sendMsgFun("head");'>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
-                        <button class="btn btn-default" onclick="sendMsgFun('head')">是否开启</button>
+                        <button class="btn btn-default" onclick="sendMsgFun('head')">已开启?</button>
+
+                    </th>
+                    <th style="text-align: center;">
+                        <select id="backheadselect" onchange='backMsgFun("head");'>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-warning" onclick="backMsgFun('head')">已开启?</button>
 
                     </th>
                     <th style="text-align: center;">
@@ -54,11 +67,21 @@
                 <tr>
                     <th style="text-align: center;"><span name="p_name">聊天~页面</span></th>
                     <th style="text-align: center;">
+                        <button class="btn btn-info" onclick="popNewPage('/chatwall/chat/chat')">我弹</button>
+                    </th>
+                    <th style="text-align: center;">
                         <select id="chatselect" onchange='sendMsgFun("chat");'>
                             <option value="0" >否</option>
                             <option value="1">是</option>
                         </select>
-                        <button class="btn btn-default" onclick="sendMsgFun('chat')">是否开启</button>
+                        <button class="btn btn-default" onclick="sendMsgFun('chat')">已开启?</button>
+                    </th>
+                    <th style="text-align: center;">
+                        <select id="backchatselect" onchange='backMsgFun("chat");'>
+                            <option value="0" >否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-warning" onclick="backMsgFun('chat')">已开启?</button>
                     </th>
                     <th style="text-align: center;">
                       <button class="btn btn-info" onclick="transationFun('/chatwall/chat/chat')">跳转</button>
@@ -73,14 +96,24 @@
                 <tr>
                     <th style="text-align: center;"><span name="p_name">抽奖~页面</span></th>
                     <th style="text-align: center;">
+                        <button class="btn btn-info" onclick="popNewPage('/li/lottery')">我弹</button>
+                    </th>
+                    <th style="text-align: center;">
                         <select id="luckselect" onchange='sendMsgFun("luck");'>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
-                        <button class="btn btn-default" onclick="sendMsgFun('luck')">是否开启</button>
+                        <button class="btn btn-default" onclick="sendMsgFun('luck')">已开启?</button>
                     </th>
                     <th style="text-align: center;">
-                      <button class="btn btn-info" onclick="transationFun('/li/tugofwarsummary')">跳转</button>
+                        <select id="backluckselect" onchange='backMsgFun("luck");'>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-warning" onclick="backMsgFun('luck')">已开启?</button>
+                    </th>
+                    <th style="text-align: center;">
+                      <button class="btn btn-info" onclick="transationFun('/li/lottery')">跳转</button>
                     </th>
                     <th style="text-align: center;">
                       <button class="btn btn-danger" onclick="">XXX</button>
@@ -92,11 +125,21 @@
                 <tr>
                     <th style="text-align: center;"><span name="p_name">投票~页面</span></th>
                     <th style="text-align: center;">
+                        <button class="btn btn-info" onclick="popNewPage('')">我弹</button>
+                    </th>
+                    <th style="text-align: center;">
                         <select id="voteselect" onchange='sendMsgFun("vote");'>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
-                        <button class="btn btn-default" onclick="sendMsgFun('vote')">是否开启</button>
+                        <button class="btn btn-default" onclick="sendMsgFun('vote')">已开启?</button>
+                    </th>
+                    <th style="text-align: center;">
+                        <select id="voteselect" onchange='backMsgFun("vote");'>
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        <button class="btn btn-warning" onclick="backMsgFun('vote')">已开启?</button>
                     </th>
                     <th style="text-align: center;">
                       <button class="btn btn-info" >跳转</button><!-- 投票结果展示页面的  路由 onclick="transationFun()"  -->

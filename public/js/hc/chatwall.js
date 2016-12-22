@@ -121,7 +121,7 @@
      * 展示中奖人员的方法的方法
      */
     function showAwardOfChat(data){
-        $(".chatAwardImgStyle").each(function(){ 
+        $(".noCssStyle").each(function(){ 
             if($(this)[0].src == ''){
                 $(this)[0].src = data.avatar;
                 $(this)[0].title = data.name;
@@ -142,8 +142,8 @@
                 var reply = data.data;
                 var _length = reply.length;
                 for( var i=0;i<_length;i++){
-                    $(".chatAwardImgStyle:eq("+i+")")[0].src = reply[i].avatar;
-                    $(".chatAwardImgStyle:eq("+i+")")[0].title = reply[i].name;
+                    $(".noCssStyle:eq("+i+")")[0].src = reply[i].avatar;
+                    $(".noCssStyle:eq("+i+")")[0].title = reply[i].name;
                 }
             },
             error:function(){

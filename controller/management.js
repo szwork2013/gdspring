@@ -192,9 +192,9 @@ exports.postresetHeadDB = (req,res)=>{
 /*
  * 保存产生的时间
  */
-exports.postsavetimes = (req,res)=>{
+exports.postcreatetimes = (req,res)=>{
     var date = new Date().getTime(),
-        timeQuantum = 1000*60*1,
+        timeQuantum = 1000*60*5,
         dateArr = [];
     for(var i=0;i<10;i++){
         dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
@@ -272,6 +272,49 @@ exports.getchatawardpeople = (req,res)=>{
             });
         }, function (err){
             res.send()
+        });
+    });
+}
+
+/*
+ * 控制后端是否保存消息的方法
+ */
+exports.postbackmessagecontr =(req,res)=>{
+    var message = req.body.message;
+    var string = message.split(":");
+    var objMsg = string[0];
+    var controlMsg = string[1];
+    if(objMsg == "chat"){
+        if(controlMsg == "open"){
+            redis.hmset("backcontrol:{0}".format(objMsg), {flag:1,name:objMsg}, (err, data) => {
+                res.send({errCode:0});
+            });
+        }
+        else if(controlMsg == "close"){
+            redis.hmset("backcontrol:{0}".format(objMsg), {flag:0,name:objMsg}, (err, data) => {
+                res.send({errCode:0});
+            });
+        }
+    }
+    else{
+        res.send({errCode:10001});
+    }
+}
+
+/*
+ * 获取页面状态的方法
+ */
+exports.getbackstatusFun = (req,res)=>{
+    var data = {};
+        data.items = [];
+    redis.keys("backcontrol:*", function (err, replies) {
+        async.each(replies, (statusInfo, rcallback) => {
+            redis.hgetall(statusInfo, (err, result) => {
+               data.items.push(result);
+               rcallback();
+            });
+        }, function (err){
+            res.send(data);
         });
     });
 }

@@ -38,8 +38,13 @@
     background: #999999;
 }
 .chatAwardImgStyle{
+	margin-top: 0px;
 	height: 40px;
 	width: 40px;
+}
+.chatAwardImgStyleBig{
+	height: 80px;
+	width: 80px;
 }
 /*css 动画  效果*/
 /*翻转效果  动画的 帧 */

@@ -43,11 +43,11 @@
 
 /*翻转效果  动画的 帧 */
 @-webkit-keyframes revolving {
-    0% {-webkit-transform: perspective(1500px) rotateX(0deg);}
-    25% {-webkit-transform: perspective(1500px) rotateX(90deg);}
-    50% {-webkit-transform: perspective(1500px) rotateX(180deg);}
-    75% {-webkit-transform: perspective(1500px) rotateX(270deg);}
-    100% {-webkit-transform: perspective(1500px) rotateX(360deg);}
+    0% {-webkit-transform: perspective(500px) rotateX(0deg);}
+    25% {-webkit-transform: perspective(500px) rotateX(90deg);}
+    50% {-webkit-transform: perspective(500px) rotateX(180deg);}
+    75% {-webkit-transform: perspective(500px) rotateX(270deg);}
+    100% {-webkit-transform: perspective(500px) rotateX(360deg);}
 }
 
 
@@ -67,6 +67,15 @@
 	55%  {transform:perspective(120px);}
 	70%  {transform:perspective(160px);}
 	100% {transform:perspective(200px);}
+}
+
+@keyframes animated_bigPic
+{
+    0%  {transform: scale(1, 1);left: 0px;right: 0px;}
+    25% {transform: scale(2, 2);left: 0px;right: 0px;}
+    50% {transform: scale(4, 4);left: 0px;right: 0px;}
+    75% {transform: scale(6, 6);left: 0px;right: 0px;}
+    100%{transform: scale(8, 8);left: 0px;right: 0px;}
 }
 
 
