@@ -12,50 +12,39 @@
     // var mainUrl="ws://www.jskplx.com/mainsocket";
     // var url = "ws://www.jskplx.com/signup";
 
-    var flag=1;
     // 记录签到人员数量
     var signNumber=0;
     
     window.onresize = adjust();
     $(function() {
 
-        // var width = $(document).width()*0.6;
-        // var height = $(document).width()*0.6;
-        // $(".firstDiv").css({
-        //     // "margin":"auto",
-        //     "width": width+"px !important",
-        //     "height": height+"px !important",
-        //     "display": "block",
-        //     "margin-left":width*0.3+"px",
-        //     // "width": "100%",
-        //     // "text-align": "center"
-        // })
-        // $(".smallDiv").css({
-        //     "width": width/40+"px",
-        //     "height":height/40+"px",
-        //     "position":"relative",
-        //     // "float":"left",
-        //     // "z-index": "2"
-        // })
-        // $(".newLineDiv").css({
-        //     "width": width/40+"px",
-        //     "height":height/40+"px"
-        // })
-        
-          
+        var width = $(document).width()*0.6;
+        var height = $(document).width()*0.6;
+        $(".firstDiv").css({
+            // "margin":"auto",
+            "width": width+"px !important",
+            "height": height+"px !important",
+            "display": "block",
+            "margin-left":width*0.4+"px",
+            // "width": "100%",
+            // "text-align": "center"
+        })
+        $(".smallDiv").css({
+            "width": width/40+"px",
+            "height":height/40+"px",
+            "position":"relative",
+            // "float":"left",
+            // "z-index": "2"
+        })
+        $(".newLineDiv").css({
+            "width": width/40+"px",
+            "height":height/40+"px"
+        })
 
         mainWebSocket();
-
-
         getData();
         getwebsocket();
 
-        $('.demo').fireworks({ 
-              sound: false, // sound effect
-              opacity: 0.1, 
-              width: '100%', 
-              height: '100%' 
-        });
     })
 
 
@@ -190,22 +179,17 @@
     }
 
     // 间隔一段时间,执行该程序
-    window.setInterval("AnimationFun()",6000);
-
-
-
-
-
-
+    window.setInterval("AnimationFun()",20000);
     function AnimationFun(){
-    	// if(flag % 2==1){
-     // 		flag = 2;
-    	// 	animationFunOne();
-    	// }else if(flag % 2==0){
-    	// 	flag=1
-    	// 	animationFunTwo();
-    	// }
-        freePictureFun();
+        var flag =Math.ceil(Math.random()*3);
+    	if(flag==1){
+    		animationFunOne();
+    	}else if(flag==2){
+    		animationFunTwo();
+    	}else if(flag==3){
+            freePictureFun();
+        }
+        
     }
     // 旋转字体
     function animationFunOne(){
@@ -218,40 +202,35 @@
     	})
     	$(".firstDiv").css({
     		"list-style":"none",
-    		"-webkit-animation":"revolving 5s 0s 1",
-    		"animation":"revolving 5s 0s 1",
+    		"-webkit-animation":"revolving 10s 0s 1",
+    		"animation":"revolving 10s 0s 1",
     	});
     }
     // 放大字体
     function animationFunTwo(){
-    	$(".firstDiv").css({
-    		"list-style":"none",
-    		"-webkit-animation":"",
-    		"animation":""
-    	});
-    	$(".secondAnimalDiv").css({
-    		"position":"relative",
-    		"animation":"animated_div 5s 1",
-    		"-moz-animation":"animated_div 5s 1",
-    		"-webkit-animation":"animated_div 5s 1",
-    		"-o-animation":"animated_div 5s 1"
-    	})
+        var number = Math.ceil(Math.random()*230);
+        var imgsrc = $("#"+number)[0].src;
+        if(imgsrc != ip +"img/xiaolian.png"){ 
+            $("#"+number).css({
+                "animation":"animated_bigPic 10s 1"
+            })
+        }
     }
 // 让图片自由移动的方法
     function freePictureFun(){
         var arr = ["wobble","bounceInDown","bounceOut","rubberBand","flip","zoomOutRight","hinge"];
-        var temp_num = Math.round(Math.random()*7);
-        for(var i= 0 ;i<9;i++){
+
+        for(var i= 0 ;i<5;i++){
             var number = Math.ceil(Math.random()*230);
+            var temp_num = Math.round(Math.random()*7);
             $("#"+number).css({
                 "animation":""
             })
 
             var imgsrc = $("#"+number)[0].src;
-            if(imgsrc != ip+ "img/green.jpg"){ //http://localhost:9999/
-                // smallAndBig(number);
+            if(imgsrc != ip+ "img/xiaolian.png"){ 
                 $("#"+number).css({
-                    "animation":arr[temp_num]+" 4s 0s 1"
+                    "animation":arr[temp_num]+" 12s 0s 1"
                 })
 
             }
