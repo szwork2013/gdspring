@@ -38,9 +38,9 @@ var config = module.exports = {
     // 执行超过此值记日志
     time: 50,
     // 入口服务器地址
-    nginxUrl: "http://localhost:9999/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
-    httpUrl: "http://localhost:9999/",
-    socketUrl: "ws://localhost:9999/",
+    nginxUrl: "http://localhost:9090/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
+    httpUrl: "http://localhost:9090/",
+    socketUrl: "ws://localhost:9090/",
     //testhostname: "http://172.28.184.75:9091",
     // 程序路由结构
     routes: {
@@ -94,24 +94,42 @@ var config = module.exports = {
         "蓝瘦，香菇～～～就差一点点了！",
         "天啊，你果然很有一套！还不继续:)"
     ],
-
     signup_message: ["来得早不如来得巧,{0}的桌号是{1},速速前往!", "{0},都在等你吃饭呢,还不赶快去!记得是第{1}桌!",
         "Hi {0},你的中奖机会已经报爆表,再不落座{1}号桌就归零了哦!5,4,3,2,1! 0!"
     ],
-
     signup_cantgetuserid: "我猜你是大BOSS，不在五行中！请联系工作人员获取桌号，谢谢！",
     signup_getuserid: "签到了就去吃饭，还愣着干嘛！桌号是{0}",
-    chatarray:[188,1800,2800,3800,4800,5800,6800,7800] //消息强页面的  中奖  号码
+    chatarray:[25,88,220,888,1992,2017,2092,3888,6666,8888,10000], //消息强页面的  中奖  号码
+    rpmessage: {
+        wechatwall:{
+           send_name: '高达',
+           wishing: '祝阖家欢乐、身体健康、万事如意',
+           act_name: '2017高达年会',
+           remark: '猜越多得越多，快来抢！',
+           no : 1
+        },
+        voice:{
+           send_name: '朱总',
+           wishing: '祝阖家欢乐、身体健康、万事如意',
+           act_name: '2017高达年会',
+           remark: '猜越多得越多，快来抢！'
+        },
+        rain:{
+           send_name: '程总',
+           wishing: '祝阖家欢乐、身体健康、万事如意',
+           act_name: '2017高达年会',
+           remark: '猜越多得越多，快来抢！'
+        }
+    }
 };
 
 
 //Specify config for prod and dev 
 if (config.debug) {
-    config.port = 9999;
+    config.port = 9090;
     config.static = 'public';
 } else {
     // 程序端口
-    config.port = 9999;
+    config.port = 9090;
     config.static = 'minify';
 }
-IP = "http://localhost:9999/"; //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
