@@ -46,6 +46,14 @@
 	height: 80px;
 	width: 80px;
 }
+.crownstyle{
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	z-index: 999;
+	margin-left: -90px;
+	margin-top: -70px;
+}
 /*css 动画  效果*/
 /*翻转效果  动画的 帧 */
 @-webkit-keyframes revolving{

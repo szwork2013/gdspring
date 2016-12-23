@@ -179,17 +179,17 @@
     }
 
     // 间隔一段时间,执行该程序
-    window.setInterval("AnimationFun()",20000);
+    window.setInterval("AnimationFun()",50000);
     function AnimationFun(){
         var flag =Math.ceil(Math.random()*3);
     	if(flag==1){
     		animationFunOne();
     	}else if(flag==2){
-    		animationFunTwo();
+    		// animationFunTwo();
     	}else if(flag==3){
             freePictureFun();
         }
-        
+        animationFunTwo();
     }
     // 旋转字体
     function animationFunOne(){
@@ -206,12 +206,16 @@
     		"animation":"revolving 10s 0s 1",
     	});
     }
-    // 放大字体
+    // 单个放大图片(  ?单个图片放大会被其他头像覆盖)
     function animationFunTwo(){
+        $(".newLineDiv").each(function(){
+            $(this)[0].style.zIndex = 1;
+        })
         var number = Math.ceil(Math.random()*230);
         var imgsrc = $("#"+number)[0].src;
-        if(imgsrc != ip +"img/xiaolian.png"){ 
+        if(imgsrc != ip +"img/xiaowanzi.png"){ 
             $("#"+number).css({
+                "z-index":"3",
                 "animation":"animated_bigPic 10s 1"
             })
         }
@@ -228,7 +232,7 @@
             })
 
             var imgsrc = $("#"+number)[0].src;
-            if(imgsrc != ip+ "img/xiaolian.png"){ 
+            if(imgsrc != ip+ "img/xiaowanzi.png"){ 
                 $("#"+number).css({
                     "animation":arr[temp_num]+" 12s 0s 1"
                 })
