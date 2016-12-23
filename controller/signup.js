@@ -4,13 +4,16 @@ var wechat = require('wechat-enterprise'),
     api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret, $.config.agentid),
     message = $.config.signup_message,
     httpUrl = $.config.httpUrl,
-    socketUrl = $.config.socketUrl;
+    socketUrl = $.config.socketUrl,
+    WebSocket = require('faye-websocket'),
+    ws        = new WebSocket.Client($.config.socketUrl+'signup');
 
 var KEY = {
     USER: 'users:%s',
     Reg: 'user_reg:%s',
     Table: 'user_table:%s'
 };
+
 /*
  *用户签到的页面
  */
@@ -44,6 +47,10 @@ exports.getreg = function(req, res) {
                     redis.hmset(key, user, (err, data) => {
                         console.log(data);
                     });
+                    
+                    //socket通知页面添加头像
+                    ws.send(JSON.stringify(user));
+
                     res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
                 }
             });
