@@ -29,7 +29,10 @@ exports.gettestsend = function(req, res) {
 };
 
 exports.gettestsign = function(req, res) {
-  redis.hgetall("users:renth", (err, user) => {
+
+  redis.hgetall("users:"+req.query.id, (err, user) => {
+     console.log(user);
+     $.extend(user, { issign:1});
      ws2.send(JSON.stringify(user));
   });
   res.send({errcode:0});

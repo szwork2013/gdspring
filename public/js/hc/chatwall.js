@@ -22,9 +22,16 @@
         getmessages();//初始化获取  发送的消息数量
 
         getsavedawardOfChat();
-        
     })
-
+    
+    //定时更新当前数据
+    $(function() {
+        setInterval(function(){
+            console.log(1);
+            getmessages();
+            getsavedawardOfChat();
+        },40000);
+    })
 
 // 连接mainWebSocket  服务
     function mainWebSocket(){
@@ -101,12 +108,12 @@
     /*
      *展示消息的方法(预处理)
      */
-    function showMessageFun(data){
-        for(var i=0;i<data.length;i++){
-            var time = Math.ceil(Math.random()*800);
-            setTimeout(showmessage(data.pop()),time);
-        }
-    }
+    // function showMessageFun(data){
+    //     for(var i=0;i<data.length;i++){
+    //         var time = Math.ceil(Math.random()*800);
+    //         setTimeout(showmessage(data.pop()),time);
+    //     }
+    // }
     /*
      * 展示消息的方法
      */
