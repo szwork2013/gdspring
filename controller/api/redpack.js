@@ -2,7 +2,8 @@ var
     amqp = require('amqplib'),
     util = require('util'),
     WebSocket = require('faye-websocket'),
-    ws        = new WebSocket.Client($.config.socketUrl+'wxmsg'), 
+    ws        = new WebSocket.Client($.config.socketUrl+'wxmsg'),
+    ws2        = new WebSocket.Client($.config.socketUrl+'signup'), 
     redis = $.redis.createClient($.config.redis.server);
 
 function getRandomInt(min, max) {
@@ -27,6 +28,12 @@ exports.gettestsend = function(req, res) {
   res.send({errcode:0});
 };
 
+exports.gettestsign = function(req, res) {
+  redis.hgetall("users:renth", (err, user) => {
+     ws2.send(JSON.stringify(user));
+  });
+  res.send({errcode:0});
+};
 
 
 
