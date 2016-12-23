@@ -27,10 +27,9 @@
     //定时更新当前数据
     $(function() {
         setInterval(function(){
-            console.log(1);
             getmessages();
             getsavedawardOfChat();
-        },40000);
+        },25000);
     })
 
 // 连接mainWebSocket  服务
@@ -145,15 +144,26 @@
         $.ajax({
             url:ip+'chatwall/chat/chatRecordAward',
             type:'get',
-            async:false,
-            dataType:'json', 
+            async:true,
+            //dataType:'json', 
             success:function(data){
-                var reply = data.data;
-                var _length = reply.length;
-                for( var i=0;i<_length;i++){
-                    $(".noCssStyle:eq("+i+")")[0].src = reply[i].avatar;
-                    $(".noCssStyle:eq("+i+")")[0].title = reply[i].name;
-                }
+                //var reply = data.data;
+                //var _length = reply.length;
+                $.each(data.data,(index, item)=>{
+                    var chatid = "#chataward"+item.chataward;
+                    $(chatid)[0].src = item.avatar;
+                    $(chatid)[0].title = item.name;
+                });
+                //for( var i=0;i<_length; i++){
+                //    console.log(i);
+                    //var chatid = "#chataward"+reply[i].chataward;
+                //    console.log(chatid);
+                //    console.log(reply[i].chataward);
+                    //$(chatid)[0].src = reply[i].avatar;
+                    //$(chatid)[0].title = reply[i].name;
+                    //$(".noCssStyle:eq("+i+")")[0].src = reply[i].avatar;
+                    //$(".noCssStyle:eq("+i+")")[0].title = reply[i].name;
+                //}
             },
             error:function(){
                 console.log("未获取到数据!");
