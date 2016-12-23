@@ -38,6 +38,13 @@ var config = module.exports = {
     // 执行超过此值记日志
     time: 50,
     // 入口服务器地址
+
+    // 朱总的红包
+    bonusofzhu:1000,
+    // 陈总的红包
+    bonusofchen:2000,
+    //份额
+    bonusofshare:25,
     nginxUrl: "http://222.92.48.94:9090/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
     httpUrl: "http://222.92.48.94:9090/",
     socketUrl: "ws://139.129.13.113/",
