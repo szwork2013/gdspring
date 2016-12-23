@@ -82,6 +82,7 @@
                 var num = $("#messageCount").html();   
                 $("#messageCount").html((parseInt(num)+1));
             }else{
+                console.log(data);
                 showAwardOfChat(data);
             }
         };
@@ -129,14 +130,18 @@
      * 展示中奖人员的方法的方法
      */
     function showAwardOfChat(data){
-        $(".noCssStyle").each(function(){ 
-            if($(this)[0].src == ''){
-                $(this)[0].src = data.avatar;
-                $(this)[0].title = data.name;
-                return false;//用于跳出each循环
-            }
-        })
+        var chatid = "#chataward" + data.chataward;
+        $(chatid)[0].src = data.avatar;
+        $(chatid)[0].title = data.name;
+        // $(".noCssStyle").each(function(){ 
+        //     if($(this)[0].src == ''){
+        //         $(this)[0].src = data.avatar;
+        //         $(this)[0].title = data.name;
+        //         return false;//用于跳出each循环
+        //     }
+        // })
     }
+
     /*
      * 获取 中奖人员的方法的方法
      */
