@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta name="save" content="history" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="blank" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../css/red/style.css" />
+<link rel="stylesheet" href="../../css/red/rain.css" />
+<title>红包雨</title>
+</head>
+<body>
+<div class="page_rain">
+	<div class="div bg_1"></div>
+	<!--蒙层-->
+	<div class="chuai_box" style="display: none;">
+		<div class="chuai"  onclick="unpackRedacPket()">
+			不用拆了,已给给你包起来了!等着领奖品吧!
+		</div>
+	</div>
+</div>
+<div id="userInformation" hidden="hidden"><%=user%></div>
+<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%>|<%=flag%></div>
+</body>
+<script src="../../js/jquery.js"></script>
+<script type="text/javascript">
+
+    var connectIP = $("#mainIP").html();
+    var ip=connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl= socketUrl +'mainsocket';
+    var userInformation = $("#userInformation").html();
+    var udata= '';
+    var flag =0;
+
+    $(function(){
+    	udata={
+            avatar:"<%=user.avatar%>",
+            num:"<%=user.num%>",
+            name:"<%=user.name%>",
+            userid:"<%=user.userid%>"
+        };
+    })
+
+    // 连接mainWebSocket  服务
+    function mainWebSocket(){
+        if ('WebSocket' in window)
+            mainSocket = new WebSocket(mainUrl);
+        else if ('MozWebSocket' in window)
+            mainSocket = new MozWebSocket(mainUrl);
+        //打开连接时触发
+        mainSocket.onopen = function() {
+            console.log('OPEN: ' + mainSocket.protocol);
+        };
+        //收到消息时触发
+        mainSocket.onmessage = function(message) {
+            console.log("mainsocket收到消息了"+message);
+            var string = message.data.split(":");
+            var objMsg = string[0];
+            var controlMsg = string[1];
+            if(objMsg == "bonus"){
+                if(controlMsg == "chen"){
+                    flag = 1;
+                    getwebsocket();
+                    console.log("mainsocket处理完消息了"+message);
+                }
+            }
+        };  
+    }
+	function getwebsocket(){
+
+	}
+	var a =0;
+	var Timerr = setInterval(aa,200);
+	var removepackage = setInterval(function(){
+			for(var jj=0;jj<$('.div>div').size()/4;jj++){
+				$('.div>div').eq($('.div>div').size()-jj).remove();
+			}
+		},1000)
+	function aa(){
+		for(var i=0;i<4;i++){
+			var m=parseInt(Math.random()*700+100);
+			var j2=parseInt(Math.random()*300+1200);
+			var j=parseInt(Math.random()*1600+000);
+			var j1=parseInt(Math.random()*300+300);
+			var n=parseInt(Math.random()*10+(-10));
+			$('.div').prepend('<div class="dd"></div>');
+			$('.div').children('div').eq(0).css({'left':j,'top':n});
+			$('.div').children('div').eq(0).animate({'left':j-j1,'top':$(window).height()+20},3000);
+		}
+	}
+	$(document).on('touchstart', '.dd', function(){
+		$(this).css("background-position","0 -100px");
+		// a++;
+		// if(a == 5){
+		// 	$(".chuai_box").show();
+		// 	clearInterval(Timerr,20);
+		// 	$(".div").removeClass("bg_1");
+		// 	setTimeout(function(){
+		// 		$(".div").addClass("bg_2");
+		// 	},3000);
+		// }
+		unpackRedacPket();
+	}); 
+	function unpackRedacPket(){
+		if(flag ==1){
+    // ??  判断会存在问题  页面刷新后就没有了  在点击发红包之后  进来该页面的也不行 之后优化
+            $.ajax({
+                url:ip+'redpacket/askforaredredpacket',
+                type:'get',
+                async:false,
+                data:udata,
+                dataType:'json',
+                success:function(data){
+                    if(data.errCode == 0){
+
+                        $(".chuai_box").show();
+                        clearInterval(Timerr,20);
+                        $(".div").removeClass("bg_1");
+                        setTimeout(function(){
+                            $(".div").addClass("bg_2");
+                        },3000);
+
+                        alert("恭喜中奖");
+                    }
+                },
+                error:function(){
+                    alert("很遗憾未中奖");
+                }
+            })
+        }
+		
+		
+	}
+</script>
+</html>

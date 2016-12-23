@@ -26,7 +26,6 @@
                   <th style="text-align:center;">名称</th>
                   <th style="text-align:center;">弹出新页面</th>
                   <th style="text-align:center;">页面消息开关</th>
-                  <th style="text-align:center;">后端消息开关</th>
                   <th style="text-align:center;">跳转到该页面</th>
                   <th style="text-align:center;">查看中奖信息</th>
                   <th style="text-align:center;">重置数据库数据</th>
@@ -46,14 +45,7 @@
                         <button class="btn btn-default" onclick="sendMsgFun('head')">已开启?</button>
 
                     </th>
-                    <th style="text-align: center;">
-                        <select id="backheadselect" onchange='backMsgFun("head");'>
-                            <option value="0">否</option>
-                            <option value="1">是</option>
-                        </select>
-                        <button class="btn btn-warning" onclick="backMsgFun('head')">已开启?</button>
 
-                    </th>
                     <th style="text-align: center;">
                       <button class="btn btn-info" onclick="transationFun('/showhead/head/head')">跳转</button>
                     </th>
@@ -76,13 +68,7 @@
                         </select>
                         <button class="btn btn-default" onclick="sendMsgFun('chat')">已开启?</button>
                     </th>
-                    <th style="text-align: center;">
-                        <select id="backchatselect" onchange='backMsgFun("chat");'>
-                            <option value="0" >否</option>
-                            <option value="1">是</option>
-                        </select>
-                        <button class="btn btn-warning" onclick="backMsgFun('chat')">已开启?</button>
-                    </th>
+
                     <th style="text-align: center;">
                       <button class="btn btn-info" onclick="transationFun('/chatwall/chat/chat')">跳转</button>
                     </th>
@@ -105,13 +91,7 @@
                         </select>
                         <button class="btn btn-default" onclick="sendMsgFun('luck')">已开启?</button>
                     </th>
-                    <th style="text-align: center;">
-                        <select id="backluckselect" onchange='backMsgFun("luck");'>
-                            <option value="0">否</option>
-                            <option value="1">是</option>
-                        </select>
-                        <button class="btn btn-warning" onclick="backMsgFun('luck')">已开启?</button>
-                    </th>
+   
                     <th style="text-align: center;">
                       <button class="btn btn-info" onclick="transationFun('/li/lottery')">跳转</button>
                     </th>
@@ -134,13 +114,7 @@
                         </select>
                         <button class="btn btn-default" onclick="sendMsgFun('vote')">已开启?</button>
                     </th>
-                    <th style="text-align: center;">
-                        <select id="voteselect" onchange='backMsgFun("vote");'>
-                            <option value="0">否</option>
-                            <option value="1">是</option>
-                        </select>
-                        <button class="btn btn-warning" onclick="backMsgFun('vote')">已开启?</button>
-                    </th>
+
                     <th style="text-align: center;">
                       <button class="btn btn-info" >跳转</button><!-- 投票结果展示页面的  路由 onclick="transationFun()"  -->
                     </th>
@@ -155,6 +129,32 @@
       </table>
   </div>
 </div>
+
+<div>
+    <table class="table table-hover">  
+        <thead>
+            <tr style="">
+            <!-- 控制聊天页面 后台是否接受消息 -->
+                <th style="text-align: center;">
+                    <select id="backchatselect" onchange='backMsgFun("chat");'>
+                        <option value="0" >否</option>
+                        <option value="1">是</option>
+                    </select>
+                    <button class="btn btn-warning" onclick="backMsgFun('chat')">chat后台接受消息已开启?</button>
+                </th>
+              <!-- 控制聊天页面 后台是否接受消息 -->
+              <th style="text-align: center;">
+                  <select id="backchatselect" onchange='backMsgFun("voice");'>
+                      <option value="0" >否</option>
+                      <option value="1">是</option>
+                  </select>
+                  <button class="btn btn-warning" onclick="backMsgFun('voice')">voice后台接受消息已开启?</button>
+              </th>
+            </tr>
+        </thead>   
+    </table>         
+</div>
+
 <!-- 数据展示 -->
 <div class="container" style="margin-top: 20px;">
     <div class="row">
