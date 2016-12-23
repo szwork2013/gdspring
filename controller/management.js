@@ -173,6 +173,15 @@ exports.postresetChatDB = (req,res)=>{
                             text:"重置数据库成功"
                         }
                     }
+
+                    redis.keys("wechatredpack:*", (err, replies)=>{
+                        async.each(replies, (wechatredpack, rcallback) => {
+                            redis.del(wechatredpack, (err, reply)=>{  
+                                rcallback();
+                            });
+                        }, function (err){
+                    })})
+
                     res.send(rep)
                 });
             })
