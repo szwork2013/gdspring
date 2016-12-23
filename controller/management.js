@@ -200,9 +200,10 @@ exports.postcreatetimes = (req,res)=>{
         dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
     } 
     dateArr=dateArr.sort();
+    var Str = dateArr.toString(); 
     redis.keys("randomtime:*", function (err, replies) {
         var leng = replies.length+1;
-        redis.hmset("randomtime:{0}".format(leng), {dates:dateArr}, (err, data) => {
+        redis.hmset("randomtime:{0}".format(leng), {dates:Str,timeArr:Str}, (err, data) => {
             res.send({errCode:0});
         });
     });
@@ -220,8 +221,8 @@ exports.postdeletetimes = (req,res)=>{
 /*
  * 按照生成的时间产生幸运中奖者
  */
-exports.postgeneratetimeluky = (req,res)=>{
-    var data = req.body.data;
+/*exports.postgeneratetimeluky = (req,res)=>{
+    var date = req.body.data;
     var mathArr = [];
     redis.keys("randomtime:*", function (err, replies) {
         redis.hgetall("randomtime:{0}".format(replies.length), (err, result) => {
@@ -232,15 +233,55 @@ exports.postgeneratetimeluky = (req,res)=>{
         });
     });
     for(var i=0;i<arrStr.length;i++){
-        var datanum = banarySearch(data,arrStr[i]);
+        var datanum = banarySearch(date,arrStr[i]);
         redis.keys("timeaward:*", function (err, _rep) {
-            redis.hmset("timeaward:{0}".format(_rep.length+1), {"dates":date}, (err, data) => {
+            redis.hmset("timeaward:{0}".format(_rep.length+1), {dates:date}, (err, data) => {
                 res.send({errCode:0});
             });
         })
     }
-}
+}*/
+/*
+ * 按照生成的时间产生幸运中奖者 
+ */
+exports.getproducetimeluckyer = (req,res)=>{  
 
+    var time = req.query.time;//接受请求的时间戳
+    var mathArr = [];//临时数组 记录已经产生的时间戳
+    var _length = 0;//记录最近产生的时间位置
+    redis.keys("randomtime:*", function (err, replies) {
+        _length = replies.length;
+        redis.hgetall("randomtime:{0}".format(_length), (err, reply) => {
+            if(reply.dates == '' || reply.dates == undefined || reply.dates == null){
+                res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
+                return;
+            }else{
+                var arrStr = reply.dates.split(",");
+                for(var i=0;i<arrStr.length;i++){
+                    mathArr.push(parseInt(arrStr[i]));
+                    console.log("::"+mathArr);
+                }
+            }
+        });
+        if(parseInt(time) >= mathArr[0]){
+            var lucktime = mathArr.shift();
+            if(mathArr != '' || mathArr != undefined || mathArr != null){
+                mathArr = mathArr.sort();
+                var str = mathArr.toString();
+                redis.hmset("randomtime:{0}".format(_length), {dates:str}, (err, data) => {});
+                redis.keys("timeaward:*", function (err, _rep) {
+                    redis.hmset("timeaward:{0}".format(_rep.length+1), {origintime:time,lucktime:lucktime}, (err, data) => {
+                        res.send({errCode:0,text:"恭喜中奖"});
+                    });
+                })
+            }else{
+                redis.hmset("randomtime:{0}".format(_length), {dates:''}, (err, data) => {});
+                res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
+            }
+        }
+    });
+    
+}
 /*
  * 二分法
  */
@@ -317,4 +358,36 @@ exports.getbackstatusFun = (req,res)=>{
             res.send(data);
         });
     });
+}
+
+
+/*
+ * 根据分配数值随机分配到N个，总和等于：allotRange 
+ * @param allolTotal 分配的总和 
+ * @param allotSize 分配大小 
+ * @param allotMinVal 分配最小值 
+ * @return 
+ */  
+exports.getrandomassignment = (req,res)=>{
+
+}
+
+
+function randomassignment(allolTotal,allotSize,allotMinVal){
+    var randoms = new Array(allotSize);
+    for (var i = 0; i < allotSize; i++) {  
+
+        var safe_total = (allolTotal - (allotSize - i) * allotMinVal) / (allotSize - i);  
+
+        var random = Math.round(safe_total - allotMinVal) + allotMinVal;  
+        if (random < allotMinVal) {  
+            random = allotMinVal;  
+        }  
+        if (i == allotSize - 1) {  
+            random = allolTotal;  
+        } 
+        allolTotal -= random;  
+        randoms.push(random);  
+    }  
+    return randoms; 
 }

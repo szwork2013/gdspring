@@ -70,7 +70,9 @@
         socket.onmessage = function(data) {
             var data = JSON.parse(data.data);
             if(parseInt(data.flag) == 0){
-                msgArr.push(data);
+                // msgArr.push(data);
+                showmessage(data);
+                
                 var num = $("#messageCount").html();   
                 $("#messageCount").html((parseInt(num)+1));
             }else{
@@ -82,18 +84,18 @@
     /*
      * 创建一个定时器  定时的读取存放消息的临时数组
      */
-     $(function() {
-           setInterval(function(){
-            if(msgArr.length <= 30){
-                showMessageFun(msgArr);
-            }
-            // 如果数组的长度大于规定长度 截取数组的后三十未数据
-            else{
-                var newarr = msgArr.slice(-30,-1);
-                showMessageFun(newarr); 
-             }
-           },1000);
-        })
+     // $(function() {
+     //       setInterval(function(){
+     //        if(msgArr.length <= 30){
+     //            showMessageFun(msgArr);
+     //        }
+     //        // 如果数组的长度大于规定长度 截取数组的后三十未数据
+     //        else{
+     //            var newarr = msgArr.slice(-30,-1);
+     //            showMessageFun(newarr); 
+     //         }
+     //       },1000);
+     //    })
     // window.setInterval(readMsgArr(),1500);不同的浏览器,可能会出现问题
 
     /*
