@@ -38,9 +38,9 @@ var config = module.exports = {
     // 执行超过此值记日志
     time: 50,
     // 入口服务器地址
-    nginxUrl: "http://localhost:9090/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
-    httpUrl: "http://localhost:9090/",
-    socketUrl: "ws://localhost:9090/",
+    nginxUrl: "http://222.92.48.94:9090/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
+    httpUrl: "http://222.92.48.94:9090/",
+    socketUrl: "ws://139.129.13.113/",
     //testhostname: "http://172.28.184.75:9091",
     // 程序路由结构
     routes: {
