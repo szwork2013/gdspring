@@ -53,11 +53,10 @@ function clickFun(){
 }
 function sendMassage(){
     $.ajax({
-        url:ip+'management/clicktostartlucky',//http://localhost:9999/
+        url:ip+'management/clicktostartlucky',//http://localhost:9999/       ?click:"click:1"
         type:'post',
         async:false,
         data:{"click":"click:1"},
-        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
         success:function(data){
             $("#btnclsid").css({
                 "animation": "none"
@@ -65,10 +64,10 @@ function sendMassage(){
             $("#btnclsid").css({
                 "animation": "pulse 1s infinite alternate"
             })
-          alert("消息发送成功");
+          layer.msg("消息发送成功");
         },
         error:function(){
-          alert("消息发送失败");
+          layer.msg("消息发送失败");
         }
     })
 }

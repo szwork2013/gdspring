@@ -64,18 +64,62 @@ exports.postredirectcontrol = (req,res)=>{
 exports.postclicktostartlucky = (req,res)=>{
     var click = req.body.click;
     ws.send(click);
-    res.send({errCode:0});
+    res.send({errCode:0,});
 }
 
 /*
- * boss 发红包 点击开始抢boss红包
+ * boss 发红包 点击开始抢boss红包 (信息入库)   陈总的红包
  */ 
-exports.postclicktostartlucky = (req,res)=>{
-    var bonus = req.body.bonus;
-    ws.send(bonus);
-    res.send({errCode:0});
+exports.postclicktorubbonus = (req,res)=>{
+    var bonus = req.body.bonus;//data:{"bonus":"bonus:chen"},
+
+    var date = new Date().getTime(),
+        timeQuantum = 1000*60*5,
+        dateArr = [];
+    for(var i=0;i<10;i++){
+        dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
+    } 
+    dateArr=dateArr.sort();
+    var Str = dateArr.toString(); 
+    var data = {
+        count : $.config.bonusofchen,
+        share: $.config.bonusofshare,
+        name :"陈总的红包",
+        dates :Str,//用的时候使用的这个
+        times:Str//做备份
+    }
+    redis.hmset("bonus:{0}".format("chen"), data, (err, data) => {
+        ws.send(bonus);
+        res.send({errCode:0});
+    });
 }
 
+/*
+ * boss 发红包 点击开始抢boss红包  (信息入库) 朱总的红包
+ */ 
+exports.postclicktorubbonusagin = (req,res)=>{
+    var bonus = req.body.bonus;//data:{"bonus":"bonus:zhu"},
+
+    var date = new Date().getTime(),
+        timeQuantum = 1000*60*5,
+        dateArr = [];
+    for(var i=0;i<10;i++){
+        dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
+    } 
+    dateArr=dateArr.sort();
+    var Str = dateArr.toString(); 
+    var data = {
+        count : $.config.bonusofzhu,
+        share: $.config.bonusofshare,
+        name :"朱总的红包",
+        dates :Str,//用的时候使用的这个
+        times:Str//做备份
+    }
+    redis.hmset("bonus:{0}".format("zhu"), data, (err, data) => {
+        ws.send(bonus);
+        res.send({errCode:0});
+    });
+}
 /*
  * 保存页面状态的方法
  */

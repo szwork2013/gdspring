@@ -9,12 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
     
 </head>
-<body style="height: 100%;/*background:url(../../img/fahongbao.png) */;background-size:100% 100%S ;text-align: center;">
-    <div>
-    <img onclick="bonusFun()" style="height: 100%;width: 100%;" src="../../img/fahongbao.png">
+<body style="height: 100%;background:url(../../img/fahongbao.png) ;background-size:cover;text-align: center;">
+    <div class="col-lg-4 col-md-4 col-sm-2 col-xs-2" style="text-align: center;margin-top: 90% ;margin-left: 35%;">
+        <img id="btnclsid"  class="btncls" style="animation: pulse 1s infinite alternate;" onclick="sendMassage()" src="../../img/sj-star.png">
     </div>
-	<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
-</body>
+<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 <script type="text/javascript" src="../../js/li/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/hc/bonus.js"  ></script>
 <script src="../../js/plugins/layer/layer.js"></script>
@@ -22,21 +21,14 @@
     var connectIP = $("#mainIP").html();
     var ip =connectIP.split("|")[0];
     function bonusFun(){
-        /*$("#btnclsid").css({
-            "animation": "none"
-        })
-        $("#btnclsid").css({
-            "animation": "gelatine 0s 1"
-        })*/
         setTimeout(sendMassage(),1000);
-        
     }
     function sendMassage(){
         $.ajax({
-            url:ip+'management/clicktorubbonus',
+            url:ip+'management/clicktorubbonusagin',
             type:'post',
             async:false,
-            data:{"bonus":"bonus:chen"},
+            data:{"bonus":"bonus:zhu"},
             success:function(data){
               
               layer.msg("消息发送成功");
