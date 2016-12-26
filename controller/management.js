@@ -82,12 +82,15 @@ exports.getclicktorubbonus = (req,res)=>{
     var Str = dateArr.toString();
     var title;
     var count;
+    var sock = '';
     if(name == "chen") {
         title = "陈总的红包";
         count = $.config.bonusofchen;
+        sock +="chen";
     }else if(name == "zhu"){
         title = "朱总的红包";
         count = $.config.bonusofzhu;
+        sock +="zhu";
     }
     var data = {
         count : count,//红包总金额
@@ -97,8 +100,8 @@ exports.getclicktorubbonus = (req,res)=>{
         times:Str//做备份
     }
     redis.hmset("bonus:{0}".format(name), data, (err, data) => {
-        // 朱总的  要做一个大屏显示
-        // ws.send(bonus);
+
+        ws.send("red:"+sock);
 
         // 推送消息给每个签到的user
         // 陈总-->路由  redpacket/redpacket
@@ -267,7 +270,21 @@ exports.getproducetimeluckyer = (req,res)=>{
     // 参数
     var key = req.query.key; 
     var user = {};
-        user.timestamp = new Date().getTime();
+        user.timestamp = new Date().getTime(),
+        user.userid  = req.query.userid,
+        user.openid  = req.query.openid;
+
+    if(key == "chen"){
+        if(parseInt(user.awardofchen) == 1){
+            res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
+            return;
+        }
+    }else if(key == "zhu"){
+        if(parseInt(user.awardofzhu) == 1){
+            res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
+            return;
+        }
+    }
 
     redis.hgetall("bonus:{0}".format(key), (err, reply) => {
         if(reply== ''){
@@ -294,6 +311,7 @@ exports.getproducetimeluckyer = (req,res)=>{
                         user:user.toString()
                     }
                     redis.hmset("bonusof{0}:{1}".format(key,result.length+1), d, (err, data) => {
+                        // todo
                         res.send({errCode:0,text:"恭喜中奖"});
                     });
                 })

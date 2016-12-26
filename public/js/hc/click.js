@@ -8,7 +8,7 @@ var mainUrl= socketUrl +'mainsocket';
 // 次监听socket
 var socket = '';
 var url = socketUrl+'msgClick';
-
+var flag = 0;
 // 连接mainWebSocket  服务
 function mainWebSocket(){
     if ('WebSocket' in window)
@@ -64,7 +64,15 @@ function sendMassage(){
             $("#btnclsid").css({
                 "animation": "pulse 1s infinite alternate"
             })
-          layer.msg("消息发送成功");
+            if(flag ==0){
+                $("#btnclsid")[0].src = "../../img/sj-stop.png";
+                flag = 1;
+            }else if(flag ==1){
+                $("#btnclsid")[0].src = "../../img/sj-star.png";
+                flag = 0;
+            }
+            
+            layer.msg("消息发送成功");
         },
         error:function(){
           layer.msg("消息发送失败");

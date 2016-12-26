@@ -51,6 +51,18 @@ exports.getaskforaredredpacket = function(req, res) {
  * 计算产生奖项的方法
  */
 function getproducetimeluckyer(req, res,user,key){
+	if(key == "chen"){
+		if(parseInt(user.awardofchen) == 1){
+			res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
+            return;
+		}
+	}else if(key == "zhu"){
+		if(parseInt(user.awardofzhu) == 1){
+			res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
+            return;
+		}
+	}
+	
 	redis.hgetall("bonus:{0}".format(key), (err, reply) => {
 		if(reply== ''){
 			res.send({errCode:10001,text:"还未开始抽奖!"});
@@ -76,6 +88,7 @@ function getproducetimeluckyer(req, res,user,key){
                 		user:user.toString()
                 	}
                     redis.hmset("bonusof{0}:{1}".format(key,result.length+1), d, (err, data) => {
+                    	// todo  将红包发给中奖者
                         res.send({errCode:0,text:"恭喜中奖"});
                     });
                 })
@@ -120,4 +133,32 @@ exports.getaskforaredredpacketagin = function(req, res) {
        timestamp:timestamp
     });
 	getproducetimeluckyer(req, res,user,"zhu");
+}
+/*
+ * 获取还有多少奖项
+ */
+exports.getnumofbossaward = function(req, res) {
+
+	var name = req.query.name;
+	if(name == "chen"){
+		redis.hgetall("bonus:chen",(err,data)=>{
+			if(data.dates == '' || data.dates == undefined || data.dates == null){
+				res.send({size:0});
+				return;
+			}
+			var strs = data.dates.split(",");
+			res.send({size:strs.length});
+		})
+	}else if(name == "zhu"){
+		redis.hgetall("bonus:zhu",(err,data)=>{
+			if(data.dates == '' || data.dates == undefined || data.dates == null){
+				res.send({size:0});
+				return;
+			}
+			var strs = data.dates.split(",");
+			res.send({size:strs.length})
+			
+		})
+	}
+    
 }

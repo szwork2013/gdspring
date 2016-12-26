@@ -200,9 +200,9 @@
         var speed = Math.ceil(Math.random()*90 +10);//移动的速度
         $("#rootwall").append(
             "<marquee scrollamount="+speed+" direction=left style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
-                "<div id='"+id+"' class='' style='background:url(../../img/111.jpg) no-repeat;background-size:cover;width:"+(messageLength)+"px;'>" +
+                "<div id='"+id+"' class='' style='width:"+(messageLength)+"px;'>" +/*background:url(../../img/111.jpg) no-repeat;background-size:cover;*/
                     "<img src='"+data.avatar+"' style='height: 40px;width: 40px;float: left;'>" +
-                    "<div style='height: 40px;max-width:280px;padding-top: 20px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>"+message+"</div>" +
+                    "<div style='height: 30px;max-width:280px;padding-top: 10px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>"+message+"</div>" +
                 "</div>" +
             "</marquee>"
         );

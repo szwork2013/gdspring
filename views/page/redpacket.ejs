@@ -24,6 +24,7 @@
 <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%>|<%=flag%></div>
 </body>
 <script src="../../js/jquery.js"></script>
+<script src="../../js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
 
     var connectIP = $("#mainIP").html();
@@ -87,18 +88,18 @@
             success:function(data){
                 if(data.errCode == 0){
 
-                    $(".chuai_box").show();
+                    /*$(".chuai_box").show();
                     clearInterval(Timerr,20);
                     $(".div").removeClass("bg_1");
                     setTimeout(function(){
                         $(".div").addClass("bg_2");
-                    },3000);
+                    },3000);*/
 
-                    alert("恭喜中奖");
+                    layer.msg("恭喜中奖");
                 }
             },
             error:function(){
-                alert("很遗憾未中奖");
+                layer.msg("很遗憾未中奖");
             }
         })
 	}
