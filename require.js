@@ -9,7 +9,5 @@ module.exports = {
     // 引用相关插件
     plug : "./lib/plug",
     // 引用db插件
-    db : "./lib/db",
-    // 处理层
-    proxy_wcqy : "./proxy/wcqy"
+    db : "./lib/db"
 };
