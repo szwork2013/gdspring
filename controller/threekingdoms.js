@@ -16,16 +16,34 @@ exports.getinitstage0 = function(req, res) {
 	var team1 = [1,2,3,6,7,8,11,12];
 	var team2 = [13,15,16,17,18,20,21,22];
 	var team3 = [4,5,9,10,14,19,23,24];
-
 	var results = team1.concat(team2).concat(team3);
-	redis.set(KEYS.tk_stage_teams.format(1), JSON.stringify(results));
-	redis.set(KEYS.tk_current, 1);
+	
+	redis.keys("tk:*", function (err, replies) {
+        async.each(replies, (key, rcallback) => {
+            redis.del(key, (err, reply)=>{  
+                rcallback();
+            });
+        }, function (err){
+			redis.set(KEYS.tk_stage_teams.format(1), JSON.stringify(results));
+			redis.set(KEYS.tk_current, 1);
+			//初始化一个空的请求组
+			async.each(results, (team, rcallback) => {
+	           	redis.lpush(KEYS.tk_stage_attacks.format(1, team), "",
+	           		function(){
+	           			rcallback();
+	           		});
+	  	    }, function (err){
+
+	  	    });			
+        });
+    });
 
 	res.send(results);
 }
 
 exports.getstageresult = function(req, res) {
 	var currentterm,nextterm;
+	var currentteams =[];
     var removedteams=[];
 
 	async.waterfall([
@@ -40,7 +58,8 @@ exports.getstageresult = function(req, res) {
 		//验证是否已经结束
 		function(cb){
 			redis.get(KEYS.tk_stage_teams.format(currentterm),function(err,teams){
-				if(teams.length<=3)return cb(teams);
+				currentteams = JSON.parse(teams);
+				if(currentteams.length<=3)return cb(currentteams);
 				cb();
 			})
 		},
@@ -68,29 +87,39 @@ exports.getstageresult = function(req, res) {
 		//剔除最后三组
 		function(sorttable, cb){
 			sorttable.sort(compare("count"));
-			redis.set(KEYS.tk_log.format(currentterm),JSON.stringify(sorttable));
-            //去除最小的三个组
-        	for(var i=0;i<3;i++)
-        	{
-        		removedteams.push(parseInt(sorttable[0].team));
-        		sorttable.pop();
-        	}
-			cb(null,sorttable);
+			redis.set(KEYS.tk_log.format(currentterm), JSON.stringify(sorttable),function(){
+				//去除最小的三个组		
+	        	for(var i=0;i<3;i++)
+	        	{
+	        		var team = parseInt(sorttable[i].team);
+	        		removedteams.push(team);
+	        		currentteams.remove(team);
+	        	}
+
+				cb(null,currentteams);
+			});
 		},
 		//保存剩下的组别
-		function(sorttable, cb){
-			var newteams = [];
-			for(var i = 0;i< sorttable.length;i++){
-			   newteams.push(parseInt(sorttable[i].team));
-			}
-			redis.set(KEYS.tk_stage_teams.format(nextterm), JSON.stringify(newteams));
+		function(newteams, cb){
+			console.log(newteams.length);
 
-			if(newteams.length<=3)
-			{
-				redis.set(KEYS.tk_current, nextterm);
-				return cb(newteams);
-			}
-			else cb(null);
+			async.each(newteams, (team, rcallback) => {
+	           	redis.lpush(KEYS.tk_stage_attacks.format(nextterm, team), "",
+	           		function(){
+	           			rcallback();
+	           		});
+	  	    }, function (err){
+
+	  	    });			
+
+			redis.set(KEYS.tk_stage_teams.format(nextterm), JSON.stringify(newteams),function(){
+				if(newteams.length<=3)
+				{
+					redis.set(KEYS.tk_current, nextterm);
+					return cb(newteams);
+				}
+				else return cb(null);
+			});
 		}],
 		//开始下一轮
 		function(error, data){
@@ -110,11 +139,11 @@ exports.postattack = function(req, res) {
 
 		currentterm = term;
 		var key = KEYS.tk_stage_teams.format(currentterm);
-
+        
 		redis.get(key, function(erro, data){
 			if(!data||data.length<=3) return res.send({errocode:1});
 
-			if(data && data.indexOf(inputs.table)>= 0)
+			if(data && JSON.parse(data).indexOf(parseInt(inputs.table))> 0)
 			{
 			   redis.lpush(KEYS.tk_stage_attacks.format(currentterm, inputs.table), inputs.userid);
 			}
@@ -122,6 +151,8 @@ exports.postattack = function(req, res) {
 	});
 	res.send({errocode:0});
 }
+
+
 
 //Object数组排序
 var compare = function (prop) {
@@ -142,5 +173,11 @@ var compare = function (prop) {
     } 
 }
 
+Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
 
 

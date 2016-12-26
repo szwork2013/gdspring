@@ -64,5 +64,20 @@ exports.gettestsignonce = function(req, res) {
 };
 
 
+exports.gettestshake = function(req, res) {
+  var table = $.randomNum(1,24);
+  //console.log(table);
+  var data = {
+    "table":table,
+    "userid":["renth","tangwc","luwh"][$.randomNum(0,2)]
+  };
+  $.ajax({
+      type: "post",
+      url: "http://localhost:9090/threekingdoms/attack",
+      data: data
+     },function(err,data){
+        res.send(data);
+     });
+};
 
 
