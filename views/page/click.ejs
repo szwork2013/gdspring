@@ -9,9 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
     
 </head>
-<body style="height: 100%;background:url(../../img/hb.jpg) ;background-size:cover;text-align: center;">
-    <div class="col-lg-4 col-md-4 col-sm-2 col-xs-2" style="text-align: center;margin-top: 90% ;margin-left: 35%;">
-        <img id="btnclsid"  class="btncls" style="animation: pulse 1s infinite alternate;" onclick="clickFun()" src="../../img/sj-star.png">
+<body style="height: 100%;width: 100%;background:url(../../img/clickbg.png) ;background-size:cover;text-align: center;">
+	<img class="preimg" style="" src="../../img/clickpre.png">
+    <div class="col-lg-4 col-md-4 col-sm-2 col-xs-2" style="width: 100%;text-align: center;margin-top: 90% ;z-index: 3">
+        <img id="btnclsid"  class="btncls" style="animation: pulse 1s infinite alternate;height:100px; width: 60%;" onclick="clickFun()" src="../../img/click.png">
     </div>
 <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 </body>

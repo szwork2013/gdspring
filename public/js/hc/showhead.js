@@ -183,13 +183,13 @@
     function AnimationFun(){
         var flag =Math.ceil(Math.random()*3);
     	if(flag==1){
-    		animationFunOne();
+    		// animationFunOne();
     	}else if(flag==2){
-    		// animationFunTwo();
+    		animationFunTwo();
     	}else if(flag==3){
             freePictureFun();
         }
-        animationFunTwo();
+        // animationFunTwo();
     }
     // 旋转字体
     function animationFunOne(){

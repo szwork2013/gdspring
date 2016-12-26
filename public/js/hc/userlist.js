@@ -503,7 +503,7 @@ var ip =connectIP.split("|")[0];
           url:ip+'management/deletetimes',//http://localhost:9999/
           type:'post',
           async:false, 
-          // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+          dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
           success:function(data){
               layer.msg("删除成功");
           },

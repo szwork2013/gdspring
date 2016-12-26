@@ -68,58 +68,46 @@ exports.postclicktostartlucky = (req,res)=>{
 }
 
 /*
- * boss 发红包 点击开始抢boss红包 (信息入库)   陈总的红包
+ * boss 发红包  (信息入库)   
  */ 
-exports.postclicktorubbonus = (req,res)=>{
-    var bonus = req.body.bonus;//data:{"bonus":"bonus:chen"},
-
+exports.getclicktorubbonus = (req,res)=>{
+    var name = req.query.bonus;//bonus="chen",bonus="zhu"
     var date = new Date().getTime(),
         timeQuantum = 1000*60*5,
         dateArr = [];
-    for(var i=0;i<10;i++){
+    for(var i=0;i<$.config.bonusofshare;i++){
         dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
     } 
     dateArr=dateArr.sort();
-    var Str = dateArr.toString(); 
+    var Str = dateArr.toString();
+    var title;
+    var count;
+    if(name == "chen") {
+        title = "陈总的红包";
+        count = $.config.bonusofchen;
+    }else if(name == "zhu"){
+        title = "朱总的红包";
+        count = $.config.bonusofzhu;
+    }
     var data = {
-        count : $.config.bonusofchen,
-        share: $.config.bonusofshare,
-        name :"陈总的红包",
+        count : count,//红包总金额
+        share: $.config.bonusofshare,//份额
+        name :title,
         dates :Str,//用的时候使用的这个
         times:Str//做备份
     }
-    redis.hmset("bonus:{0}".format("chen"), data, (err, data) => {
-        ws.send(bonus);
+    redis.hmset("bonus:{0}".format(name), data, (err, data) => {
+        // 朱总的  要做一个大屏显示
+        // ws.send(bonus);
+
+        // 推送消息给每个签到的user
+        // 陈总-->路由  redpacket/redpacket
+
         res.send({errCode:0});
     });
 }
 
-/*
- * boss 发红包 点击开始抢boss红包  (信息入库) 朱总的红包
- */ 
-exports.postclicktorubbonusagin = (req,res)=>{
-    var bonus = req.body.bonus;//data:{"bonus":"bonus:zhu"},
 
-    var date = new Date().getTime(),
-        timeQuantum = 1000*60*5,
-        dateArr = [];
-    for(var i=0;i<10;i++){
-        dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
-    } 
-    dateArr=dateArr.sort();
-    var Str = dateArr.toString(); 
-    var data = {
-        count : $.config.bonusofzhu,
-        share: $.config.bonusofshare,
-        name :"朱总的红包",
-        dates :Str,//用的时候使用的这个
-        times:Str//做备份
-    }
-    redis.hmset("bonus:{0}".format("zhu"), data, (err, data) => {
-        ws.send(bonus);
-        res.send({errCode:0});
-    });
-}
 /*
  * 保存页面状态的方法
  */
@@ -271,69 +259,50 @@ exports.postdeletetimes = (req,res)=>{
     });
 }
 
-/*
- * 按照生成的时间产生幸运中奖者
- */
-/*exports.postgeneratetimeluky = (req,res)=>{
-    var date = req.body.data;
-    var mathArr = [];
-    redis.keys("randomtime:*", function (err, replies) {
-        redis.hgetall("randomtime:{0}".format(replies.length), (err, result) => {
-            var arrStr = result.dates.split(",");
-            for(var i=0;i<arrStr.length;i++){
-                mathArr.push(parseInt(arrStr[i]));
-            }
-        });
-    });
-    for(var i=0;i<arrStr.length;i++){
-        var datanum = banarySearch(date,arrStr[i]);
-        redis.keys("timeaward:*", function (err, _rep) {
-            redis.hmset("timeaward:{0}".format(_rep.length+1), {dates:date}, (err, data) => {
-                res.send({errCode:0});
-            });
-        })
-    }
-}*/
+
 /*
  * 按照生成的时间产生幸运中奖者 
  */
-exports.getproducetimeluckyer = (req,res)=>{  
+exports.getproducetimeluckyer = (req,res)=>{ 
+    // 参数
+    var key = req.query.key; 
+    var user = {};
+        user.timestamp = new Date().getTime();
 
-    var time = req.query.time;//接受请求的时间戳
-    var mathArr = [];//临时数组 记录已经产生的时间戳
-    var _length = 0;//记录最近产生的时间位置
-    redis.keys("randomtime:*", function (err, replies) {
-        _length = replies.length;
-        redis.hgetall("randomtime:{0}".format(_length), (err, reply) => {
-            if(reply.dates == '' || reply.dates == undefined || reply.dates == null){
-                res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
-                return;
-            }else{
-                var arrStr = reply.dates.split(",");
-                for(var i=0;i<arrStr.length;i++){
-                    mathArr.push(parseInt(arrStr[i]));
-                    console.log("::"+mathArr);
-                }
+    redis.hgetall("bonus:{0}".format(key), (err, reply) => {
+        if(reply== ''){
+            res.send({errCode:10001,text:"还未开始抽奖!"});
+            return;
+        }
+        var mathArr = [];//临时数组 记录奖池中的时间戳
+        if(reply.dates == '' || reply.dates == undefined || reply.dates == null){
+            res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
+            return;
+        }else{
+            var arrStr = reply.dates.split(",");
+            for(var i=0;i<arrStr.length;i++){
+                mathArr.push(arrStr[i]);
             }
-        });
-        if(parseInt(time) >= mathArr[0]){
-            var lucktime = mathArr.shift();
-            if(mathArr != '' || mathArr != undefined || mathArr != null){
-                mathArr = mathArr.sort();
-                var str = mathArr.toString();
-                redis.hmset("randomtime:{0}".format(_length), {dates:str}, (err, data) => {});
-                redis.keys("timeaward:*", function (err, _rep) {
-                    redis.hmset("timeaward:{0}".format(_rep.length+1), {origintime:time,lucktime:lucktime}, (err, data) => {
+            if(parseInt(user.timestamp) >= parseInt(mathArr[0])){
+                var lucktime = mathArr.shift();
+                mathArr = mathArr.toString();
+                redis.hmset("bonus:{0}".format(key), {dates:mathArr}, (err, data) => {});
+                redis.keys("bonusof{0}:*".format(key), function (err, result) {
+                    var d = {
+                        origintime:user.timestamp,
+                        lucktime:lucktime,
+                        user:user.toString()
+                    }
+                    redis.hmset("bonusof{0}:{1}".format(key,result.length+1), d, (err, data) => {
                         res.send({errCode:0,text:"恭喜中奖"});
                     });
                 })
             }else{
-                redis.hmset("randomtime:{0}".format(_length), {dates:''}, (err, data) => {});
-                res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
+                res.send({errCode:1000,text:"继续努力!胜利就在眼前!"});
             }
         }
     });
-    
+
 }
 /*
  * 二分法
