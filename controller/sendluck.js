@@ -13,7 +13,7 @@ exports.getclick = function(req, res) {
 };
 
 /*
- * boss发红包(手机端  红包雨)
+ * boss发红包(pad端  红包雨  陈总)
  */
 exports.getbonus = function(req, res) {
     var data = {};
@@ -22,7 +22,7 @@ exports.getbonus = function(req, res) {
     res.render('page/bonus',data);
 };
 /*
- * boss发红包(手机端  voice)
+ * boss发红包(pad端  voice 朱总)
  */
 exports.getbonusagin = function(req, res) {
     var data = {};
@@ -39,4 +39,13 @@ exports.getshowbonusofc = function(req, res) {
         data.httpUrl = $.config.httpUrl;
         data.socketUrl = $.config.socketUrl; 
     res.render('page/bossbonusshowofc',data);
+};
+/*
+ * boss发红包(结果展示:朱总)
+ */
+exports.getshowbonusofz = function(req, res) {
+    var data = {};
+        data.httpUrl = $.config.httpUrl;
+        data.socketUrl = $.config.socketUrl; 
+    res.render('page/bossbonusshowofz',data);
 };

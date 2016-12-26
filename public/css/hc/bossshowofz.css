@@ -1,0 +1,84 @@
+/*左上角的钱*/  
+.moneyle{
+    z-index: 2;
+    position: absolute;
+    margin-top:400px;
+    /*animation: pulse 3s infinite ;*/
+}
+/*右上角的钱*/
+.moneyre{
+    z-index: 2;
+    position: absolute;
+    margin-top:400px;
+    /*animation: pulse_re 3s infinite ;*/
+}
+
+/*中间的钱*/
+.moneyme{
+    z-index: 2;
+    position: absolute;
+    margin-top:400px;
+    /*animation: pulse_me 2.5s infinite ;*/
+}
+.moneymd{
+    z-index: 2;
+    position: absolute;
+    margin-top:400px;
+    /*animation: pulse_md 2.5s infinite ;*/
+}
+/*左下角的钱*/
+.moneyld{
+    z-index: 2;
+    position: absolute;
+    margin-top:400px;
+    /*animation: pulse_ld 2s infinite ;*/
+}
+/*右下角的钱*/
+.moneyrd{
+    z-index: 2;
+    position: absolute;
+    margin-top:400px;
+    /*animation: pulse_rd 2s infinite ;*/
+}
+
+.moneybag{
+	width: 400px;
+	height: 400px;	
+	margin-top: 440px;
+	position: relative;
+
+	z-index: 33;
+}
+/*左上角的动画*/
+@keyframes pulse {
+    0%   {margin-top: 400px;left: 830px;opacity:1}
+    100% {margin-top: 100px;left: 700px;opacity:0}
+}
+/*左下角的动画*/
+@keyframes pulse_ld {
+    0%   {margin-top: 400px;left: 830px;opacity:1}
+    100% {margin-top: 100px;left: 700px;opacity:0}
+}
+
+/*中间的动画*/
+@keyframes pulse_me {
+    0%   {margin-top: 400px;left: 830px;opacity:1}
+    100% {margin-top: 100px;left: 720px;opacity:0}
+}
+@keyframes pulse_md {
+    0%   {margin-top: 400px;right: 880px;opacity:1}
+    100% {margin-top: 100px;right: 750px;opacity:0}
+}	
+
+/*右上角的动画*/
+@keyframes pulse_re {
+     0%   {margin-top: 400px;right: 880px;opacity:1}
+    100% {margin-top: 100px;right: 800px;opacity:0}
+}
+/*右下角的动画*/
+@keyframes pulse_rd {
+     0%   {margin-top: 400px;right: 880px;opacity:1}
+    100% {margin-top: 100px;right: 750px;opacity:0}
+}
+
+

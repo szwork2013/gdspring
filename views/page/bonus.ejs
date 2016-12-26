@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>点击开始抽奖</title>
+    <title>陈总的红包</title>
 
     <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css" />
      <link href="../../css/hc/click.css" rel="stylesheet" type="text/css" /> 
@@ -24,7 +24,7 @@
     function bonusFun(){
         /*$("#btnclsid").css({
             "animation": "none"
-        })
+        })陈总的红包陈总的红包
         $("#btnclsid").css({
             "animation": "gelatine 0s 1"
         })*/
@@ -33,10 +33,10 @@
     }
     function sendMassage(){
         $.ajax({
-            url:ip+'management/clicktorubbonus',
-            type:'post',
+            url:ip+'management/clicktorubbonus?bonus=chen',
+            type:'get',
             async:false,
-            data:{"bonus":"bonus:chen"},
+ 
             success:function(data){
               
               layer.msg("消息发送成功");

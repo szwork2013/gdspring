@@ -38,41 +38,13 @@
 
     $(function(){
     	udata={
-            avatar:"<%=user.avatar%>",
-            num:"<%=user.num%>",
-            name:"<%=user.name%>",
-            userid:"<%=user.userid%>"
+            avatar:userInformation.avatar,
+            num:userInformation.num,
+            name:userInformation.name,
+            userid:userInformation.userid
         };
     })
 
-    // 连接mainWebSocket  服务
-    function mainWebSocket(){
-        if ('WebSocket' in window)
-            mainSocket = new WebSocket(mainUrl);
-        else if ('MozWebSocket' in window)
-            mainSocket = new MozWebSocket(mainUrl);
-        //打开连接时触发
-        mainSocket.onopen = function() {
-            console.log('OPEN: ' + mainSocket.protocol);
-        };
-        //收到消息时触发
-        mainSocket.onmessage = function(message) {
-            console.log("mainsocket收到消息了"+message);
-            var string = message.data.split(":");
-            var objMsg = string[0];
-            var controlMsg = string[1];
-            if(objMsg == "bonus"){
-                if(controlMsg == "chen"){
-                    flag = 1;
-                    getwebsocket();
-                    console.log("mainsocket处理完消息了"+message);
-                }
-            }
-        };  
-    }
-	function getwebsocket(){
-
-	}
 	var a =0;
 	var Timerr = setInterval(aa,200);
 	var removepackage = setInterval(function(){
@@ -106,34 +78,29 @@
 		unpackRedacPket();
 	}); 
 	function unpackRedacPket(){
-		if(flag ==1){
-    // ??  判断会存在问题  页面刷新后就没有了  在点击发红包之后  进来该页面的也不行 之后优化
-            $.ajax({
-                url:ip+'redpacket/askforaredredpacket',
-                type:'get',
-                async:false,
-                data:udata,
-                dataType:'json',
-                success:function(data){
-                    if(data.errCode == 0){
+        $.ajax({
+            url:ip+'redpacket/askforaredredpacket',
+            type:'get',
+            async:false,
+            data:udata,
+            dataType:'json',
+            success:function(data){
+                if(data.errCode == 0){
 
-                        $(".chuai_box").show();
-                        clearInterval(Timerr,20);
-                        $(".div").removeClass("bg_1");
-                        setTimeout(function(){
-                            $(".div").addClass("bg_2");
-                        },3000);
+                    $(".chuai_box").show();
+                    clearInterval(Timerr,20);
+                    $(".div").removeClass("bg_1");
+                    setTimeout(function(){
+                        $(".div").addClass("bg_2");
+                    },3000);
 
-                        alert("恭喜中奖");
-                    }
-                },
-                error:function(){
-                    alert("很遗憾未中奖");
+                    alert("恭喜中奖");
                 }
-            })
-        }
-		
-		
+            },
+            error:function(){
+                alert("很遗憾未中奖");
+            }
+        })
 	}
 </script>
 </html>
