@@ -2,14 +2,14 @@
 .moneyle{
     z-index: 2;
     position: absolute;
-    margin-top:400px;
+    margin-top:500px;
     /*animation: pulse 3s infinite ;*/
 }
 /*右上角的钱*/
 .moneyre{
     z-index: 2;
     position: absolute;
-    margin-top:400px;
+    margin-top:500px;
     /*animation: pulse_re 3s infinite ;*/
 }
 
@@ -17,27 +17,27 @@
 .moneyme{
     z-index: 2;
     position: absolute;
-    margin-top:400px;
+    margin-top:500px;
     /*animation: pulse_me 2.5s infinite ;*/
 }
 .moneymd{
     z-index: 2;
     position: absolute;
-    margin-top:400px;
+    margin-top:500px;
     /*animation: pulse_md 2.5s infinite ;*/
 }
 /*左下角的钱*/
 .moneyld{
     z-index: 2;
     position: absolute;
-    margin-top:400px;
+    margin-top:500px;
     /*animation: pulse_ld 2s infinite ;*/
 }
 /*右下角的钱*/
 .moneyrd{
     z-index: 2;
     position: absolute;
-    margin-top:400px;
+    margin-top:500px;
     /*animation: pulse_rd 2s infinite ;*/
 }
 
