@@ -34,17 +34,8 @@
     var mainSocket='';
     var mainUrl= socketUrl +'mainsocket';
     var userInformation = $("#userInformation").html();
-    var udata= '';
-    var flag =0;
+    var user = eval('(' + userInformation + ')');
 
-    $(function(){
-    	udata={
-            avatar:userInformation.avatar,
-            num:userInformation.num,
-            name:userInformation.name,
-            userid:userInformation.userid
-        };
-    })
 
 	var a =0;
 	var Timerr = setInterval(aa,200);
@@ -81,21 +72,18 @@
 	function unpackRedacPket(){
         $.ajax({
             url:ip+'redpacket/askforaredredpacket',
-            type:'get',
+            type:'post',
             async:false,
-            data:udata,
-            dataType:'json',
+            data:{data:user,key:"chen"},
             success:function(data){
                 if(data.errCode == 0){
-
-                    /*$(".chuai_box").show();
-                    clearInterval(Timerr,20);
-                    $(".div").removeClass("bg_1");
-                    setTimeout(function(){
-                        $(".div").addClass("bg_2");
-                    },3000);*/
-
-                    layer.msg("恭喜中奖");
+                    layer.msg(data.text);
+                }else if(data.errCode == 10002){
+                	layer.msg(data.text);
+                }else if(data.errCode == 1001){
+                	layer.msg(data.text);
+                }else if(data.errCode == 10001){
+                	layer.msg(data.text);
                 }
             },
             error:function(){

@@ -38,19 +38,20 @@ exports.getredpacket = function(req, res) {
 /*
  * 红包雨页面  请求获取红包的方法(陈总)
  */
-exports.getaskforaredredpacket = function(req, res) {
+exports.postaskforaredredpacket = function(req, res) {
 	var timestamp = new Date().getTime();
-	var user = req.body;
+	var user = req.body.data;
+	var key = req.body.key;
     $.extend(user,{
        timestamp:timestamp
     });
-	getproducetimeluckyer(req, res,user,"chen");
+	getproducetimeluckyer(req, res,user,key);
 }
 
 /*
  * 计算产生奖项的方法
  */
-function getproducetimeluckyer(req, res,user,key){
+function getproducetimeluckyer(req,res,user,key){
 	if(key == "chen"){
 		if(parseInt(user.awardofchen) == 1){
 			res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
@@ -62,10 +63,14 @@ function getproducetimeluckyer(req, res,user,key){
             return;
 		}
 	}
-	
+	//记录每次请求抢红包的人的信息
+	redis.keys("redlogof{0}:*".format(key),(err, rep)=>{
+		redis.hmset("redlogof{0}:{1}".format(key,rep.length+1),user,(err, result) => {})
+	})
+	// 查询是否中奖
 	redis.hgetall("bonus:{0}".format(key), (err, reply) => {
 		if(reply== ''){
-			res.send({errCode:10001,text:"还未开始抽奖!"});
+			res.send({errCode:1001,text:"还未开始抽奖!"});
             return;
 		}
 		var mathArr = [];//临时数组 记录奖池中的时间戳
@@ -80,7 +85,17 @@ function getproducetimeluckyer(req, res,user,key){
             if(parseInt(user.timestamp) >= parseInt(mathArr[0])){
                 var lucktime = mathArr.shift();
                 mathArr = mathArr.toString();
+                //将boss奖项的剩余时间戳存入数据库
                 redis.hmset("bonus:{0}".format(key), {dates:mathArr}, (err, data) => {});
+
+                //抢到红包后就不能在领取  将用户的字段设置成 1 表示已经领取
+            	if(key == "chen"){
+            		redis.hmset(util.format(KEY.USER,user.userid),{awardofchen:1},(err, data) => {})
+            	}else if(key == "zhu"){
+            		redis.hmset(util.format(KEY.USER,user.userid),{awardofzhu:1},(err, data) => {})
+            	}
+
+                //记录下中奖人的信息
                 redis.keys("bonusof{0}:*".format(key), function (err, result) {
                 	var d = {
                 		origintime:user.timestamp,
@@ -92,6 +107,7 @@ function getproducetimeluckyer(req, res,user,key){
                         res.send({errCode:0,text:"恭喜中奖"});
                     });
                 })
+                
             }else{
                 res.send({errCode:1000,text:"继续努力!胜利就在眼前!"});
             }
@@ -102,7 +118,7 @@ function getproducetimeluckyer(req, res,user,key){
 /*
  * voice红包页面 (朱总)
  */
-exports.getredpacketagin = function(req, res) {
+/*exports.getredpacketagin = function(req, res) {
 	var code = req.query.code;
 	var state = req.query.state;
  	api.getUserIdByCode(code, (err, data) => {
@@ -122,18 +138,18 @@ exports.getredpacketagin = function(req, res) {
 		    });
 		}
     });
-};
+};*/
 /*
  * voice红包页面 请求获取红包的方法 (朱总)
  */
-exports.getaskforaredredpacketagin = function(req, res) {
+/*exports.getaskforaredredpacketagin = function(req, res) {
 	var timestamp = new Date().getTime();
 	var user = req.body;
     $.extend(user,{
        timestamp:timestamp
     });
 	getproducetimeluckyer(req, res,user,"zhu");
-}
+}*/
 /*
  * 获取还有多少奖项
  */

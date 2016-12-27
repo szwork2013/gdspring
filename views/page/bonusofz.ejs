@@ -24,17 +24,31 @@
         setTimeout(sendMassage(),1000);
     }
     function sendMassage(){
+        
         $.ajax({
             url:ip+'management/clicktorubbonus?bonus=zhu',
             type:'get',
             async:false,
             success:function(data){
-              
+              removeclickFun();
+              window.setTimeout(addclickFun,1000*60*3)
               layer.msg("消息发送成功");
             },
             error:function(){
               layer.msg("消息发送失败");
             }
+        })
+    }
+    function addclickFun(){
+        $("#btnclsid").attr("onclick","sendMassage();");
+        $("#btnclsid").css({
+            "-webkit-filter": "grayscale(0)"
+        })
+    }
+    function removeclickFun(){
+        $("#btnclsid").removeAttr("onclick");
+        $("#btnclsid").css({
+            "-webkit-filter": "grayscale(100%)"
         })
     }
 
