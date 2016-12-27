@@ -15,7 +15,7 @@ exports.getclick = function(req, res) {
 /*
  * boss发红包(pad端  红包雨  陈总)
  */
-exports.getbonus = function(req, res) {
+exports.getbonusofc = function(req, res) {
     var data = {};
         data.httpUrl = $.config.httpUrl;
         data.socketUrl = $.config.socketUrl; 
@@ -24,7 +24,7 @@ exports.getbonus = function(req, res) {
 /*
  * boss发红包(pad端  voice 朱总)
  */
-exports.getbonusagin = function(req, res) {
+exports.getbonusofz = function(req, res) {
     var data = {};
         data.httpUrl = $.config.httpUrl;
         data.socketUrl = $.config.socketUrl; 

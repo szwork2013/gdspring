@@ -268,11 +268,11 @@ exports.postdeletetimes = (req,res)=>{
  */
 exports.getproducetimeluckyer = (req,res)=>{ 
     // 参数
-    var key = req.query.key; 
+    var key = req.body.key; 
     var user = {};
         user.timestamp = new Date().getTime(),
-        user.userid  = req.query.userid,
-        user.openid  = req.query.openid;
+        user.userid  = req.body.userid,
+        user.openid  = req.body.openid;
 
     if(key == "chen"){
         if(parseInt(user.awardofchen) == 1){
@@ -285,10 +285,14 @@ exports.getproducetimeluckyer = (req,res)=>{
             return;
         }
     }
+    //记录每次请求抢红包的人的信息
+    redis.keys("redlogof{0}:*".format(key),(err, rep)=>{
+        redis.hmset("redlogof{0}:{1}".format(key,rep.length+1),user,(err, result) => {})
+    })
 
     redis.hgetall("bonus:{0}".format(key), (err, reply) => {
         if(reply== ''){
-            res.send({errCode:10001,text:"还未开始抽奖!"});
+            res.send({errCode:1001,text:"还未开始抽奖!"});
             return;
         }
         var mathArr = [];//临时数组 记录奖池中的时间戳
@@ -303,7 +307,9 @@ exports.getproducetimeluckyer = (req,res)=>{
             if(parseInt(user.timestamp) >= parseInt(mathArr[0])){
                 var lucktime = mathArr.shift();
                 mathArr = mathArr.toString();
+                //将boss奖项的剩余时间戳存入数据库
                 redis.hmset("bonus:{0}".format(key), {dates:mathArr}, (err, data) => {});
+                //记录下中奖人的信息
                 redis.keys("bonusof{0}:*".format(key), function (err, result) {
                     var d = {
                         origintime:user.timestamp,
@@ -315,6 +321,13 @@ exports.getproducetimeluckyer = (req,res)=>{
                         res.send({errCode:0,text:"恭喜中奖"});
                     });
                 })
+                //抢到红包后就不能在领取  将用户的字段设置成 1 表示已经领取
+                    if(key == "chen"){
+                        redis.hmset(util.format(KEY.USER,user.userid),{awardofchen:1},(err, data) => {})
+                    }else if(key == "zhu"){
+                        redis.hmset(util.format(KEY.USER,user.userid),{awardofzhu:1},(err, data) => {})
+                    }
+                
             }else{
                 res.send({errCode:1000,text:"继续努力!胜利就在眼前!"});
             }

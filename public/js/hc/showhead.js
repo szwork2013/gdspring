@@ -18,7 +18,7 @@
     window.onresize = adjust();
     $(function() {
 
-        var width = $(document).width()*0.6;
+       /* var width = $(document).width()*0.6;
         var height = $(document).width()*0.6;
         $(".firstDiv").css({
             // "margin":"auto",
@@ -39,7 +39,7 @@
         $(".newLineDiv").css({
             "width": width/40+"px",
             "height":height/40+"px"
-        })
+        })*/
 
         mainWebSocket();
         getData();
@@ -76,7 +76,7 @@
             }else if(objMsg == "url"){
                 window.location.href = controlMsg;
             }
-        }; 
+        };
     }
 
 	// 连接websocket  服务
@@ -91,7 +91,6 @@
         };
         //收到消息时触发
         socket.onmessage = function(evt) {
-        	console.log(evt.data);
 	        var data=JSON.parse(evt.data);
 	       	var imgSrc = data.avatar;
 	    	var num = data.num;
@@ -139,9 +138,7 @@
         while(i<data.length){
             var imgSrc = data[i].avatar;
             var num = data[i].num;
-            if(num>235){
-                return;
-            }
+            if(num>235){return;}
             var name = data[i].name; 
             if(num != "" && num != undefined && num != null){
                 if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
@@ -163,7 +160,7 @@
     		$("#"+num).css({
                 "animation":"bigPicture 3s 0s 1"
             })
-    	},0);
+    	},500);
         $("#"+num).click(function(){
             $("#"+num).css({
                 "z-index":"3",
@@ -185,11 +182,11 @@
     	if(flag==1){
     		// animationFunOne();
     	}else if(flag==2){
-    		animationFunTwo();
+    		// animationFunTwo();
     	}else if(flag==3){
             freePictureFun();
         }
-        // animationFunTwo();
+        animationFunTwo();
     }
     // 旋转字体
     function animationFunOne(){
@@ -208,15 +205,12 @@
     }
     // 单个放大图片(  ?单个图片放大会被其他头像覆盖)
     function animationFunTwo(){
-        $(".newLineDiv").each(function(){
-            $(this)[0].style.zIndex = 1;
-        })
+
         var number = Math.ceil(Math.random()*230);
         var imgsrc = $("#"+number)[0].src;
         if(imgsrc != ip +"img/xiaowanzi.png"){ 
             $("#"+number).css({
-                "z-index":"3",
-                "animation":"animated_bigPic 10s 1"
+                "animation":"bigPictureAni 5s 0s 1"
             })
         }
     }

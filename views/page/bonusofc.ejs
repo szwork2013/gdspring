@@ -11,7 +11,7 @@
 </head>
 <body style="height: 100%;/*background:url(../../img/fahongbao.png) */;background-size:100% 100%S ;text-align: center;">
     <div>
-    <img onclick="bonusFun()" style="height: 100%;width: 100%;" src="../../img/fahongbao.png">
+    <img id="btnclsid" onclick="sendMassage()" style="height: 100%;width: 100%;" src="../../img/fahongbao.png">
     </div>
 	<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 </body>
@@ -21,16 +21,7 @@
 <script type="text/javascript">
     var connectIP = $("#mainIP").html();
     var ip =connectIP.split("|")[0];
-    function bonusFun(){
-        /*$("#btnclsid").css({
-            "animation": "none"
-        })陈总的红包陈总的红包
-        $("#btnclsid").css({
-            "animation": "gelatine 0s 1"
-        })*/
-        setTimeout(sendMassage(),1000);
-        
-    }
+
     function sendMassage(){
         $.ajax({
             url:ip+'management/clicktorubbonus?bonus=chen',
@@ -38,14 +29,26 @@
             async:false,
  
             success:function(data){
-              
-              layer.msg("消息发送成功");
+                removeclickFun();
+                window.setTimeout(addclickFun,1000*60*3)
+                layer.msg("消息发送成功");
             },
             error:function(){
-              layer.msg("消息发送失败");
+                layer.msg("消息发送失败");
             }
         })
     }
-
+    function addclickFun(){
+        $("#btnclsid").attr("onclick","sendMassage();");
+        $("#btnclsid").css({
+            "-webkit-filter": "grayscale(0)"
+        })
+    }
+    function removeclickFun(){
+        $("#btnclsid").removeAttr("onclick");
+        $("#btnclsid").css({
+            "-webkit-filter": "grayscale(100%)"
+        })
+    }
 </script>
 </html>
