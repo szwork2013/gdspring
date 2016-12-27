@@ -175,6 +175,7 @@
             }
         })
     }
+    
     /*
      * 插入消息
      */
@@ -197,12 +198,12 @@
      * 接受到纯文字
      */
     function appendText(position,message,messageLength,data,id){
-        var speed = Math.ceil(Math.random()*90 +10);//移动的速度
+        var speed = Math.ceil(Math.random()*60 +10);//移动的速度
         $("#rootwall").append(
             "<marquee scrollamount="+speed+" direction=left style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div id='"+id+"' class='' style='width:"+(messageLength)+"px;'>" +/*background:url(../../img/111.jpg) no-repeat;background-size:cover;*/
                     "<img src='"+data.avatar+"' style='height: 40px;width: 40px;float: left;'>" +
-                    "<div style='height: 30px;max-width:280px;padding-top: 10px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>"+message+"</div>" +
+                    "<div style='line-height: 40px;vertical-align: middle;height: 40px;color: white;max-width:380px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>&nbsp;"+message+"</div>" +
                 "</div>" +
             "</marquee>"
         );
@@ -212,7 +213,7 @@
      * 接受到图片
      */  
     function appendImage(position,image,data,id){
-        var speed = Math.ceil(Math.random()*90 +10);//移动的速度
+        var speed = Math.ceil(Math.random()*60 +10);//移动的速度
         $("#rootwall").append(
             "<marquee scrollamount="+speed+" direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div id='"+id+"' style='width: 280px;'>"+
