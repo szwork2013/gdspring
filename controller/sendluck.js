@@ -19,7 +19,7 @@ exports.getbonus = function(req, res) {
     var data = {};
         data.httpUrl = $.config.httpUrl;
         data.socketUrl = $.config.socketUrl; 
-    res.render('page/bonus',data);
+    res.render('page/bonusofc',data);
 };
 /*
  * boss发红包(pad端  voice 朱总)
@@ -28,7 +28,7 @@ exports.getbonusagin = function(req, res) {
     var data = {};
         data.httpUrl = $.config.httpUrl;
         data.socketUrl = $.config.socketUrl; 
-    res.render('page/bonusagin',data);
+    res.render('page/bonusofz',data);
 };
 
 /*

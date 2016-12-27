@@ -73,7 +73,7 @@ exports.postclicktostartlucky = (req,res)=>{
 exports.getclicktorubbonus = (req,res)=>{
     var name = req.query.bonus;//bonus="chen",bonus="zhu"
     var date = new Date().getTime(),
-        timeQuantum = 1000*60*5,
+        timeQuantum = 1000*60*3 +20*1000,//抢红包时长 三分二十秒
         dateArr = [];
     for(var i=0;i<$.config.bonusofshare;i++){
         dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
