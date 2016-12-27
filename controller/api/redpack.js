@@ -2,8 +2,8 @@ var
     amqp = require('amqplib'),
     util = require('util'),
     WebSocket = require('faye-websocket'),
-    redis = $.redis.createClient($.config.redis.server),
-    ws2 = new WebSocket.Client($.config.socketUrl+'signup');
+    redis = $.redis.createClient($.config.redis.server);
+    //ws2 = new WebSocket.Client($.config.socketUrl+'signup');
 
 var KEY = {
     USER   : 'users:%s',
@@ -34,8 +34,7 @@ exports.gettestsend = function(req, res) {
 };
 
 exports.gettestsign = function(req, res) {
-  if(!ws2)
-     ws2 = new WebSocket.Client($.config.socketUrl+'signup');
+  var ws2 = new WebSocket.Client($.config.socketUrl+'signup');
 
   redis.hgetall("users:"+req.query.id, (err, user) => {
      console.log(user);
@@ -46,8 +45,7 @@ exports.gettestsign = function(req, res) {
 };
 
 exports.gettestsignonce = function(req, res) {
-  if(!ws2)
-     ws2 = new WebSocket.Client($.config.socketUrl+'signup');
+  var ws2 = new WebSocket.Client($.config.socketUrl+'signup');
 
   redis.keys(util.format(KEY.USER,"*"), function (err, replies) {
         async.each(replies, (userid, rcallback) => {
