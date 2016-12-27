@@ -14,32 +14,8 @@
 
     // 记录签到人员数量
     var signNumber=0;
-    
-    window.onresize = adjust();
-    $(function() {
 
-       /* var width = $(document).width()*0.6;
-        var height = $(document).width()*0.6;
-        $(".firstDiv").css({
-            // "margin":"auto",
-            "width": width+"px !important",
-            "height": height+"px !important",
-            "display": "block",
-            "margin-left":width*0.4+"px",
-            // "width": "100%",
-            // "text-align": "center"
-        })
-        $(".smallDiv").css({
-            "width": width/40+"px",
-            "height":height/40+"px",
-            "position":"relative",
-            // "float":"left",
-            // "z-index": "2"
-        })
-        $(".newLineDiv").css({
-            "width": width/40+"px",
-            "height":height/40+"px"
-        })*/
+    $(function() {
 
         mainWebSocket();
         getData();
@@ -158,7 +134,7 @@
     function smallAndBig(num){
     	setTimeout(function(){
     		$("#"+num).css({
-                "animation":"bigPicture 3s 0s 1"
+                "animation":"bigPicture 5s 0s 1"
             })
     	},500);
         $("#"+num).click(function(){
@@ -176,21 +152,18 @@
     }
 
     // 间隔一段时间,执行该程序
-    window.setInterval("AnimationFun()",50000);
+    window.setInterval("AnimationFun()",15000);
     function AnimationFun(){
-        var flag =Math.ceil(Math.random()*3);
+        var flag = Math.ceil(Math.random()*2);
     	if(flag==1){
-    		// animationFunOne();
+    		animationFunTwo();
     	}else if(flag==2){
-    		// animationFunTwo();
-    	}else if(flag==3){
             freePictureFun();
         }
-        animationFunTwo();
     }
     // 旋转字体
     function animationFunOne(){
-    	$(".secondAnimalDiv").css({
+    	$(".secondAnimalDiv").css({    
     		"position":"relative",
     		"animation":"",
     		"-moz-animation":"",
@@ -210,7 +183,7 @@
         var imgsrc = $("#"+number)[0].src;
         if(imgsrc != ip +"img/xiaowanzi.png"){ 
             $("#"+number).css({
-                "animation":"bigPictureAni 5s 0s 1"
+                "animation":"bigPictureAni 10s 0s 1"
             })
         }
     }
@@ -218,27 +191,21 @@
     function freePictureFun(){
         var arr = ["wobble","bounceInDown","bounceOut","rubberBand","flip","zoomOutRight","hinge"];
 
-        for(var i= 0 ;i<5;i++){
+        for(var i= 0 ;i<2;i++){
             var number = Math.ceil(Math.random()*230);
             var temp_num = Math.round(Math.random()*7);
             $("#"+number).css({
                 "animation":""
             })
-
             var imgsrc = $("#"+number)[0].src;
             if(imgsrc != ip+ "img/xiaowanzi.png"){ 
                 $("#"+number).css({
-                    "animation":arr[temp_num]+" 12s 0s 1"
+                    "animation":arr[temp_num]+" 10s 0s 1"
                 })
 
             }
         }
     }
-
-    function adjust(){
-        // location.reload(false);
-    }
-
     function signNumberFun(value){
         $("#signNumber").html(value);
     };

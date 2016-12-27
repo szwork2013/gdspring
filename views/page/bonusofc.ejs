@@ -2,16 +2,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>陈总的红包</title>
+    <title>陈总发红包</title>
 
     <link href="../../css/bootstrap.css" rel="stylesheet" type="text/css" />
      <link href="../../css/hc/click.css" rel="stylesheet" type="text/css" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
     
 </head>
-<body style="height: 100%;/*background:url(../../img/fahongbao.png) */;background-size:100% 100%S ;text-align: center;">
-    <div>
-    <img id="btnclsid" onclick="sendMassage()" style="height: 100%;width: 100%;" src="../../img/fahongbao.png">
+<body style="height: 100%;background:url(../../img/pad/padbg.png) ;background-size:cover;text-align: center;">
+    <img style="width: 400px;z-index: 333;margin-top: 20%" src="../../img/pad/bag.png">
+    <div class="col-lg-4 col-md-4 col-sm-2 col-xs-2" style="text-align: center;margin-top: 15% ;margin-left: 35%;">
+        <img id="btnclsid"  class="btncls" style="animation: pulse 1s infinite alternate;width: 200px;" onclick="sendMassage()" src="../../img/pad/btn.png">
     </div>
 	<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 </body>
@@ -27,7 +28,6 @@
             url:ip+'management/clicktorubbonus?bonus=chen',
             type:'get',
             async:false,
- 
             success:function(data){
                 removeclickFun();
                 window.setTimeout(addclickFun,1000*60*3)

@@ -94,11 +94,11 @@
 /* 放大和缩小图片 */
 
 @-webkit-keyframes bigPicture {
-    0%  {transform: scale(5, 5);}
-    25% {transform: scale(4, 4);}
-    50% {transform: scale(3, 3);}
-    75% {transform: scale(2, 2);}
-    100%{transform: scale(1, 1);z-index: 2;}
+    0%  {transform: scale(8);}
+    25% {transform: scale(6);}
+    50% {transform: scale(4);}
+    75% {transform: scale(2);}
+    100%{transform: scale(1);z-index: 2;}
 }
 @-webkit-keyframes bigPictureAni {
     0%  {transform: scale(1);}
