@@ -44,10 +44,12 @@ exports.getfetchallusers =function (req, res){
                     openid: reply.openid,
                     appid:reply.appid,
                     num:x++,
-                    //增加三个字段  记录哪个页面中奖了 不能重复在一个活动中中奖 0代表未中奖 1 代表已中奖
+                    //增加字段  记录哪个页面中奖了 不能重复在一个活动中中奖 0代表未中奖 1 代表已中奖
                     headaward:0,
                     luckyaward:0,
-                    chataward:0
+                    chataward:0,
+                    awardofchen:0,
+                    awardofzhu:0
                 })
                 user.department = JSON.stringify(user.department);
                  //保存数据
@@ -286,11 +288,19 @@ exports.postrecordpeopleOfaward = function(req,res){
             //记录中奖人员的信息
             redis.keys("luckyaward:*",(err, data)=>{
                 redis.hgetall("luckyaward:{0}".format(data.length),(err, reply)=>{
-                    var luckid_ = parseInt(reply.luckid)+1;
-                    $.extend(body,{
-                        "luckid": luckid_
-                    })
-                    redis.hmset("luckyaward:{0}".format(luckid_), body, (err, data) => {});
+                    if(reply == null || reply == ''){
+                        $.extend(body,{
+                            "luckid": 1
+                        })
+                        redis.hmset("luckyaward:{0}".format(1), body, (err, data) => {});
+                    }else{
+                        var _luckid = parseInt(reply.luckid)+1;
+                        $.extend(body,{
+                            "luckid": _luckid
+                        })
+                        redis.hmset("luckyaward:{0}".format(_luckid), body, (err, data) => {});
+                    }
+                    
                 })
             })
             // 改变被抽中的奖品数量
