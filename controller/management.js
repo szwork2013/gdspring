@@ -8,7 +8,8 @@ var async = $.async,
     WebSocket = require('faye-websocket'),
     ws = new WebSocket.Client(mainUrl),
     redis = $.redis.createClient($.config.redis.server),
-    lock = require("redis-lock")(redis);
+    lock = require("redis-lock")(redis),
+    amqp = require('amqplib');
 
 var KEY = {
     USER : 'users:%s',
@@ -449,9 +450,21 @@ exports.getproducetimeluckyer = (req,res)=>{
         }], function(erro,data){
             //记录每次请求抢红包的人的信息
            redis.set("bonus:{0}:logs:{1}".format(key, currenttimestamp), JSON.stringify(user),(err, result) => {});
-
            //非中奖、异常的退出
            if(erro) return res.send(erro);
+
+           //发奖入库
+           amqp.connect($.config.mqconnOptions).then(function(conn) {
+              return conn.createChannel().then(function(ch) {
+                var q = 'redpacket_queue';
+                var ok = ch.assertQueue(q, {durable: true});
+                return ok.then(function() {
+                  ch.sendToQueue(q, new Buffer(JSON.stringify(user)), {deliveryMode: true});
+                  return ch.close();
+                });
+              }).finally(function() { conn.close(); });
+           }).catch(console.warn);
+
            res.send({errCode:0,text:"恭喜中奖"});
     });
 
