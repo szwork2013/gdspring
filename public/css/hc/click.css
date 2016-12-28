@@ -35,6 +35,23 @@
     80%  {opacity:0.9;}
     100% {opacity:1;}
 }
+@keyframes flyaway {
+    40% {
+        -webkit-transform: scale(1) translateY(-42px);
+        -ms-transform: scale(1) translateY(-42px);
+        transform: scale(1) translateY(-42px);
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear
+    }
+    100% {
+        -webkit-transform: scale(.5) translateY(-2000px);
+        -ms-transform: scale(.5) translateY(-2000px);
+        transform: scale(.5) translateY(-2000px);
+        -webkit-transform-origin: top center;
+        -ms-transform-origin: top center;
+        transform-origin: top center;
+    }
+}
 @keyframes gelatine {
     from,
     to {

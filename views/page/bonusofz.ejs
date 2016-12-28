@@ -12,20 +12,16 @@
 <body style="height: 100%;background:url(../../img/pad/padbg.png) ;background-size:cover;text-align: center;">
     <img style="width: 400px;z-index: 333;margin-top: 20%" src="../../img/pad/bag.png">
     <div class="col-lg-4 col-md-4 col-sm-2 col-xs-2" style="text-align: center;margin-top: 15% ;margin-left: 35%;">
-        <img id="btnclsid"  class="btncls" style="animation: pulse 1s infinite alternate;width: 200px;" onclick="sendMassage()" src="../../img/pad/btn.png">
+        <img id="btnclsid"  class="btncls" style="animation: pulse 1s infinite alternate;width: 200px;" onclick="sendMassage();" src="../../img/pad/btn.png">
     </div>
 <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
 <script type="text/javascript" src="../../js/li/jquery.min.js"></script>
-<script type="text/javascript" src="../../js/hc/bonus.js"  ></script>
 <script src="../../js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
     var connectIP = $("#mainIP").html();
     var ip =connectIP.split("|")[0];
-    function bonusFun(){
-        setTimeout(sendMassage(),1000);
-    }
+
     function sendMassage(){
-        
         $.ajax({
             url:ip+'management/clicktorubbonus?bonus=zhu',
             type:'get',
@@ -41,16 +37,20 @@
         })
     }
     function addclickFun(){
+        $("#btnclsid").show();
         $("#btnclsid").attr("onclick","sendMassage();");
         $("#btnclsid").css({
-            "-webkit-filter": "grayscale(0)"
+            "animation": "pulse 1s infinite alternate"
         })
     }
     function removeclickFun(){
         $("#btnclsid").removeAttr("onclick");
         $("#btnclsid").css({
-            "-webkit-filter": "grayscale(100%)"
-        })
+            "animation": "flyaway 2s 1 "
+        });
+        window.setTimeout(function(){
+            $("#btnclsid").hide();
+        },2000) 
     }
 
 </script>
