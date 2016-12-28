@@ -35,7 +35,8 @@
     "soap":"*",
     "wechat-enterprise":"*",
     "weixin-redpack":"*",
-    "amqplib":"*"
+    "amqplib":"*",
+    "redis-lock":"*"
   },
   "devDependencies": {
     "jshint": "^2.9.3",

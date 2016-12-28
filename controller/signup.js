@@ -14,6 +14,12 @@ var KEY = {
     Table: 'user_table:%s'
 };
 
+//handle socket closed 
+ws.on('close', function(event) {
+  console.log('close', event.code, event.reason);
+  ws = null;
+});
+
 /*
  *用户签到的页面
  */
@@ -49,6 +55,11 @@ exports.getreg = function(req, res) {
                     });
                     
                     //socket通知页面添加头像
+                    //reconnect socket
+                    if(!ws)
+                    {
+                      ws = new WebSocket.Client($.config.socketUrl+'wxmsg');
+                    }
                     ws.send(JSON.stringify(user));
 
                     res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
