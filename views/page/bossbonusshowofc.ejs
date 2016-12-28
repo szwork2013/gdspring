@@ -1,0 +1,156 @@
+<!-- <!DOCTYPE html> -->
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>陈总的红包</title>
+<link rel="stylesheet" type="text/css" href="../../css/hc/chatwall.css">
+<link rel="stylesheet" type="text/css" href="../../css/hc/bossshowofz.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+<style>
+    
+</style>
+</head>
+<body class="" style="background: url(../../img/rp/bg.png);background-position: center;background-repeat: no-repeat;background-attachment: fixed;">
+    <div class="" style="height: auto;position: absolute;width: 100%;">
+        <!-- <div style="text-align: center;margin-top: 2%;margin-bottom: 20px;">
+            <span style="font-size: 40pt;color: red;">陈总的红包</span>
+        </div> -->
+        <!-- 记录消息数量和中奖人员名单 -->
+        <div style="width: 100%;height:60px;margin:auto;text-align: center;z-index: 999;">
+            <span id="repacketcount" style="z-index: 2; font-size: 16pt;color: yellow;position: absolute;margin-top: 140px;margin-left: 60px;">0</span>
+            <div style="width: 100%;padding-top: 140px;">
+                <div style=" z-index: 2;color: #fff;font-size: 16pt;font-family: '微软雅黑'">陈总的宝库还剩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个</div>
+
+                 
+            </div>
+        </div>
+    </div>
+    <div style="width:100%;height: 100%;text-align: center;"><!-- /*background: #EEEEEE*/ -->
+
+        <img class="moneyle" style="" src="../../img/rp/moneyle.png">
+        <img class="moneyre" style="" src="../../img/rp/moneyr.png">
+<!-- middle -->
+        <img class="moneyme" style="" src="../../img/rp/moneyr.png">
+        <img class="moneymd" style="" src="../../img/rp/moneyll.png">
+
+        <img class="moneyld" style="" src="../../img/rp/moneyll.png">
+        <img class="moneyrd" style="" src="../../img/rp/moneyl.png">
+        
+        <img class="moneybag" style="" src="../../img/rp/bag.png">
+    </div>
+    <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
+</body>
+<script src="../../js/jquery.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<!-- <script src="../../js/hc/chatwall.js"></script>  -->
+<script type="text/javascript">
+    var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var socketUrl=connectIP.split("|")[1];
+    // 主监听socket   用来控制 次监听socket
+    var mainSocket='';
+    var mainUrl= socketUrl +'mainsocket';
+    $(function() {
+        mainWebSocket();
+        getDate();/*$("#repacketcount").click()*/
+        setInterval(getDate, 1000);
+    })
+    // 连接mainWebSocket  服务
+    function mainWebSocket(){
+        if ('WebSocket' in window)
+            mainSocket = new WebSocket(mainUrl);
+        else if ('MozWebSocket' in window)
+            mainSocket = new MozWebSocket(mainUrl);
+        //打开连接时触发
+        mainSocket.onopen = function() {
+            console.log('OPEN: ' + mainSocket.protocol);
+        };
+        //收到消息时触发
+        mainSocket.onmessage = function(message) {
+            console.log("mainsocket收到消息了"+message);
+            var string = message.data.split(":");
+            var objMsg = string[0];
+            var controlMsg = string[1];
+            if(objMsg == "red"){
+                if(controlMsg == "chen")
+                    addcssFun();
+            }
+        };  
+    }
+    function getDate(){
+        $.ajax({
+            url:ip+'redpacket/numofbossaward',
+            type:'get',
+            async:false,
+            data:{name:"chen"},
+            dataType:'json',
+            success:function(data){
+                $("#repacketcount").css({
+                    "animation": "bgnum 2s infinite" 
+                })
+                
+                $("#repacketcount").html(data.size);
+            },
+            error:function(){
+                console.log("获取数量失败");
+            }
+        })
+    }
+    function addcssFun() {
+        $(".moneyle").css({
+            "animation": "pulse 3s infinite" 
+        })
+        $(".moneyre").css({
+            "animation": "pulse_re 3s infinite"
+        })
+        $(".moneyme").css({
+            "animation": "pulse_me 2.5s infinite" 
+        })
+        $(".moneymd").css({
+            "animation": "pulse_md 2.5s infinite"
+        })
+        $(".moneyld").css({
+            "animation": "pulse_ld 2s infinite"
+        })
+        $(".moneyrd").css({
+            "animation": "pulse_rd 2s infinite"
+        })
+    }
+
+  /*  var zoomIn=function(aimObj,minFont,maxFont,addNum){
+        //alert(num)
+        aimObj.style.display="block";
+        aimObj.innerHTML=num;
+        var fontSize=minFont,opacity = 1;
+        var setp=setInterval(function(){
+            fontSize+=2;
+            opacity-=0.09;
+            aimObj.style.fontSize=fontSize+"px";
+            aimObj.style.opacity=opacity;
+            aimObj.style.filter = "Alpha(opacity="+opacity*100+")";
+            if(fontSize>maxFont){
+                num+=addNum;
+                aimObj.innerHTML = num;
+                clearInterval(setp);
+                var setp2 = setInterval(function(){
+                    fontSize-=2;
+                    opacity+=0.09;
+                    aimObj.style.fontSize=fontSize+"px";
+                    aimObj.style.opacity=opacity;
+                    aimObj.style.filter = "Alpha(opacity="+opacity*100+")";
+                    if (fontSize <= minFont) {
+                    clearInterval(setp2);
+                    }
+                },20);
+            }
+        },20);
+    };
+    document.getElementById("repacketcount").onclick=function(){
+        zoomIn(document.getElementById("repacketcount"),36,54,5)
+        return false;
+    }*/
+    
+
+</script>
+</html>

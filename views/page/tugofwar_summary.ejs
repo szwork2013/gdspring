@@ -64,7 +64,7 @@
             var string = message.data.split(":");
             var objMsg = string[0];
             var controlMsg = string[1];
-            if(objMsg == "bonus"){
+            if(objMsg == ""){
                 getwebsocket();
                 console.log("mainsocket处理完消息了"+message);
             }

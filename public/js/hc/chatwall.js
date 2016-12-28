@@ -22,9 +22,15 @@
         getmessages();//初始化获取  发送的消息数量
 
         getsavedawardOfChat();
-        
     })
-
+    
+    //定时更新当前数据
+    $(function() {
+        setInterval(function(){
+            getmessages();
+            getsavedawardOfChat();
+        },25000);
+    })
 
 // 连接mainWebSocket  服务
     function mainWebSocket(){
@@ -70,41 +76,19 @@
         socket.onmessage = function(data) {
             var data = JSON.parse(data.data);
             if(parseInt(data.flag) == 0){
-                msgArr.push(data);
+                // msgArr.push(data);
+                showmessage(data);
+                
                 var num = $("#messageCount").html();   
                 $("#messageCount").html((parseInt(num)+1));
             }else{
+                console.log(data);
                 showAwardOfChat(data);
             }
         };
     }
 
-    /*
-     * 创建一个定时器  定时的读取存放消息的临时数组
-     */
-     $(function() {
-           setInterval(function(){
-            if(msgArr.length <= 30){
-                showMessageFun(msgArr);
-            }
-            // 如果数组的长度大于规定长度 截取数组的后三十未数据
-            else{
-                var newarr = msgArr.slice(-30,-1);
-                showMessageFun(newarr); 
-             }
-           },1000);
-        })
-    // window.setInterval(readMsgArr(),1500);不同的浏览器,可能会出现问题
 
-    /*
-     *展示消息的方法(预处理)
-     */
-    function showMessageFun(data){
-        for(var i=0;i<data.length;i++){
-            var time = Math.ceil(Math.random()*800);
-            setTimeout(showmessage(data.pop()),time);
-        }
-    }
     /*
      * 展示消息的方法
      */
@@ -121,14 +105,12 @@
      * 展示中奖人员的方法的方法
      */
     function showAwardOfChat(data){
-        $(".chatAwardImgStyle").each(function(){ 
-            if($(this)[0].src == ''){
-                $(this)[0].src = data.avatar;
-                $(this)[0].title = data.name;
-                return false;//用于跳出each循环
-            }
-        })
+        var chatid = "#chataward" + data.chataward;
+        $(chatid)[0].src = data.avatar;
+        $(chatid)[0].title = data.name;
+
     }
+
     /*
      * 获取 中奖人员的方法的方法
      */
@@ -136,21 +118,23 @@
         $.ajax({
             url:ip+'chatwall/chat/chatRecordAward',
             type:'get',
-            async:false,
-            dataType:'json', 
+            async:true,
+            //dataType:'json', 
             success:function(data){
-                var reply = data.data;
-                var _length = reply.length;
-                for( var i=0;i<_length;i++){
-                    $(".chatAwardImgStyle:eq("+i+")")[0].src = reply[i].avatar;
-                    $(".chatAwardImgStyle:eq("+i+")")[0].title = reply[i].name;
-                }
+
+                $.each(data.data,(index, item)=>{
+                    var chatid = "#chataward"+item.chataward;
+                    $(chatid)[0].src = item.avatar;
+                    $(chatid)[0].title = item.name;
+                });
+                
             },
             error:function(){
                 console.log("未获取到数据!");
             }
         })
     }
+    
     /*
      * 插入消息
      */
@@ -173,12 +157,12 @@
      * 接受到纯文字
      */
     function appendText(position,message,messageLength,data,id){
-        var speed = Math.ceil(Math.random()*90 +10);//移动的速度
+        var speed = Math.ceil(Math.random()*60 +10);//移动的速度
         $("#rootwall").append(
             "<marquee scrollamount="+speed+" direction=left style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
-                "<div id='"+id+"' class='' style='background:url(../../img/111.jpg) no-repeat;background-size:cover;width:"+(messageLength)+"px;'>" +
+                "<div id='"+id+"' class='' style='width:"+(messageLength)+"px;'>" +/*background:url(../../img/111.jpg) no-repeat;background-size:cover;*/
                     "<img src='"+data.avatar+"' style='height: 40px;width: 40px;float: left;'>" +
-                    "<div style='height: 40px;max-width:280px;padding-top: 20px;font-size: 17pt;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>"+message+"</div>" +
+                    "<div style='line-height: 40px;vertical-align: middle;height: 40px;color: white;max-width:380px;font-size: 17pt;font-family: '微软雅黑';white-space:nowrap; overflow:hidden; text-overflow:ellipsis;'>&nbsp;"+message+"</div>" +
                 "</div>" +
             "</marquee>"
         );
@@ -188,7 +172,7 @@
      * 接受到图片
      */  
     function appendImage(position,image,data,id){
-        var speed = Math.ceil(Math.random()*90 +10);//移动的速度
+        var speed = Math.ceil(Math.random()*60 +10);//移动的速度
         $("#rootwall").append(
             "<marquee scrollamount="+speed+" direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
                 "<div id='"+id+"' style='width: 280px;'>"+

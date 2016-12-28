@@ -3,11 +3,15 @@
  */
 
 var async = $.async,
+    wechat = require('wechat-enterprise'),
+    api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,$.config.agentid),
     util = require('util'),
     mainUrl = $.config.socketUrl+"mainsocket",
     WebSocket = require('faye-websocket'),
     ws = new WebSocket.Client(mainUrl),
-    redis = $.redis.createClient($.config.redis.server);
+    redis = $.redis.createClient($.config.redis.server),
+    lock = require("redis-lock")(redis),
+    amqp = require('amqplib');
 
 var KEY = {
     USER : 'users:%s',
@@ -64,17 +68,71 @@ exports.postredirectcontrol = (req,res)=>{
 exports.postclicktostartlucky = (req,res)=>{
     var click = req.body.click;
     ws.send(click);
-    res.send({errCode:0});
+    res.send({errCode:0,});
 }
 
 /*
- * boss 发红包 点击开始抢boss红包
+ * boss 发红包  (信息入库)   
  */ 
-exports.postclicktostartlucky = (req,res)=>{
-    var bonus = req.body.bonus;
-    ws.send(bonus);
-    res.send({errCode:0});
+exports.getclicktorubbonus = (req,res)=>{
+    var name = req.query.bonus;//bonus="chen",bonus="zhu"
+    var date = new Date().getTime(),
+        timeQuantum = $.config.bonustime,
+        dateArr = [];
+    for(var i=0;i<$.config.bonusofshare;i++){
+        dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
+    } 
+    dateArr=dateArr.sort();
+    var Str = dateArr.toString();
+    var title;
+    var count;
+    var sock = '';
+    if(name == "chen") {
+        title = "陈总的红包";
+        count = $.config.bonusofchen;
+        sock +="chen";
+    }else if(name == "zhu"){
+        title = "朱总的红包";
+        count = $.config.bonusofzhu;
+        sock +="zhu";
+    }
+    var data = {
+        count : count,//红包总金额
+        share: $.config.bonusofshare,//份额
+        name :title,
+        dates :Str,//用的时候使用的这个
+        times:Str//做备份
+    }
+    redis.hmset("bonus:{0}".format(name), data, (err, data) => {
+
+        ws.send("red:"+sock);
+
+        // 推送消息给每个签到的user
+        // 陈总-->路由  redpacket/redpacket
+        var message = {
+            "msgtype": "news",
+            "news": {
+                "articles":[
+                    {
+                        "title": title,
+                        "description": "Description",
+                         "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbea72108079dcb26&redirect_uri=http://www.jskplx.com:9090/redpacket/redpacket&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
+                        "picurl": "{0}img/pad/padbg.png".format($.config.httpUrl),
+                    }
+                ]
+            },
+            "safe":"0"
+        }
+
+        api.send({"touser": "@all"},message,(err,reply)=>{
+            console.log(err);
+            console.log(reply);
+        })
+
+        res.send({errCode:0});
+    });
 }
+
 
 /*
  * 保存页面状态的方法
@@ -129,6 +187,15 @@ exports.postresetChatDB = (req,res)=>{
                             text:"重置数据库成功"
                         }
                     }
+
+                    redis.keys("wechatredpack:*", (err, replies)=>{
+                        async.each(replies, (wechatredpack, rcallback) => {
+                            redis.del(wechatredpack, (err, reply)=>{  
+                                rcallback();
+                            });
+                        }, function (err){
+                    })})
+
                     res.send(rep)
                 });
             })
@@ -192,17 +259,18 @@ exports.postresetHeadDB = (req,res)=>{
 /*
  * 保存产生的时间
  */
-exports.postsavetimes = (req,res)=>{
+exports.postcreatetimes = (req,res)=>{
     var date = new Date().getTime(),
-        timeQuantum = 1000*60*1,
+        timeQuantum = 1000*60*5,
         dateArr = [];
     for(var i=0;i<10;i++){
         dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
     } 
     dateArr=dateArr.sort();
+    var Str = dateArr.toString(); 
     redis.keys("randomtime:*", function (err, replies) {
         var leng = replies.length+1;
-        redis.hmset("randomtime:{0}".format(leng), {dates:dateArr}, (err, data) => {
+        redis.hmset("randomtime:{0}".format(leng), {dates:Str,timeArr:Str}, (err, data) => {
             res.send({errCode:0});
         });
     });
@@ -217,48 +285,215 @@ exports.postdeletetimes = (req,res)=>{
     });
 }
 
-/*
- * 按照生成的时间产生幸运中奖者
- */
-exports.postgeneratetimeluky = (req,res)=>{
-    var data = req.body.data;
-    var mathArr = [];
-    redis.keys("randomtime:*", function (err, replies) {
-        redis.hgetall("randomtime:{0}".format(replies.length), (err, result) => {
-            var arrStr = result.dates.split(",");
-            for(var i=0;i<arrStr.length;i++){
-                mathArr.push(parseInt(arrStr[i]));
-            }
-        });
-    });
-    for(var i=0;i<arrStr.length;i++){
-        var datanum = banarySearch(data,arrStr[i]);
-        redis.keys("timeaward:*", function (err, _rep) {
-            redis.hmset("timeaward:{0}".format(_rep.length+1), {"dates":date}, (err, data) => {
-                res.send({errCode:0});
-            });
-        })
+
+exports.getproducetimeluckyer_back = (req,res)=>{ 
+    // 参数
+    var key = req.query.key; 
+    var user = {};
+        user.timestamp = new Date().getTime(),
+        user.userid  = req.query.userid,
+        user.openid  = "req.query.openid;";
+
+    if(key == "chen"){
+        if(parseInt(user.awardofchen) == 1){
+            res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
+            return;
+        }
+    }else if(key == "zhu"){
+        if(parseInt(user.awardofzhu) == 1){
+            res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
+            return;
+        }
     }
+    //记录每次请求抢红包的人的信息
+    redis.keys("redlogof{0}:*".format(key),(err, rep)=>{
+        redis.hmset("redlogof{0}:{1}".format(key,rep.length+1),user,(err, result) => {})
+    })
+
+    redis.hgetall("bonus:{0}".format(key), (err, reply) => {
+        if(reply== ''){
+            res.send({errCode:1001,text:"还未开始抽奖!"});
+            return;
+        }
+        var mathArr = [];//临时数组 记录奖池中的时间戳
+        if(reply.dates == '' || reply.dates == undefined || reply.dates == null){
+            res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
+            return;
+        }else{
+            var arrStr = reply.dates.split(",");
+            for(var i=0;i<arrStr.length;i++){
+                mathArr.push(arrStr[i]);
+            }
+            if(parseInt(user.timestamp) >= parseInt(mathArr[0])){
+                var lucktime = mathArr.shift();
+                mathArr = mathArr.toString();
+                //将boss奖项的剩余时间戳存入数据库
+                redis.hmset("bonus:{0}".format(key), {dates:mathArr}, (err, data) => {});
+                //记录下中奖人的信息
+                redis.keys("bonusof{0}:*".format(key), function (err, result) {
+                    var d = {
+                        origintime:user.timestamp,
+                        lucktime:lucktime,
+                        user:user.toString()
+                    }
+                    //redis.hmset("bonusof{0}:{1}".format(key,result.length+1), d, (err, data) => {
+                    redis.hmset("bonusof{0}:{1}".format(key,user.timestamp), d, (err, data) => {
+                        // todo
+                        res.send({errCode:0,text:"恭喜中奖"});
+                    });
+                })
+                //抢到红包后就不能在领取  将用户的字段设置成 1 表示已经领取
+                    if(key == "chen"){
+                        redis.hmset(util.format(KEY.USER,user.userid),{awardofchen:1},(err, data) => {})
+                    }else if(key == "zhu"){
+                        redis.hmset(util.format(KEY.USER,user.userid),{awardofzhu:1},(err, data) => {})
+                    }
+                
+            }else{
+                res.send({errCode:1000,text:"继续努力!胜利就在眼前!"});
+            }
+        }
+    });
 }
 
 /*
- * 二分法
+ * 按照生成的时间产生幸运中奖者 
  */
-function banarySearch(array,num){
-    var low=0, high, mid;
-    high = array.length - 1;
-    while (low <= high){
-        mid =Math.ceil( (low + high) / 2);
-        if (array[mid] < num){
-            low = mid + 1;
-        }else if (array[mid]>num){
-            high = mid - 1;
-        }else{
-            return array[mid+1];
-        }
-    }
-    return array[mid+1];
+exports.getproducetimeluckyer = (req,res)=>{ 
+    // 参数
+    var key = req.query.key; 
+    var userid = req.query.userid;
+
+    var user = {};
+    var currenttimestamp = new Date().getTime();
+
+    async.waterfall([
+        //参数验证
+        function(cb){
+            if(!key||!userid)return cb({errCode:10003, text:"错误参数"});
+            cb();
+        },
+        //获取用户信息
+        function(cb){
+            redis.hgetall(util.format(KEY.USER, userid), (err, data) => {
+                user = data;
+                cb();
+            });
+        },
+        //判断是否已经中过奖
+        function(cb){
+            var erro = {errCode:10002, text:"厉害了Word朋友,你已中过奖了!"};
+
+            if(key == "chen"){
+                if(parseInt(user.awardofchen) == 1){
+                    return cb(erro);
+                }
+            }else if(key == "zhu"){
+                if(parseInt(user.awardofzhu) == 1){
+                    return cb(erro);
+                }
+            }
+            cb();
+        },
+        //奖池以及活动开始情况验证
+        function(cb){
+            redis.hgetall("bonus:{0}".format(key), (err, bonuspool) => {
+                //未生成奖池验证
+                if(bonuspool == ''){
+                   return cb({errCode:1001,text:"哎呦，别急！还没开始呢！"});
+                }
+
+                //活动已经结束验证
+                if(bonuspool.dates == '' || 
+                   bonuspool.dates == undefined || 
+                   bonuspool.dates == null){
+                   return cb({errCode:1001,text:"你长这么美，肯定还有机会的！"});
+                }
+
+                //临时数组 记录奖池中的时间戳
+                var mathArr = [];
+                var arrStr = bonuspool.dates.split(",");
+
+                for(var i=0;i< arrStr.length;i++){
+                    mathArr.push(arrStr[i]);
+                }
+
+                cb(null, mathArr);
+            });
+        },
+        //中奖逻辑1 -- 未中奖
+        function(mathArr,cb){
+            if(parseInt(currenttimestamp) < parseInt(mathArr[0])){
+                return cb(null, {errCode:1000,text:"继续努力!胜利就在眼前!"});
+            }
+
+            var lucktime = mathArr.shift();
+            mathArr = mathArr.toString();
+
+            //将boss奖项的剩余时间戳存入数据库
+            redis.hmset("bonus:{0}".format(key), {dates:mathArr}, (err, data) => {
+            });
+
+            //记录下中奖人的信息
+            var bingodata = {
+                origintime: currenttimestamp,
+                lucktime: lucktime,
+                user: JSON.stringify(user)
+            };
+
+            cb(null, bingodata);
+        },
+        //中奖逻辑2 -- 中奖
+        //注意：此处有一个漏洞还是存在：A用户中奖纪录尚未保存入库的同时（毫秒级别），A用户的标识并没有变化，仍然会进入下面中奖逻辑。
+        function(bingodata,cb){
+            //锁住中奖纪录数据
+            lock("bonus:{0}:bingo:{1}".format(key,bingodata.lucktime), function(done) {
+                redis.keys("bonus:{0}:bingo:{1}:*".format(key, bingodata.lucktime),function(error,data){
+                    if(data.length>0) {
+                        return cb({errCode:10002,text:"来晚一步,再接再厉"});
+                    }
+
+                    //中奖人添加中奖标识
+                    if(key == "chen"){
+                        redis.hmset(util.format(KEY.USER, userid), {awardofchen:1},(err, data) => {})
+                    }else if(key == "zhu"){
+                        redis.hmset(util.format(KEY.USER, userid), {awardofzhu:1},(err, data) => {})
+                    }
+
+                    //保存中奖信息
+                    redis.set("bonus:{0}:bingo:{1}:{2}".format(key,bingodata.lucktime, currenttimestamp), JSON.stringify(bingodata), (err, data) => {
+                    //抢到红包后就不能在领取  将用户的字段设置成 1 表示已经领取
+                        done();
+                        cb();
+                    });
+                });
+            });
+        }], function(erro,data){
+            //记录每次请求抢红包的人的信息
+           redis.set("bonus:{0}:logs:{1}".format(key, currenttimestamp), JSON.stringify(user),(err, result) => {});
+           //非中奖、异常的退出
+           if(erro) return res.send(erro);
+
+           //发奖入库
+           amqp.connect($.config.mqconnOptions).then(function(conn) {
+              return conn.createChannel().then(function(ch) {
+                var q = 'redpacket_queue';
+                var ok = ch.assertQueue(q, {durable: true});
+                return ok.then(function() {
+                  $.extend(user,{
+                    key :req.query.key
+                  });
+                  ch.sendToQueue(q, new Buffer(JSON.stringify(user)), {deliveryMode: true});
+                  return ch.close();
+                });
+              }).finally(function() { conn.close(); });
+           }).catch(console.warn);
+
+           res.send({errCode:0,text:"恭喜中奖"});
+    });
+
 }
+
 
 /*
  * 查看聊天页面中奖者信息(与数据库中的信息相比较)        (未写完)
@@ -274,4 +509,87 @@ exports.getchatawardpeople = (req,res)=>{
             res.send()
         });
     });
+}
+
+/*
+ * 控制后端是否保存消息的方法
+ */
+exports.postbackmessagecontr =(req,res)=>{
+    var message = req.body.message;
+    var string = message.split(":");
+    var objMsg = string[0];
+    var controlMsg = string[1];
+    if(objMsg == "chat"){
+        if(controlMsg == "open"){
+            redis.hmset("backcontrol:{0}".format(objMsg), {flag:1,name:objMsg}, (err, data) => {
+                res.send({errCode:0});
+            });
+        }
+        else if(controlMsg == "close"){
+            redis.hmset("backcontrol:{0}".format(objMsg), {flag:0,name:objMsg}, (err, data) => {
+                res.send({errCode:0});
+            });
+        }
+    }
+    else{
+        res.send({errCode:10001});
+    }
+}
+
+/*
+ * 获取页面状态的方法
+ */
+exports.getbackstatusFun = (req,res)=>{
+    var data = {};
+        data.items = [];
+    redis.keys("backcontrol:*", function (err, replies) {
+        async.each(replies, (statusInfo, rcallback) => {
+            redis.hgetall(statusInfo, (err, result) => {
+               data.items.push(result);
+               rcallback();
+            });
+        }, function (err){
+            res.send(data);
+        });
+    });
+}
+
+
+/*
+ * 根据分配数值随机分配到N个，总和等于：total 
+ * @param total 分配的总和 
+ * @param size 分配大小 
+ * @param min 分配最小值 
+ * @return 
+ */  
+exports.getrandomassignment = (req,res)=>{
+    var name = req.query.name;
+    var total;
+    var size = $.config.bonusofshare;
+    var min = $.config.minbonus;
+        var arr = [];
+    if(name == "chen"){
+        total = $.config.bonusofchen;
+    }else if(name == "zhu"){
+        total = $.config.bonusofzhu;
+    }
+    // 随机分配算法
+    for (var i = 0; i < size; i++) {
+        var max   = total / (size - i) * 2 + total % (size - i);
+        var money = Math.floor(Math.random() * max);
+            money = money < min ? min : money;
+        if (i == size - 1) {
+            arr.push(total);
+        }else{
+            arr.push(money);
+            total -= money;
+        }
+    }
+    var data = {
+        randomAmount : arr.toString(),
+        backup : arr.toString(),
+    }
+    redis.hmset("bonus:award:{0}".format(name), data, (err, data)=>{
+        res.send({errCode:0})
+    })
 }

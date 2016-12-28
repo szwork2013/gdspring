@@ -21,10 +21,11 @@
              }
              .message {
                  display:block;
-                 top:59%;   
+                 top:55%;   
                  left:20%;
                  position:fixed;
-                 font-family:"楷体"; 
+                 font-family: '隶书';
+                 font-weight: 600;
                  font-size: 40px;
                  text-align:center;
                  height:80%;
@@ -37,32 +38,32 @@
                <!-- <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/> -->
             </div>
             <div class="message"><%=user.message%></div>
-<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
+<!-- <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div> -->
     </body>
     <script src="../../js/jquery.js"></script>
     <script type="text/javascript">
 
-    var connectIP = $("#mainIP").html();
-    var socketUrl=connectIP.split("|")[1];
+    // var connectIP = $("#mainIP").html();
+    // var socketUrl=connectIP.split("|")[1];
 
-    var socket = '';
-    var url = socketUrl+'signup';
+    // var socket = '';
+    // var url = socketUrl+'signup';
 
         $(function() {
-            if ('WebSocket' in window){
-                socket = new WebSocket(url);
-            }else if ('MozWebSocket' in window){
-                socket = new MozWebSocket(url);
-            }
+            // if ('WebSocket' in window){
+            //     socket = new WebSocket(url);
+            // }else if ('MozWebSocket' in window){
+            //     socket = new MozWebSocket(url);
+            // }
 
-            socket.onopen = function() {
-                var d={
-                    avatar:"<%=user.avatar%>",
-                    num:"<%=user.num%>",
-                    name:"<%=user.name%>"
-                };
-                socket.send(JSON.stringify(d));
-            };
+            // socket.onopen = function() {
+            //     var d={
+            //         avatar:"<%=user.avatar%>",
+            //         num:"<%=user.num%>",
+            //         name:"<%=user.name%>"
+            //     };
+            //     socket.send(JSON.stringify(d));
+            // };
             getWidthAndHeigth();
         })
 

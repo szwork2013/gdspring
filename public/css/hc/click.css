@@ -1,11 +1,22 @@
 .btncls {
-    "animation": "pulse 1s infinite alternate", "position": "absolute"
+    animation: "pulse 1s infinite alternate", 
+    "position": "absolute",
+
 }
 
 .btncls:click {
     background: hsla(220, 100%, 60%, 1);
     margin-top: -1px;
     animation: none;
+}
+.preimg{
+    z-index: 1px;
+    position: absolute;
+    height: 50%;
+    width: 60%;
+    margin-top: 22%;
+    margin-left: -27%;
+    animation: darkandlight 1s infinite alternate;
 }
 
 @keyframes pulse {
@@ -16,7 +27,31 @@
         margin-top: 6px;
     }
 }
-
+@keyframes darkandlight {
+    0%   {opacity:0.5;}
+    20%  {opacity:0.6;}
+    40%  {opacity:0.7;}
+    60%  {opacity:0.8;}
+    80%  {opacity:0.9;}
+    100% {opacity:1;}
+}
+@keyframes flyaway {
+    40% {
+        -webkit-transform: scale(1) translateY(-42px);
+        -ms-transform: scale(1) translateY(-42px);
+        transform: scale(1) translateY(-42px);
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear
+    }
+    100% {
+        -webkit-transform: scale(.5) translateY(-2000px);
+        -ms-transform: scale(.5) translateY(-2000px);
+        transform: scale(.5) translateY(-2000px);
+        -webkit-transform-origin: top center;
+        -ms-transform-origin: top center;
+        transform-origin: top center;
+    }
+}
 @keyframes gelatine {
     from,
     to {
