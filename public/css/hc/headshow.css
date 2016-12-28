@@ -94,39 +94,36 @@
 /* 放大和缩小图片 */
 
 @-webkit-keyframes bigPicture {
-    0%  {transform: scale(8);}
-    25% {transform: scale(6);}
-    50% {transform: scale(4);}
-    75% {transform: scale(2);}
-    100%{transform: scale(1);z-index: 2;}
+    0%  {transform: scale(1);}
+    100%{transform: scale(10);}
 }
 @-webkit-keyframes bigPictureAni {
     0%  {transform: scale(1);}
-    100%{transform: scale(8);z-index: 2;}
+    100%{transform: scale(8);}
 }
 
 @-webkit-keyframes movePictureAction {
-    0%  {transform: scale(1, 1);}
-    5%  {transform: scale(1.2, 1.2);}
-    10% {transform: scale(1.4, 1.4);}
-    15% {transform: scale(1.6, 1.6);}
-    20% {transform: scale(1.8, 1.8);}
-    25% {transform: scale(2, 2);}
-    30% {transform: scale(2.2, 2.2);}
-    35% {transform: scale(2.4, 2.4);}
-    40% {transform: scale(2.6, 2.6);}
-    45% {transform: scale(2.8, 2.8);}
-    50% {transform: scale(3, 3);}
-    55% {transform: scale(3.2, 3.2);}
-    60% {transform: scale(3.4, 3.4);}
-    65% {transform: scale(3.6, 3.6);}
-    70% {transform: scale(3.4, 3.4);}
-    75% {transform: scale(3, 3);}
-    80% {transform: scale(2.6, 2.6);}
-    85% {transform: scale(2.2, 2.2);}
-    90% {transform: scale(1.8, 1.8);}
-    95% {transform: scale(1.4, 1.4);}
-    100%{transform: scale(1, 1);}
+    0%  {transform: scale(1);}
+    5%  {transform: scale(1.2);}
+    10% {transform: scale(1.4);}
+    15% {transform: scale(1.6);}
+    20% {transform: scale(1.8);}
+    25% {transform: scale(2);}
+    30% {transform: scale(2.2);}
+    35% {transform: scale(2.4);}
+    40% {transform: scale(2.6);}
+    45% {transform: scale(2.8);}
+    50% {transform: scale(3);}
+    55% {transform: scale(3.2);}
+    60% {transform: scale(3.4);}
+    65% {transform: scale(3.6);}
+    70% {transform: scale(3.4);}
+    75% {transform: scale(3);}
+    80% {transform: scale(2.6);}
+    85% {transform: scale(2.2);}
+    90% {transform: scale(1.8);}
+    95% {transform: scale(1.4);}
+    100%{transform: scale(1);}
 }
 
 /*  图片小动画*/

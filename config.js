@@ -45,6 +45,9 @@ var config = module.exports = {
     bonusofchen:2000,
     //份额
     bonusofshare:25,
+    // 最小金额
+    minbonus :5,
+    
     nginxUrl: "http://localhost:9090/", //"http://192.168.51.4",//   ws://www.jskplx.com/mainsocket   http://localhost:9999/
     httpUrl: "http://localhost:9090/",
     socketUrl: "ws://139.129.13.113/",

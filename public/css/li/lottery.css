@@ -576,10 +576,10 @@ body {
     height: 768px;
     margin: 0 auto;
     background: url(../../img/lukyfont.png) no-repeat;/* 中心图片的位置 +++++++++++++++++++++++++++++++++++*/
-    -webkit-background-size:  100% 30%;
-    -moz-background-size:  100% 30%;
-    -o-background-size:  100% 30%;
-    background-size:  100% 30%;
+    -webkit-background-size:  100% 26%;
+    -moz-background-size:  100% 26%;
+    -o-background-size:  100% 26%;
+    background-size:  100% 26%;
      /*background-positon: 100%,100%;*/
 }
 

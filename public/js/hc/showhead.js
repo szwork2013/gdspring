@@ -88,12 +88,10 @@
     //ajax 请求头像数据
     function getData(){
         $.ajax({
-            url:ip+'api/user/reguserlist',//http://localhost:9999/
+            url:ip+'api/user/reguserlist',
             type:'get',
             async:false,
-            // data:{name:'yang',age:25},
-            // timeout:5000,    //超时时间
-            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            dataType:'json',
             success:function(data){
                 if(data != "" && data != null && data != undefined){  //200为正常返回
             	   insertImg(data);
@@ -105,26 +103,23 @@
         })
     }
     // 插入微信头像  
-    function insertImg(data_){
-        var data = data_;
+    function insertImg(data){
     	var i=0
         var _num = data.length;
         signNumber = _num;
         signNumberFun(signNumber);
         while(i<data.length){
             var imgSrc = data[i].avatar;
-            var num = data[i].num;
+            var num = data[i].num;  
             if(num>235){return;}
             var name = data[i].name; 
             if(num != "" && num != undefined && num != null){
                 if(imgSrc != undefined && imgSrc != '' && imgSrc != null){
                     document.getElementById(num).src=imgSrc;// $("#"+num)[0].src = imgSrc;
                     document.getElementById(num).title=name;
-                    smallAndBig(num);
                 }else{
                     document.getElementById(num).src="../../img/gif.jpg";// $("#"+num)[0].src = imgSrc;
                     document.getElementById(num).title=name;
-                    smallAndBig(num);
                 }
             }
             i++;
@@ -191,20 +186,19 @@
     function freePictureFun(){
         var arr = ["wobble","bounceInDown","bounceOut","rubberBand","flip","zoomOutRight","hinge"];
 
-        for(var i= 0 ;i<2;i++){
-            var number = Math.ceil(Math.random()*230);
-            var temp_num = Math.round(Math.random()*7);
+        var number = Math.ceil(Math.random()*230);
+        var temp_num = Math.round(Math.random()*7);
+        $("#"+number).css({
+            "animation":""
+        })
+        var imgsrc = $("#"+number)[0].src;
+        if(imgsrc != ip+ "img/xiaowanzi.png"){ 
             $("#"+number).css({
-                "animation":""
+                "animation":arr[temp_num]+" 10s 0s 1"
             })
-            var imgsrc = $("#"+number)[0].src;
-            if(imgsrc != ip+ "img/xiaowanzi.png"){ 
-                $("#"+number).css({
-                    "animation":arr[temp_num]+" 10s 0s 1"
-                })
 
-            }
         }
+
     }
     function signNumberFun(value){
         $("#signNumber").html(value);
