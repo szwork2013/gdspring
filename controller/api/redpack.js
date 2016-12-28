@@ -78,4 +78,59 @@ exports.gettestshake = function(req, res) {
      });
 };
 
+exports.getresetbonus = function(req, res) {
+  var key = req.query.key;
+
+  redis.keys("bonus:{0}:*".format(key), function (err, data) {
+      async.each(data, (id, rcallback) => {
+          redis.del(id, (err, reply)=>{  
+            rcallback();
+          });
+      }, function (err){
+      });
+  });
+
+  redis.keys(util.format(KEY.USER,"*"), function (err, keys) {
+      async.each(keys, (userid, rcallback) => {
+          redis.hgetall(userid, (err, _user) => {
+             if(key == "chen")
+             {
+                _user.awardofchen = "0";
+             }else if(key == "zhu")
+             {
+                _user.awardofzhu= "0";
+             }
+             redis.hmset(userid, _user, (err, data) => {});
+          });
+          rcallback();
+      }, function (err){
+          res.send({errCode:0}); 
+      });
+  });
+};
+
+exports.gettestbonus = function(req, res) {
+  var key = req.query.key;
+  
+  redis.keys(util.format(KEY.USER,"*"), function (err, userkeys) {
+     var userid = userkeys[$.randomNum(1,200)];
+     //console.log(userkeys[$.randomNum(1,200)]);
+     $.ajax({
+      type: "get",
+      url: "http://localhost:9090/management/producetimeluckyer?key={0}&userid={1}".format(key,userid.split(":")[1]),
+     },function(err,data){
+        res.send({errCode:0}); 
+     });
+  });
+};
+
+
+
+
+
+
+
+
+
+
 
