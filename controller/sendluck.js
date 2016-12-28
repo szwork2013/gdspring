@@ -49,3 +49,12 @@ exports.getshowbonusofz = function(req, res) {
         data.socketUrl = $.config.socketUrl; 
     res.render('page/bossbonusshowofz',data);
 };
+/*
+ * 荒岛求生
+ */
+exports.getbeglive = function(req, res) {
+    var data = {};
+        data.httpUrl = $.config.httpUrl;
+        data.socketUrl = $.config.socketUrl; 
+    res.render('page/beglive',data);
+};
