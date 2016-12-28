@@ -43,25 +43,15 @@ exports.getredpacket = function(req, res) {
 exports.getnumofbossaward = function(req, res) {
 
 	var name = req.query.name;
-	if(name == "chen"){
-		redis.hgetall("bonus:chen",(err,data)=>{
-			if(data.dates == '' || data.dates == undefined || data.dates == null){
-				res.send({size:0});
-				return;
-			}
-			var strs = data.dates.split(",");
-			res.send({size:strs.length});
-		})
-	}else if(name == "zhu"){
-		redis.hgetall("bonus:zhu",(err,data)=>{
-			if(data.dates == '' || data.dates == undefined || data.dates == null){
-				res.send({size:0});
-				return;
-			}
-			var strs = data.dates.split(",");
-			res.send({size:strs.length})
-			
-		})
-	}
+
+	redis.hgetall("bonus:{0}".format(name),(err,data)=>{
+		if(data.dates == '' || data.dates == undefined || data.dates == null){
+			res.send({size:0});
+			return;
+		}
+		var strs = data.dates.split(",");
+		res.send({size:strs.length});
+	})
+
     
 }

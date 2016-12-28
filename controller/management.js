@@ -3,6 +3,8 @@
  */
 
 var async = $.async,
+    wechat = require('wechat-enterprise'),
+    api = new wechat.API($.config.enterprise.corpId, $.config.enterprise.corpsecret,$.config.agentid),
     util = require('util'),
     mainUrl = $.config.socketUrl+"mainsocket",
     WebSocket = require('faye-websocket'),
@@ -107,6 +109,25 @@ exports.getclicktorubbonus = (req,res)=>{
 
         // 推送消息给每个签到的user
         // 陈总-->路由  redpacket/redpacket
+        var message = {
+            "msgtype": "news",
+            "news": {
+                "articles":[
+                    {
+                        "title": title,
+                        "description": "Description",
+                         "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbea72108079dcb26&redirect_uri=http://www.jskplx.com:9090/redpacket/redpacket&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
+                        "picurl": "{0}img/pad/padbg.png".format($.config.httpUrl),
+                    }
+                ]
+            },
+            "safe":"0"
+        }
+
+        api.send({"touser": "@all"},message,(err,reply)=>{
+            console.log(err);
+            console.log(reply);
+        })
 
         res.send({errCode:0});
     });
