@@ -86,9 +86,7 @@
             data:{name:"chen"},
             dataType:'json',
             success:function(data){
-                $("#repacketcount").css({
-                    "animation": "bgnum 2s infinite" 
-                })
+                
                 
                 $("#repacketcount").html(data.size);
             },
@@ -98,6 +96,9 @@
         })
     }
     function addcssFun() {
+        $("#repacketcount").css({
+            "animation": "bgnum 2s infinite" 
+        })
         $(".moneyle").css({
             "animation": "pulse 3s infinite" 
         })
