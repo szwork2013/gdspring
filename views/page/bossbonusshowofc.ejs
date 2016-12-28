@@ -6,6 +6,7 @@
 <title>陈总的红包</title>
 <link rel="stylesheet" type="text/css" href="../../css/hc/chatwall.css">
 <link rel="stylesheet" type="text/css" href="../../css/hc/bossshowofz.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
 <style>
     
 </style>
@@ -17,10 +18,11 @@
         </div> -->
         <!-- 记录消息数量和中奖人员名单 -->
         <div style="width: 100%;height:60px;margin:auto;text-align: center;z-index: 999;">
-            <div style="width: 100%;padding-top: 180px;">
-                <div style=" color: #fff;display: block;margin: auto;font-size: 16pt;
-font-family: '微软雅黑'">还剩的红包数量:  <span id="repacketcount" style=" font-size: 16pt;color: yellow;
-font-family: '微软雅黑'">0</span></div>
+            <span id="repacketcount" style="z-index: 2; font-size: 16pt;color: yellow;position: absolute;margin-top: 140px;margin-left: 60px;">0</span>
+            <div style="width: 100%;padding-top: 140px;">
+                <div style=" z-index: 2;color: #fff;font-size: 16pt;font-family: '微软雅黑'">陈总的宝库还剩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个</div>
+
+                 
             </div>
         </div>
     </div>
@@ -51,7 +53,7 @@ font-family: '微软雅黑'">0</span></div>
     var mainUrl= socketUrl +'mainsocket';
     $(function() {
         mainWebSocket();
-        getDate();
+        getDate();/*$("#repacketcount").click()*/
         setInterval(getDate, 1000);
     })
     // 连接mainWebSocket  服务
@@ -84,6 +86,10 @@ font-family: '微软雅黑'">0</span></div>
             data:{name:"chen"},
             dataType:'json',
             success:function(data){
+                $("#repacketcount").css({
+                    "animation": "bgnum 2s infinite" 
+                })
+                
                 $("#repacketcount").html(data.size);
             },
             error:function(){
@@ -111,5 +117,40 @@ font-family: '微软雅黑'">0</span></div>
             "animation": "pulse_rd 2s infinite"
         })
     }
+
+  /*  var zoomIn=function(aimObj,minFont,maxFont,addNum){
+        //alert(num)
+        aimObj.style.display="block";
+        aimObj.innerHTML=num;
+        var fontSize=minFont,opacity = 1;
+        var setp=setInterval(function(){
+            fontSize+=2;
+            opacity-=0.09;
+            aimObj.style.fontSize=fontSize+"px";
+            aimObj.style.opacity=opacity;
+            aimObj.style.filter = "Alpha(opacity="+opacity*100+")";
+            if(fontSize>maxFont){
+                num+=addNum;
+                aimObj.innerHTML = num;
+                clearInterval(setp);
+                var setp2 = setInterval(function(){
+                    fontSize-=2;
+                    opacity+=0.09;
+                    aimObj.style.fontSize=fontSize+"px";
+                    aimObj.style.opacity=opacity;
+                    aimObj.style.filter = "Alpha(opacity="+opacity*100+")";
+                    if (fontSize <= minFont) {
+                    clearInterval(setp2);
+                    }
+                },20);
+            }
+        },20);
+    };
+    document.getElementById("repacketcount").onclick=function(){
+        zoomIn(document.getElementById("repacketcount"),36,54,5)
+        return false;
+    }*/
+    
+
 </script>
 </html>

@@ -481,37 +481,7 @@ var ip =connectIP.split("|")[0];
       
       $("#recordLukyAward").modal("show");
   }
-  // 从当前开始随机生成时间
-  function createTimes(){
-      $.ajax({
-          url:ip+'management/createtimes',//http://localhost:9999/
-          type:'post',
-          async:false, 
-          data:{},
-          // dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-          success:function(data){
-              layer.msg("生成成功");
-          },
-          error:function(){
-              layer.msg("保存失败");
-          }
-      })
-  }
-  //删除随机生成的时间
-  function deleteTimes(){
-      $.ajax({
-          url:ip+'management/deletetimes',//http://localhost:9999/
-          type:'post',
-          async:false, 
-          dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-          success:function(data){
-              layer.msg("删除成功");
-          },
-          error:function(){
-              layer.msg("删除失败");
-          }
-      })
-  }
+
   function showawardpeople(param){
       if(param == 'chat'){
           $.ajax({
