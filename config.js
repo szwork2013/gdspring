@@ -125,7 +125,7 @@ var config = module.exports = {
            remark: '猜越多得越多，快来抢！'
         },
         rain:{
-           send_name: '程总',
+           send_name: '陈总',
            wishing: '祝阖家欢乐、身体健康、万事如意',
            act_name: '2017高达年会',
            remark: '猜越多得越多，快来抢！'
