@@ -75,7 +75,7 @@ exports.postclicktostartlucky = (req,res)=>{
 exports.getclicktorubbonus = (req,res)=>{
     var name = req.query.bonus;//bonus="chen",bonus="zhu"
     var date = new Date().getTime(),
-        timeQuantum = 1000*60*3 +20*1000,//抢红包时长 三分二十秒
+        timeQuantum = $.config.bonustime,
         dateArr = [];
     for(var i=0;i<$.config.bonusofshare;i++){
         dateArr.push(date+Math.ceil(Math.random()*timeQuantum)) 
@@ -471,84 +471,8 @@ exports.getproducetimeluckyer = (req,res)=>{
            res.send({errCode:0,text:"恭喜中奖"});
     });
 
-    // if(key == "chen"){
-    //     if(parseInt(user.awardofchen) == 1){
-    //         res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
-    //         return;
-    //     }
-    // }else if(key == "zhu"){
-    //     if(parseInt(user.awardofzhu) == 1){
-    //         res.send({errCode:10002,text:"你已中奖了!将机会留给其他人!"});
-    //         return;
-    //     }
-    // }
-    // //记录每次请求抢红包的人的信息
-    // redis.keys("redlogof{0}:*".format(key),(err, rep)=>{
-    //     redis.hmset("redlogof{0}:{1}".format(key,rep.length+1),user,(err, result) => {})
-    // })
+}
 
-    // redis.hgetall("bonus:{0}".format(key), (err, reply) => {
-    //     if(reply== ''){
-    //         res.send({errCode:1001,text:"还未开始抽奖!"});
-    //         return;
-    //     }
-    //     var mathArr = [];//临时数组 记录奖池中的时间戳
-    //     if(reply.dates == '' || reply.dates == undefined || reply.dates == null){
-    //         res.send({errCode:10001,text:"该阶段的奖项已经抽完了"});
-    //         return;
-    //     }else{
-    //         var arrStr = reply.dates.split(",");
-    //         for(var i=0;i<arrStr.length;i++){
-    //             mathArr.push(arrStr[i]);
-    //         }
-    //         if(parseInt(user.timestamp) >= parseInt(mathArr[0])){
-    //             var lucktime = mathArr.shift();
-    //             mathArr = mathArr.toString();
-    //             //将boss奖项的剩余时间戳存入数据库
-    //             redis.hmset("bonus:{0}".format(key), {dates:mathArr}, (err, data) => {});
-    //             //记录下中奖人的信息
-    //             redis.keys("bonusof{0}:*".format(key), function (err, result) {
-    //                 var d = {
-    //                     origintime:user.timestamp,
-    //                     lucktime:lucktime,
-    //                     user:user.toString()
-    //                 }
-    //                 redis.hmset("bonusof{0}:{1}".format(key,result.length+1), d, (err, data) => {
-    //                     // todo
-    //                     res.send({errCode:0,text:"恭喜中奖"});
-    //                 });
-    //             })
-    //             //抢到红包后就不能在领取  将用户的字段设置成 1 表示已经领取
-    //                 if(key == "chen"){
-    //                     redis.hmset(util.format(KEY.USER,user.userid),{awardofchen:1},(err, data) => {})
-    //                 }else if(key == "zhu"){
-    //                     redis.hmset(util.format(KEY.USER,user.userid),{awardofzhu:1},(err, data) => {})
-    //                 }
-                
-    //         }else{
-    //             res.send({errCode:1000,text:"继续努力!胜利就在眼前!"});
-    //         }
-    //     }
-    // });
-}
-/*
- * 二分法
- */
-function banarySearch(array,num){
-    var low=0, high, mid;
-    high = array.length - 1;
-    while (low <= high){
-        mid =Math.ceil( (low + high) / 2);
-        if (array[mid] < num){
-            low = mid + 1;
-        }else if (array[mid]>num){
-            high = mid - 1;
-        }else{
-            return array[mid+1];
-        }
-    }
-    return array[mid+1];
-}
 
 /*
  * 查看聊天页面中奖者信息(与数据库中的信息相比较)        (未写完)
@@ -611,32 +535,40 @@ exports.getbackstatusFun = (req,res)=>{
 
 
 /*
- * 根据分配数值随机分配到N个，总和等于：allotRange 
- * @param allolTotal 分配的总和 
- * @param allotSize 分配大小 
- * @param allotMinVal 分配最小值 
+ * 根据分配数值随机分配到N个，总和等于：total 
+ * @param total 分配的总和 
+ * @param size 分配大小 
+ * @param min 分配最小值 
  * @return 
  */  
 exports.getrandomassignment = (req,res)=>{
-
-}
-
-
-function randomassignment(allolTotal,allotSize,allotMinVal){
-    var randoms = new Array(allotSize);
-    for (var i = 0; i < allotSize; i++) {  
-
-        var safe_total = (allolTotal - (allotSize - i) * allotMinVal) / (allotSize - i);  
-
-        var random = Math.round(safe_total - allotMinVal) + allotMinVal;  
-        if (random < allotMinVal) {  
-            random = allotMinVal;  
-        }  
-        if (i == allotSize - 1) {  
-            random = allolTotal;  
-        } 
-        allolTotal -= random;  
-        randoms.push(random);  
-    }  
-    return randoms; 
+    var name = req.query.name;
+    var total;
+    var size = $.config.bonusofshare;
+    var min = $.config.minbonus;
+        var arr = [];
+    if(name == "chen"){
+        total = $.config.bonusofchen;
+    }else if(name == "zhu"){
+        total = $.config.bonusofzhu;
+    }
+    // 随机分配算法
+    for (var i = 0; i < size; i++) {
+        var max   = total / (size - i) * 2 + total % (size - i);
+        var money = Math.floor(Math.random() * max);
+            money = money < min ? min : money;
+        if (i == size - 1) {
+            arr.push(total);
+        }else{
+            arr.push(money);
+            total -= money;
+        }
+    }
+    var data = {
+        randomAmount : arr.toString(),
+        backup : arr.toString(),
+    }
+    redis.hmset("bonus:award:{0}".format(name), data, (err, data)=>{
+        res.send({errCode:0})
+    })
 }

@@ -20,7 +20,7 @@
 		</div>
 	</div>
 </div>
-<div id="userInformation" hidden="hidden"><%=user%></div>
+<div id="userInformation" hidden="hidden"><%=user.userid%></div>
 <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%>|<%=flag%></div>
 </body>
 <script src="../../js/jquery.js"></script>
@@ -33,8 +33,7 @@
     // 主监听socket   用来控制 次监听socket
     var mainSocket='';
     var mainUrl= socketUrl +'mainsocket';
-    var userInformation = $("#userInformation").html();
-    var user = eval('(' + userInformation + ')');
+    var userid = $("#userInformation").html();
 
 
 	var a =0;
@@ -70,11 +69,13 @@
 		unpackRedacPket();
 	}); 
 	function unpackRedacPket(){
+		if(userid == null || userid == '' || userid == undefined){
+			return;
+		}
         $.ajax({
-            url:ip+'redpacket/askforaredredpacket',
-            type:'post',
+            url:ip+'management/producetimeluckyer?key=chen&userid='+userid,
+            type:'get',
             async:false,
-            data:{data:user,key:"chen"},
             success:function(data){
                 if(data.errCode == 0){
                     layer.msg(data.text);
@@ -91,5 +92,6 @@
             }
         })
 	}
+   
 </script>
 </html>
