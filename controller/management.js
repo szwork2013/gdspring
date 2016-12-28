@@ -459,6 +459,9 @@ exports.getproducetimeluckyer = (req,res)=>{
                 var q = 'redpacket_queue';
                 var ok = ch.assertQueue(q, {durable: true});
                 return ok.then(function() {
+                  $.extend(user,{
+                    key :req.query.key
+                  });
                   ch.sendToQueue(q, new Buffer(JSON.stringify(user)), {deliveryMode: true});
                   return ch.close();
                 });
