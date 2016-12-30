@@ -48,16 +48,16 @@ function renderPage(userid, pageName){
     redis.hgetall(key, (err, user) => {
         //已经签到了
         if (user.issign === "1") {
-            $.extend(user, {
-                message: $.config.signup_getuserid.format(user.table ? user.table : 0)
-            });
-            res.render('page/{0}'.format(pageName), { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
+            var msg = $.config.signup_getuserid.format(user.table ? user.table : 0);
+            res.render('page/{0}'.format(pageName), { message: msg});
         } else {
+            var messages = message[$.plug.sms.getRandomInt(0, 3)].format(user.name, user.table ? user.table : 0);
             //签到成功
             $.extend(user, {
                 issign: 1,
-                message: message[$.plug.sms.getRandomInt(0, 3)].format(user.name, user.table ? user.table : 0)
+                message: messages
             });
+            
             redis.hmset(key, user, (err, data) => {
                 console.log(data);
             });
@@ -66,7 +66,7 @@ function renderPage(userid, pageName){
               ws = new WebSocket.Client($.config.socketUrl+'wxmsg');
             }
             ws.send(JSON.stringify(user));
-            res.render('page/{0}'.format(pageName), { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
+            res.render('page/{0}'.format(pageName), { message: messages});
         }
     });
 }

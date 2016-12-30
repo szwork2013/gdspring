@@ -23,11 +23,17 @@
 	</div>
 
 <div class="ft"><img src="../../img/rd/g1.png" ></div>
+	<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=userid%></div>
 </div>
 
 <script src="../../js/Block.js"></script>
 <script src="../../js/jquery.js"></script>
 <script>
+
+	var connectIP = $("#mainIP").html();
+    var ip =connectIP.split("|")[0];
+    var userid=connectIP.split("|")[1];
+
 	var oContainer = document.getElementById('container');
 	var block = new Block(oContainer);
 	block.init();

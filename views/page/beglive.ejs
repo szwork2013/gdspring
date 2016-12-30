@@ -21,13 +21,14 @@
 
 
 
-	<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
+	<div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=userid%></div>
 </body>
 <script type="text/javascript" src="../../js/li/jquery.min.js"></script>
 <script src="../../js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
     var connectIP = $("#mainIP").html();
     var ip =connectIP.split("|")[0];
+    var userid =connectIP.split("|")[1];
 
     function sendMassage(){
         $.ajax({

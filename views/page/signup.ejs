@@ -34,36 +34,15 @@
         </style>
     </head>
     <body id="bodyId">
-            <div class="avatar">
-               <!-- <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/> -->
-            </div>
-            <div class="message"><%=user.message%></div>
-<!-- <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div> -->
+        <div class="avatar">
+           <!-- <img src="<%=user.avatar%>" height="120" width="120" id="headImg"/> -->
+        </div>
+        <div class="message"><%=message%></div>
     </body>
     <script src="../../js/jquery.js"></script>
     <script type="text/javascript">
 
-    // var connectIP = $("#mainIP").html();
-    // var socketUrl=connectIP.split("|")[1];
-
-    // var socket = '';
-    // var url = socketUrl+'signup';
-
         $(function() {
-            // if ('WebSocket' in window){
-            //     socket = new WebSocket(url);
-            // }else if ('MozWebSocket' in window){
-            //     socket = new MozWebSocket(url);
-            // }
-
-            // socket.onopen = function() {
-            //     var d={
-            //         avatar:"<%=user.avatar%>",
-            //         num:"<%=user.num%>",
-            //         name:"<%=user.name%>"
-            //     };
-            //     socket.send(JSON.stringify(d));
-            // };
             getWidthAndHeigth();
         })
 
