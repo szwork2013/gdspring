@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+     <style type="text/css">
+        body {
+            background-color: white
+        }
+    </style>
+</head>
+<body id="bodyId">
+    <div id="mainIP" hidden="hidden"><%=key%></div><!-- 跳转页面时候判断的key -->
+</body>
+<script src="../../js/jquery.js"></script>
+<script type="text/javascript">
+    $(function() {
+        // 测试使用
+        // var key = $("#mainIP").html();
+        // addCookies('tangwc');
+
+        gotoUrl();
+    })
+    function gotoUrl(){
+
+        var userid = getCookiesOfuserid();
+        var iscookie = false;
+        if(userid){
+            iscookie = true;
+            addCookies(userid);
+        }
+
+        var key = $("#mainIP").html();
+        // var key = "beglive";
+        // 测试使用
+        // var key = "signup";
+
+        switch(key){
+            case "signup":
+                if(iscookie) 
+                    window.location.href = "http://www.jskplx.com:9090/signup/reg?userid="+userid;
+                else
+                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbea72108079dcb26&redirect_uri="+
+                        "http://www.jskplx.com:9090/signup/reg"+
+                        "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                break;
+            case "redpacket":
+                if(iscookie) 
+                    window.location.href = "http://www.jskplx.com:9090/redpacket/redpacket?userid="+userid;
+                else
+                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbea72108079dcb26&redirect_uri="+
+                        "http://www.jskplx.com:9090/redpacket/redpacket"+
+                        "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                break;
+            case "beglive":
+                if(iscookie) 
+                    window.location.href = "http://www.jskplx.com:9090/sendluck/beglive?userid="+userid;
+                else
+                    window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbea72108079dcb26&redirect_uri="+
+                        "http://www.jskplx.com:9090/sendluck/beglive"+
+                        "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+                break;
+        }
+    }
+
+    function addCookies(userid){
+        var time = new Date();
+            time.setTime(time.getTime() + 1000*3600*24*100);//设置失效时间 100天
+        document.cookie = 'userid=' + userid +';expires=' + time.toGMTString(); 
+    }
+    function getCookiesOfuserid(){
+        var userid = '';
+        if(document.cookie != ''){ 
+            var arrCookie = document.cookie.split(';');
+            for(var i=0; i<arrCookie.length; i++) { 
+                if(arrCookie[i].indexOf("userid") > -1){
+                    return arrCookie[i].split('=')[1];
+                }
+            }
+            return '';
+        }else{
+            return ''; 
+        }
+    } 
+</script>
+</html>

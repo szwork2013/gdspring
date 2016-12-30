@@ -41,6 +41,19 @@
     /*animation: pulse_rd 2s infinite ;*/
 }
 
+.moneyaaa{
+    z-index: 2;
+    position: absolute;
+    margin-top:500px;
+    /*animation: pulse_rd 2s infinite ;*/
+}
+.moneyaa{
+    z-index: 2;
+    position: absolute;
+    margin-top:500px;
+    /*animation: pulse_rd 2s infinite ;*/
+}
+
 .moneybag{
 	width: 400px;
 	height: 400px;	
@@ -51,34 +64,42 @@
 }
 /*左上角的动画*/
 @keyframes pulse {
-    0%   {margin-top: 400px;left: 830px;opacity:1}
-    100% {margin-top: 100px;left: 700px;opacity:0}
+    0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 500px;opacity:0.3}
 }
 /*左下角的动画*/
 @keyframes pulse_ld {
-    0%   {margin-top: 400px;left: 830px;opacity:1}
-    100% {margin-top: 100px;left: 700px;opacity:0}
+    0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 500px;opacity:0.3}
 }
 
 /*中间的动画*/
 @keyframes pulse_me {
-    0%   {margin-top: 400px;left: 830px;opacity:1}
-    100% {margin-top: 100px;left: 720px;opacity:0}
+    0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 680px;opacity:0.3}
 }
 @keyframes pulse_md {
-    0%   {margin-top: 400px;right: 880px;opacity:1}
-    100% {margin-top: 100px;right: 750px;opacity:0}
+    0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 880px;opacity:0.3}
 }	
 
 /*右上角的动画*/
 @keyframes pulse_re {
-     0%   {margin-top: 400px;right: 880px;opacity:1}
-    100% {margin-top: 100px;right: 800px;opacity:0}
+     0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 900px;opacity:0.3}
 }
 /*右下角的动画*/
 @keyframes pulse_rd {
-     0%   {margin-top: 400px;right: 880px;opacity:1}
-    100% {margin-top: 100px;right: 750px;opacity:0}
+     0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 1000px;opacity:0.3}
+}
+@keyframes pulse_aaa {
+     0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 900px;opacity:0.3}
+}
+@keyframes pulse_aa {
+     0%   {margin-top: 400px;left: 750px;opacity:1}
+    100% {margin-top: 100px;left: 650px;opacity:0.3}
 }
 
 @keyframes bgnum {
