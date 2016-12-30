@@ -20,7 +20,7 @@ exports.getredpacket = function(req, res) {
 	var userid = req.query.userid;
 
 	if(userid){
-	   	res.render('page/redpacket', {user: user,httpUrl:httpUrl});
+	   	res.render('page/redpacket', {userid: userid,httpUrl:httpUrl});
     }else{
         api.getUserIdByCode(code, (err, data) => {
 	 		var user = {};

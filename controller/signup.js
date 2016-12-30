@@ -31,10 +31,8 @@ exports.getreg = function(req, res) {
     }else{
         api.getUserIdByCode(code, (err, data) => {
             if (!code || !data.UserId) {
-                $.extend(user, {
-                    message: $.config.signup_cantgetuserid
-                });
-                res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
+                var message = $.config.signup_cantgetuserid;
+                res.render('page/signup', { message: message});
             }
             if(data.UserId){
                 renderPage(data.UserId,'signup');
