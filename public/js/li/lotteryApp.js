@@ -173,11 +173,13 @@ var InitAwards = function() {
 /* 初始化  人员列表 */
 var InitPerlist = function() {
 
-    $.get(lotteryApp.ip+"api/user/reguserlist", null, function(perlist) {
-        if (perlist == null || perlist.length === 0) {
+    $.get(lotteryApp.ip+"api/user/reguserlist", null, function(data) {
+      
+        if(data.errcode != 0){
             layer.msg("获取参与人员失败");
             return;
         }
+        var perlist = data.data;
 
         var strList = "";
         $.each(perlist, function(k, v) {

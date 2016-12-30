@@ -88,7 +88,7 @@ exports.getclicktorubbonus = (req,res)=>{
     var count;
     var sock = '';
     if(name == "chen") {
-        title = "陈总的红包";
+        title = "程董的红包";
         count = $.config.bonusofchen;
         sock +="chen";
     }else if(name == "zhu"){
@@ -108,7 +108,7 @@ exports.getclicktorubbonus = (req,res)=>{
         ws.send("red:"+sock);
 
         // 推送消息给每个签到的user
-        // 陈总-->路由  redpacket/redpacket
+        // 程董-->路由  redpacket/redpacket
         if(name == "chen") {
             var message = {
                 "msgtype": "news",

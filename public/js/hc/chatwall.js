@@ -172,10 +172,10 @@
      * 接受到图片
      */  
     function appendImage(position,image,data,id){
-        var speed = Math.ceil(Math.random()*60 +10);//移动的速度
+        var speed = Math.ceil(Math.random()*30 +10);//移动的速度
         $("#rootwall").append(
             "<marquee scrollamount="+speed+" direction=left  style='position:fixed;z-index:999;' vspace='"+position+"px;' loop='1'>" +
-                "<div id='"+id+"' style='width: 280px;'>"+
+                "<div id='"+id+"' style='width: 320px;'>"+
                     "<div class='' style=''>" +
                         "<img src='"+data.avatar+"' style='height: 40px;width:40px;float:left;'>" +
                     "</div>" +

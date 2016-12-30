@@ -7,7 +7,7 @@ function Block( dom ){
 	this.h = parseInt(this.parentW/3*this.scale);
 	this.top = -this.h;
 	this.speed = 2; //速度
-	this.maxSpeed = 26; //最大速度
+	this.maxSpeed = 10; //最大速度
 	this.timer = null; //定时器
 	this.state = true; //游戏判断
 	this.sum = 0; //分数
@@ -19,7 +19,7 @@ Block.prototype.init = function(){
 	var _t = this;
 
 	_t.zsy();
-	_t.mark();
+	_t.mark(); 	//分数标记++++++++++++++++++++++++++++++++++++++++++
 
 	var clickEvent = "ontouchstart" in document.documentElement ? "touchstart" : "click";
 
@@ -37,12 +37,35 @@ Block.prototype.init = function(){
 			
 			target.className = 'cell block_click'+s;
 			log(target)
-		}else{//未正确点击红包-停止
-			_t.state = false;
-			clearInterval(_t.timer);
-			_t.end();
-			return false;
 		}
+
+
+		/*$.ajax({
+            url:ip+'management/producetimeluckyer?key=chen&userid='+userid,
+            type:'get',
+            async:false,
+            success:function(data){
+                if(data.errCode == 0){
+                    layer.msg(data.text);
+                }else if(data.errCode == 10002){
+                	layer.msg(data.text);
+                }else if(data.errCode == 1001){
+                	layer.msg(data.text);
+                }else if(data.errCode == 10001){
+                	layer.msg(data.text);
+                }
+            },
+            error:function(){
+                layer.msg("很遗憾未中奖");
+            }
+        })*/
+		
+		// else{//未正确点击红包-停止
+		// 	_t.state = false;
+		// 	clearInterval(_t.timer);
+		// 	// _t.end();		//抢红包结束方法 +++++++++++++++++++
+		// 	return false;
+		// }
 	});
 }
 
@@ -108,11 +131,11 @@ Block.prototype.judge = function(){
 
 	var blocks = _t.getEleByClassName('block','div',_t.dom);
 	for (var j=0; j<blocks.length; j++){
-		if ( blocks[j].offsetTop >= _t.parentH ){
-			_t.state = false;
-			clearInterval(_t.timer);
-			_t.end();
-		}
+		// if ( blocks[j].offsetTop >= _t.parentH ){
+			// _t.state = false;
+			// clearInterval(_t.timer);
+			// _t.end();
+		// }
 	}
 }
 
@@ -189,7 +212,7 @@ Block.prototype.end = function(){
 		againMask.id = 'againMask';
 		
 	 // againMask.innerHTML =
-		'<div id="gove" ><h2 id="againSum">哇塞!你只抢到了'+_t.sum+'红包</h2><h1>难道是大神没附体!</h1><span id="againStart"><img src="img/e1.png"></span><span id="againStart_two"><img src="img/e2.png"></span><div>';
+		'<div id="gove" ><h2 id="againSum">哇塞!你只抢到了'+_t.sum+'红包</h2><h1>难道是大神没附体!</h1><span id="againStart"><img src="../../img/rd/e1.png"></span><span id="againStart_two"><img src="../../img/rd/e2.png"></span><div>';
 		
 		_t.dom.parentNode.appendChild(againMask);
 	}else{
@@ -205,14 +228,14 @@ Block.prototype.end = function(){
 
 if(0<_t.sum<=4){
 	againMask.innerHTML =
-		'<div id="gove" ><h2 id="againSum">哇塞!你只抢到了'+_t.sum+'红包</h2><h1>难道是大神没附体!</h1><span id="againStart"><img src="img/e1.png"></span><span id="againStart_two"><img src="img/e2.png"></span><div>';
+		'<div id="gove" ><h2 id="againSum">哇塞!你只抢到了'+_t.sum+'红包</h2><h1>难道是大神没附体!</h1><span id="againStart"><img src="../../img/rd/e1.png"></span><span id="againStart_two"><img src="../../img/rd/e2.png"></span><div>';
 
 	}
 
 
 if(_t.sum>=5){
 		againMask.innerHTML =
-		'<div id="gove" ><h2 id="againSum">哇抢到了'+_t.sum+'红包</h2><h1>好哈哈好啊难附体!</h1><span id="againStart"><img src="img/e1.png"></span><span id="againStart_two"><img src="img/e2.png"></span><div>';
+		'<div id="gove" ><h2 id="againSum">哇抢到了'+_t.sum+'红包</h2><h1>好哈哈好啊难附体!</h1><span id="againStart"><img src="../../img/rd/e1.png"></span><span id="againStart_two"><img src="../../img/rd/e2.png"></span><div>';
 
 	}
 
@@ -227,7 +250,7 @@ if(_t.sum>=5){
 	}
 }
 
-//游戏重来
+//游戏重来    在结束的时候  才会调用这方法
 Block.prototype.again = function(){
 	this.parentW = this.dom.parentNode.clientWidth;
 	this.parentH = this.dom.parentNode.clientHeight;

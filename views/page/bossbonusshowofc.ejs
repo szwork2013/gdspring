@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>陈总的红包</title>
+<title>程董的红包</title>
 <link rel="stylesheet" type="text/css" href="../../css/hc/chatwall.css">
 <link rel="stylesheet" type="text/css" href="../../css/hc/bossshowofz.css">
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
@@ -14,13 +14,13 @@
 <body class="" style="background: url(../../img/rp/bg.png);background-position: center;background-repeat: no-repeat;background-attachment: fixed;">
     <div class="" style="height: auto;position: absolute;width: 100%;">
         <!-- <div style="text-align: center;margin-top: 2%;margin-bottom: 20px;">
-            <span style="font-size: 40pt;color: red;">陈总的红包</span>
+            <span style="font-size: 40pt;color: red;">程董的红包</span>
         </div> -->
         <!-- 记录消息数量和中奖人员名单 -->
         <div style="width: 100%;height:60px;margin:auto;text-align: center;z-index: 999;">
-            <span id="repacketcount" style="z-index: 2; font-size: 16pt;color: yellow;position: absolute;margin-top: 140px;margin-left: 60px;">0</span>
+            <span id="repacketcount" style="z-index: 2; font-size: 20pt;color: yellow;position: absolute;margin-top: 140px;margin-left: 90px;">0</span>
             <div style="width: 100%;padding-top: 140px;">
-                <div style=" z-index: 2;color: #fff;font-size: 16pt;font-family: '微软雅黑'">陈总的宝库还剩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个</div>
+                <div style=" z-index: 2;color: red;font-size: 25pt;font-family:'隶书'">程董的宝库还剩&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个</div>
 
                  
             </div>
@@ -36,7 +36,8 @@
 
         <img class="moneyld" style="" src="../../img/rp/moneyll.png">
         <img class="moneyrd" style="" src="../../img/rp/moneyl.png">
-        
+        <img class="moneyaaa" style="" src="../../img/rp/moneyl.png">
+        <img class="moneyaa" style="" src="../../img/rp/moneyr.png">
         <img class="moneybag" style="" src="../../img/rp/bag.png">
     </div>
     <div id="mainIP" hidden="hidden"><%=httpUrl%>|<%=socketUrl%></div>
@@ -54,7 +55,7 @@
     $(function() {
         mainWebSocket();
         getDate();/*$("#repacketcount").click()*/
-        setInterval(getDate, 1000);
+        setInterval(getDate, 1000);addcssFun();
     })
     // 连接mainWebSocket  服务
     function mainWebSocket(){
@@ -116,6 +117,12 @@
         })
         $(".moneyrd").css({
             "animation": "pulse_rd 2s infinite"
+        })
+        $(".moneyaaa").css({
+            "animation": "pulse_aaa 2s infinite"
+        })
+        $(".moneyaa").css({
+            "animation": "pulse_aa 2s infinite"
         })
     }
 

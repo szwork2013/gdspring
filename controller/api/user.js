@@ -14,19 +14,56 @@ var KEY = {
  * 获取已签到人员的信息
  */
 exports.getreguserlist = function(req, res) {
-  	var data = [];
-  	redis.keys(util.format(KEY.USER,"*"), function (err, replies) {
-  	    async.each(replies, (userid, rcallback) => {
-           	redis.hgetall(userid, (err, result) => {
-                if(parseInt(result.issign)==1){
-                    data.push(result);
+    var array1 = [];    
+    var data = [];
+    async.waterfall([
+        // 记录所有的人的userid
+        function(cb){
+            redis.keys(util.format(KEY.USER,"*"), function (err, replies) {
+                array1 = replies;
+                cb();
+            })
+        },
+        // 将已排除人员的名单 作为临时数组的key值
+        function(cb){   
+            var tempArray1 = [];
+            var array2  = $.config.excludedpeople;
+            async.each(array2, (userid, rcallback) => {
+                tempArray1[userid]=true;//将数array2 中的元素值作为tempArray1 中的键，值为true
+                rcallback();
+            }, function (err){
+                cb(null,tempArray1);
+            });
+        },
+        // 从所有人员的userid中剔除已排除人员
+        function(tempArray1, cb){
+            var tempArray2 = [];
+            async.each(array1, (userid, rcallback) => {
+                if(!tempArray1[userid]){
+                    tempArray2.push(userid);//过滤array1 中与array2 相同的元素；
                 }
-           	    rcallback();
-  		 	    });
-  	    }, function (err){
-    	      res.send(data);
-  	    });
-    });
+                rcallback();
+            }, function (err){
+                 cb(null,tempArray2);
+            });
+        },
+        // 查询剩余的userid 中已经签到的人的信息
+        function(tempArray2, cb){
+            async.each(tempArray2, (userid, rcallback) => {
+                redis.hgetall(userid, (err, result) => {
+                    if(parseInt(result.issign)==1){
+                        data.push(result);
+                    }
+                    rcallback();
+                });
+            }, function (err){
+                 cb(null,data);
+            });  
+        }],function(error, data){
+           if(error) return res.send({errcode:1, retults: error });
+           res.send({errcode:0, data: data });
+        }
+    );
 };
 
 /*

@@ -25,46 +25,53 @@ ws.on('close', function(event) {
  */
 exports.getreg = function(req, res) {
     var code = req.query.code;
-    api.getUserIdByCode(code, (err, data) => {
-        var user = {};
-        // 获取不到Code或者拿不到UserId
-        if (!code || !data.UserId) {
-            $.extend(user, {
-                message: $.config.signup_cantgetuserid
-            });
-            res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
-        }
-        if (data.UserId) {
-            var key = util.format(KEY.USER, data.UserId);
-            redis.hgetall(key, (err, user) => {
-                console.log(user.issign);
-                //已经签到了
-                if (user.issign === "1") {
-                    $.extend(user, {
-                        message: $.config.signup_getuserid.format(user.table ? user.table : 0)
-                    });
-                    res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
-                } else {
-                    //签到成功
-                    $.extend(user, {
-                        issign: 1,
-                        message: message[$.plug.sms.getRandomInt(0, 3)].format(user.name, user.table ? user.table : 0)
-                    });
-                    redis.hmset(key, user, (err, data) => {
-                        console.log(data);
-                    });
-                    
-                    //socket通知页面添加头像
-                    //reconnect socket
-                    if(!ws)
-                    {
-                      ws = new WebSocket.Client($.config.socketUrl+'wxmsg');
-                    }
-                    ws.send(JSON.stringify(user));
+    var userid = req.query.userid;
+    if(userid){
+        renderPage(userid,'signup');
+    }else{
+        api.getUserIdByCode(code, (err, data) => {
+            if (!code || !data.UserId) {
+                $.extend(user, {
+                    message: $.config.signup_cantgetuserid
+                });
+                res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
+            }
+            if(data.UserId){
+                renderPage(data.UserId,'signup');
+            }
 
-                    res.render('page/signup', { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
-                }
+        });
+    }
+};
+function renderPage(userid, pageName){
+    var key = util.format(KEY.USER, userid);
+    redis.hgetall(key, (err, user) => {
+        //已经签到了
+        if (user.issign === "1") {
+            $.extend(user, {
+                message: $.config.signup_getuserid.format(user.table ? user.table : 0)
             });
+            res.render('page/{0}'.format(pageName), { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
+        } else {
+            //签到成功
+            $.extend(user, {
+                issign: 1,
+                message: message[$.plug.sms.getRandomInt(0, 3)].format(user.name, user.table ? user.table : 0)
+            });
+            redis.hmset(key, user, (err, data) => {
+                console.log(data);
+            });
+            //socket通知页面添加头像 reconnect socket
+            if(!ws){
+              ws = new WebSocket.Client($.config.socketUrl+'wxmsg');
+            }
+            ws.send(JSON.stringify(user));
+            res.render('page/{0}'.format(pageName), { user: user, httpUrl: httpUrl, socketUrl: socketUrl });
         }
     });
-};
+}
+// 测试用的  跳板  路由
+exports.getregtest = function(req, res) {
+
+    res.render('page/preload', { key: 'signup'});
+}
