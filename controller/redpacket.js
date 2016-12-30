@@ -19,32 +19,20 @@ exports.getredpacket = function(req, res) {
 	var state = req.query.state;
 	var userid = req.query.userid;
 
-	res.render('page/redpacket');
-	
-	/*if(userid){
-	    var key = util.format(KEY.USER, userid);
-	    redis.hgetall(key, (err, user)=>{
-	   	  	res.render('page/redpacket', {user: user,httpUrl:httpUrl,socketUrl:socketUrl,flag:1});
-	    });
+	if(userid){
+	   	res.render('page/redpacket', {userid: userid,httpUrl:httpUrl});
     }else{
         api.getUserIdByCode(code, (err, data) => {
 	 		var user = {};
 	 		if(!code || !data.UserId) {
-	 			res.send("哎呦! 这水太深了,不能去啊!!!");
-			   	// res.render('page/redpacket',{user: user,httpUrl:httpUrl,socketUrl:socketUrl,flag:0});
+	 			return res.send("哎呦! 这水太深了,不能去啊!!!");
 	 		}
 			if(data.UserId){
-			    var key = util.format(KEY.USER, data.UserId);
-			    redis.hgetall(key, (err, user)=>{
-			   	    if(user.issign === "1"){
-			   	  	    res.render('page/redpacket', {user: user,httpUrl:httpUrl,socketUrl:socketUrl,flag:1});
-			   	    }else{
-			   	    	res.send("哎呦! 这水太深了,不能去啊!!!");
-			   	    }
-			    });
+				// 为了能让每一个人都能体验游戏  这边就不对user是否签到做判断了
+			   	res.render('page/redpacket', {userid: data.UserId,httpUrl:httpUrl});
 			}
 	    });
-    }*/
+    }
 };
 
 

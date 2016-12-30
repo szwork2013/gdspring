@@ -66,25 +66,16 @@ exports.getbeglive = function(req, res) {
     var userid = req.query.userid;
 
     if(userid){
-        var key = util.format(KEY.USER, userid);
-        redis.hgetall(key, (err, user)=>{
-            res.render('page/beglive', {user: user,httpUrl:httpUrl,socketUrl:socketUrl,flag:1});
-        });
+        res.render('page/beglive', {userid: userid,httpUrl:httpUrl});
     }else{
         api.getUserIdByCode(code, (err, data) => {
             var user = {};
             if(!code || !data.UserId) {
-                res.send("哎呦! 这水太深了,不能去啊!!!");
+                return res.send("哎呦! 这水太深了,不能去啊!!!");
             }
             if(data.UserId){
-                var key = util.format(KEY.USER, data.UserId);
-                redis.hgetall(key, (err, user)=>{
-                    if(user.issign === "1"){
-                        res.render('page/beglive', {user: user,httpUrl:httpUrl,socketUrl:socketUrl,flag:1});
-                    }else{
-                        res.send("哎呦! 这水太深了,不能去啊!!!");
-                    }
-                });
+                    // 为了能让每一个人都能体验游戏  这边就不对user是否签到做判断了
+                res.render('page/beglive', {userid: data.UserId,httpUrl:httpUrl});
             }
         });
     }
